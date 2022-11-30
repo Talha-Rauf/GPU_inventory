@@ -1,76 +1,36 @@
-const Joi = require('joi')
-const express = require('express');
-const app = express();
-
-app.use(express.json());
-const PORT = process.env.PORT || 3000;
-//Environment vairable => process.env.PORT is default value
-
-const gpus = [
-  { id: 1, name: 'RX580' },
-]
-
-app.set('view engine', 'ejs');
-
-app.get('/', (req, res) => {
-  res.render('pages/inv_GPU.ejs');
-});
-
-app.get('/gpu/Inventory', (req, res) => {
-  res.send(gpus)
-});
-
-app.post('/gpu/Inventory', (req, res) => {
-
-  // Object destructuring, meaning function returns 2 thing from
-  // which we only require error so we use { } braces to get it.
-  const { error } = validateGPU(req.body); // <-----------------
-  if(error) return res.status(400).send(error.details[0].message);
-
-  const gpu = {
-    id: gpus.length + 1,
-    name: req.body.name
-  };
-
-  gpus.push(gpu);
-  res.send(gpu);
-});
-
-app.put('/gpu/Inventory/:id', (req, res) => {
-
-  const gpu = gpus.find(c => c.id === parseInt(req.params.id));
-  if(!gpu) res.status(404).send('ID not found :<');
-
-  const { error } = validateGPU(req.body);
-  if(error) return res.status(400).send(error.details[0].message);
-
-  gpu.name = req.body.name;
-  res.send(gpu);
-
-});
-
-function validateGPU(gpu) {
-
-  const schema = { name: Joi.string().min(3).required() };
-  return Joi.validate(gpu, schema);
-
-};
-
-app.get('/gpu/Inventory/:id', (req, res) => {
-  const gpu = gpus.find(c => c.id === parseInt(req.params.id));
-  if(!gpu) return res.status(404).send('ID not found :<');
-  res.send(gpu)
-});
-
-app.delete('/gpu/Inventory/:id', (req, res) => {
-
-  const gpu = gpus.find(c => c.id === parseInt(req.params.id));
-  if(!gpu) return res.status(404).send('ID not found :<');
-
-  const index = gpus.indexOf(gpu);
-  gpus.splice(index, 1);
-
-  res.send(gpu);
-});
-
-app.listen(PORT, () => console.log(`Listening on port ${PORT}...`))
+var createError = require('http-errors')
+var path = require('path')
+var bodyParser = require('body-parser')
+var flash = require('express-flash')
+var session = require('express-session')
+var express = require('express')
+var userRoutes = require('./routes/users')
+var app = express()
+// view engine setup
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
+app.use(logger('dev'))
+app.use(express.json())
+app.use(cookieParser())
+app.use(express.urlencoded({ extended: false }))
+app.use(express.static(path.join(__dirname, 'public')))
+app.use(
+  session({
+    secret: '123@abcd',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 60000 },
+  }),
+)
+app.use(flash())
+app.use('/', userRoutes)
+app.use(function (req, res, next) {
+  next(createError(404))
+})
+app.use(function (err, req, res, next) {
+  res.locals.message = err.message
+  res.locals.error = req.app.get('env') === 'development' ? err : {}
+  res.status(err.status || 500)
+  res.render('error')
+})
+module.exports = app
