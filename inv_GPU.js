@@ -10,8 +10,10 @@ const gpus = [
   { id: 1, name: 'RX580' },
 ]
 
+app.set('view engine', 'ejs');
+
 app.get('/', (req, res) => {
-  res.send('Hello World!!!')
+  res.render('pages/inv_GPU.ejs');
 });
 
 app.get('/gpu/Inventory', (req, res) => {
