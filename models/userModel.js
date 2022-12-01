@@ -4,7 +4,7 @@ const mySchema = {
             Company: String,
             Model: String,
             Processor: String,
-            Cores: String,
+            Cores: Number,
             Memory: String,
             Type: String,
             Details: String

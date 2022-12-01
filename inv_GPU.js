@@ -2,8 +2,10 @@ const Joi = require('joi')
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-var http = require('http');
-var path = require("path");
+const connection = require('./database.js')
+const Entry = require('./models/userModel.js')
+const http = require('http');
+const path = require("path");
 
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -19,33 +21,22 @@ app.get('/add', function(req,res){
   res.render('pages/inv_GPU.ejs');
 });
 
-var connection = require('./database.js')
+
 
 app.post('/add', function(req,res){
 
-  console.log(req.body)
-
-  let usr = req.body
-  // res.render('login', {title: "Failed! Try again", failed: true});
-
-  connection.query(`SELECT * from customers where username="${usr.uname}"`, function(err, rows, fields) {
-    if (!err) {
-      console.log('The solution is: ', rows[0]);
-
-      if(typeof rows[0] != 'undefined' && pwVerify(usr.pwd, rows[0].password)){
-        console.log("Successful Login");
-        req.session.user = {
-          id : rows[0].id,
-          username : rows[0].username,
-        };
-        res.redirect('/');
-      } else {
-        res.render('login', {title: "Failed! Try again", failed: true});
-      }
-    }
-    else
-      throw err;
+  let newEntry = new Entry({
+    Company: req.body.company,
+    Model: req.body.model,
+    Processor: req.body.processor,
+    Cores: req.body.cores,
+    Memory: req.body.size,
+    Type: req.body.type,
+    Details: req.body.textarea
   });
+
+  newEntry.save();
+  res.redirect('/')
 
 });
 
