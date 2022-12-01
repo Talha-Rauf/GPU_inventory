@@ -2,12 +2,9 @@ h1, p{
   text-align: center;
 }
 
-form{
- width: 45%;
- display: inline-block;
- margin: 20px;
+body{
+ background-color: #eeeeee;
 }
-
 header{
  text-align: center;
  height: 100px;
@@ -15,4 +12,19 @@ header{
  background-color: #3399ff;
  color: #FFFFFF;
  font-size: x-large;
+}
+h3{
+ margin-top: 2px;
+ padding: 10px;
+ text-align: center;
+ background-color: #bcbcbc;
+}
+form{
+ width: 100%;
+ display: inline-block;
+ margin: 20px;
+}
+footer{
+ margin-top: 3%;
+ text-align: center;
 }
