@@ -13,5 +13,7 @@ conn.on('disconnected', function () {
 })
 conn.on('error', console.error.bind(console))
 
+conn.run('CREATE TABLE IF NOT EXISTS emp(id TEXT, name TEXT)');
+
 module.exports = conn;
 module.exports = mongoose;

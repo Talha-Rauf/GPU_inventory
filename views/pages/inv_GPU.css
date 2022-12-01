@@ -1,3 +1,18 @@
 h1, p{
   text-align: center;
 }
+
+form{
+ width: 45%;
+ display: inline-block;
+ margin: 20px;
+}
+
+header{
+ text-align: center;
+ height: 100px;
+ padding-top: 1px;
+ background-color: #3399ff;
+ color: #FFFFFF;
+ font-size: x-large;
+}
