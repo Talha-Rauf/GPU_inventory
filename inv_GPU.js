@@ -1,8 +1,11 @@
 const Joi = require('joi')
 const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
 var http = require('http');
 var path = require("path");
-const app = express();
+
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.set('view engine', 'ejs');
 
@@ -16,62 +19,51 @@ app.get('/add', function(req,res){
   res.render('pages/inv_GPU.ejs');
 });
 
+var connection = require('./database.js')
 
-app.post('/', function(req,res){
-  db.serialize(()=>{
-    db.run('INSERT INTO emp(id,name) VALUES(?,?)', [req.body.id, req.body.name], function(err) {
-      if (err) {
-        return console.log(err.message);
+app.post('/add', function(req,res){
+
+  console.log(req.body)
+
+  let usr = req.body
+  // res.render('login', {title: "Failed! Try again", failed: true});
+
+  connection.query(`SELECT * from customers where username="${usr.uname}"`, function(err, rows, fields) {
+    if (!err) {
+      console.log('The solution is: ', rows[0]);
+
+      if(typeof rows[0] != 'undefined' && pwVerify(usr.pwd, rows[0].password)){
+        console.log("Successful Login");
+        req.session.user = {
+          id : rows[0].id,
+          username : rows[0].username,
+        };
+        res.redirect('/');
+      } else {
+        res.render('login', {title: "Failed! Try again", failed: true});
       }
-      console.log("New employee has been added");
-      res.send("New employee has been added into the database with ID = "+req.body.id+ " and Name = "+req.body.name);
-      });
-   });
-});
-
-app.put('/gpu/Inventory/:id', (req, res) => {
-
-  const gpu = gpus.find(c => c.id === parseInt(req.params.id));
-  if(!gpu) res.status(404).send('ID not found :<');
-
-  const { error } = validateGPU(req.body);
-  if(error) return res.status(400).send(error.details[0].message);
-
-  gpu.name = req.body.name;
-  res.send(gpu);
+    }
+    else
+      throw err;
+  });
 
 });
 
-function validateGPU(gpu) {
+//app.delete('/gpu/Inventory/:id', (req, res) => {
 
-  const schema = { name: Joi.string().min(3).required() };
-  return Joi.validate(gpu, schema);
+//  const gpu = gpus.find(c => c.id === parseInt(req.params.id));
+//  if(!gpu) return res.status(404).send('ID not found :<');
 
-};
+//  const index = gpus.indexOf(gpu);
+//  gpus.splice(index, 1);
 
-app.get('/gpu/Inventory/:id', (req, res) => {
-  const gpu = gpus.find(c => c.id === parseInt(req.params.id));
-  if(!gpu) return res.status(404).send('ID not found :<');
-  res.send(gpu)
-});
-
-app.delete('/gpu/Inventory/:id', (req, res) => {
-
-  const gpu = gpus.find(c => c.id === parseInt(req.params.id));
-  if(!gpu) return res.status(404).send('ID not found :<');
-
-  const index = gpus.indexOf(gpu);
-  gpus.splice(index, 1);
-
-  res.send(gpu);
-});
+//  res.send(gpu);
+//});
 
 if (typeof window !== 'undefined') {
   console.log('You are on the browser')
 } else {
   console.log('You are on the server')
 }
-
-
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}...`))
