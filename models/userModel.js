@@ -1,15 +1,10 @@
 const mongoose = require("../database");
 
 const mySchema = {
-            Company: String,
-            Model: String,
-            Processor: String,
-            Cores: Number,
-            Memory: String,
-            Type: String,
-            Details: String
+            Name: String,
+            Email: String
         };
 
-var userModel = mongoose.model('gpu', mySchema);
+var userModel = mongoose.model('user', mySchema);
 
 module.exports = userModel;

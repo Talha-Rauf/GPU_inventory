@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const connection = require('./database.js')
-const Entry = require('./models/userModel.js')
+const gpuEntry = require('./models/gpuModel.js')
 const http = require('http');
 const path = require("path");
 
@@ -25,7 +25,7 @@ app.get('/add', function(req,res){
 
 app.post('/add', function(req,res){
 
-  let newEntry = new Entry({
+  let newEntry = new gpuEntry({
     Company: req.body.company,
     Model: req.body.model,
     Processor: req.body.processor,
