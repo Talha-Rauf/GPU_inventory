@@ -17,12 +17,27 @@ app.use(express.json());
 const PORT = process.env.PORT || 3000;
 //Environment vairable => process.env.PORT is default value
 
+//Index page
 app.get('/', function(req,res){
   res.render('pages/GPU Inventory/add_GPU.ejs');
 });
 
+//GPU page
+app.get('/gpu', function(req,res){
+  res.render('pages/gpu.ejs');
+});
+
+//Adding data to the GPU inventory
 app.get('/gpu/add', function(req,res){
   res.render('pages/GPU Inventory/add_GPU.ejs');
+});
+
+app.get('/gpu/delete', function(req,res){
+  res.render('pages/GPU Inventory/delete_GPU.ejs');
+});
+
+app.get('/gpu/update', function(req,res){
+  res.render('pages/GPU Inventory/update_GPU.ejs');
 });
 
 app.post('/gpu/add', function(req,res){
@@ -40,6 +55,10 @@ app.post('/gpu/add', function(req,res){
   newEntry.save();
   res.redirect('/')
 
+});
+
+app.get('/user', function(req,res){
+  res.render('pages/User Database/users.ejs');
 });
 
 app.get('/user/add', function(req,res){

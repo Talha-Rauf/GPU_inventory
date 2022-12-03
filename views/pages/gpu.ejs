@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <%- include('../partials/user_Database/head'); %>
+  </head>
+  <body>
+
+    <div class="container content-center">
+      <div class="jumbotron">
+
+        <h1>WELCOME</h1>
+        <h3>What action would you like to perform?.</h3>
+
+      </div>
+    </div>
+
+    <div class="container">
+
+      <a href="/gpu/add"><button class="btn btn-primary" name="dir_add">ADD</button></a>
+      <a href="/gpu/delete"><button class="btn btn-primary" name="dir_delete">DELETE</button></a>
+      <a href="/gpu/update"><button class="btn btn-primary" name="dir_update">UPDATE</button></a>
+
+    </div>
+
+    <script type="text/javascript" src="index.js">
+
+      function moveadd() {
+        window.location.href = '/GPU Inventory/add_GPU.ejs';
+      }
+
+    </script>
+
+  </body>
+</html>

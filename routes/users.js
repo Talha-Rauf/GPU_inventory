@@ -24,7 +24,7 @@ router.post('/insert-user', function(req, res, next) {
         email: req.body.email,
       });
 
-      userDetails .save((err, doc) => {
+      userDetails.save((err, doc) => {
             if (!err)
                 {req.flash('success', 'Data added.');
                 res.redirect('/');}
