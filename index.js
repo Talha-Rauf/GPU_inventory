@@ -6,6 +6,7 @@ const connection = require('./database.js')
 const gpuEntry = require('./models/gpuModel.js')
 const http = require('http');
 const path = require("path");
+const routes = require('./routes')
 
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -17,45 +18,7 @@ app.use(express.json());
 const PORT = process.env.PORT || 3000;
 //Environment vairable => process.env.PORT is default value
 
-//Index page
-app.get('/', function(req,res){
-  res.render('pages/GPU Inventory/add_GPU.ejs');
-});
-
-//GPU page
-app.get('/gpu', function(req,res){
-  res.render('pages/gpu.ejs');
-});
-
-//Adding data to the GPU inventory
-app.get('/gpu/add', function(req,res){
-  res.render('pages/GPU Inventory/add_GPU.ejs');
-});
-
-app.get('/gpu/delete', function(req,res){
-  res.render('pages/GPU Inventory/delete_GPU.ejs');
-});
-
-app.get('/gpu/update', function(req,res){
-  res.render('pages/GPU Inventory/update_GPU.ejs');
-});
-
-app.post('/gpu/add', function(req,res){
-
-  let newEntry = new gpuEntry({
-    Company: req.body.company,
-    Model: req.body.model,
-    Processor: req.body.processor,
-    Cores: req.body.cores,
-    Memory: req.body.size,
-    Type: req.body.type,
-    Details: req.body.textarea
-  });
-
-  newEntry.save();
-  res.redirect('/')
-
-});
+app.use('/', routes);
 
 app.get('/user', function(req,res){
   res.render('pages/User Database/users.ejs');
