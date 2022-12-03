@@ -17,13 +17,15 @@ app.use(express.json());
 const PORT = process.env.PORT || 3000;
 //Environment vairable => process.env.PORT is default value
 
-app.get('/add', function(req,res){
-  res.render('pages/inv_GPU.ejs');
+app.get('/', function(req,res){
+  res.render('pages/GPU Inventory/add_GPU.ejs');
 });
 
+app.get('/gpu/add', function(req,res){
+  res.render('pages/GPU Inventory/add_GPU.ejs');
+});
 
-
-app.post('/add', function(req,res){
+app.post('/gpu/add', function(req,res){
 
   let newEntry = new gpuEntry({
     Company: req.body.company,
@@ -38,6 +40,10 @@ app.post('/add', function(req,res){
   newEntry.save();
   res.redirect('/')
 
+});
+
+app.get('/user/add', function(req,res){
+  res.render('pages/User Database/add_Users.ejs');
 });
 
 //app.delete('/gpu/Inventory/:id', (req, res) => {
