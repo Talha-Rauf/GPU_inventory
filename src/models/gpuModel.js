@@ -10,6 +10,4 @@ const mySchema = {
             Details: String
         };
 
-var userModel = mongoose.model('gpu', mySchema);
-
-module.exports = userModel;
+module.exports = mongoose.model('gpu', mySchema);

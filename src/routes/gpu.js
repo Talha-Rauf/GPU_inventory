@@ -8,11 +8,9 @@ router.get('/', function(req,res){
 });
 
 //Adding data to the GPU inventory
-router.get('/add', function(req,res){
-  res.render('pages/GPU Inventory/add_GPU.ejs');
-});
+router.get('/add', gpuController.addIt);
 
-router.get('/delete', gpuController.delete);
+router.get('/delete', gpuController.deleteIt);
 
 router.get('/update', function(req,res){
   res.render('pages/GPU Inventory/update_GPU.ejs');
