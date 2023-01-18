@@ -9,20 +9,29 @@ const viewAllUsers = function (req, res){
             res.send(user)
         })
         .catch(err => {
-            res.status(500).send({message: err.message || "Error occured while retrieveing user..."});
+            res.status(500).send({message: err.message || "Error occured while retrieveing all users..."});
         });
 
 }
 
 const viewUser = function (req, res){
 
-    userDB.User.findOne(req.param.id)
-        .then(user => {
-            res.send(user)
-        })
-        .catch(err => {
-            res.status(500).send({message: err.message || "Error occured while retrieveing user..."});
-        });
+    if(req.query.id){
+        const id = req.query.id;
+
+        userDB.User.findById(id)
+            .then(data => {
+                if(!data){
+                    res.status(404).send({message: "User not found..."})
+                }
+                else{
+                    res.send(data)
+                }
+            })
+            .catch(err => {
+                res.status(500).send({message: err.message || "Error occured while retrieveing user..."});
+            });
+    }
 
 }
 
