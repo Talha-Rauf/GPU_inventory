@@ -1,0 +1,32 @@
+
+<%- include('include/_header') %>
+
+<div class="jumbotron">
+    <div class="container">
+
+        <h1>WELCOME</h1>
+        <h3>USER INFORMATION</h3>
+
+    </div>
+
+    <div class="Container container-sm text-center">
+
+        <a href=""><button type="submit" id="editBtn" class="btn btn-primary">Edit</button></a>
+        <a href=""><button type="submit" id="submitBtn" class="btn btn-primary">BACK</button></a>
+
+    </div>
+</div>
+
+{% if user %}
+<div class="Container container-sm">
+
+    <ol>
+        <li>Name: {{ user.first_name }} {{ user.second_name }}</li>
+        <li>Email: {{ user.email }}</li>
+        <li>Company: {{ user.company }}</li>
+    </ol>
+
+</div>
+{% endif %}
+
+<%- include('include/_footer') %>

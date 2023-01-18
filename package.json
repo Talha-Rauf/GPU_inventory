@@ -1,18 +1,25 @@
 {
-  "name": "gpu_inventory",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/index.js"
-  },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
+    "axios": "^1.2.2",
     "body-parser": "^1.20.1",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
     "express": "^4.18.2",
-    "mongoose": "^6.7.5",
+    "mongoose": "^6.8.3",
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.20"
-  }
+  },
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "name": "user_management_nodejs",
+  "version": "1.0.0",
+  "description": "user management using crud operations",
+  "main": "server.js",
+  "keywords": [
+    "user",
+    "management"
+  ],
+  "author": "Talha Rauf",
+  "license": "ISC"
 }

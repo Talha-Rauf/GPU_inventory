@@ -1,0 +1,62 @@
+
+<%- include('include/_header') %>
+
+<div class="jumbotron">
+    <div class="container text-center">
+
+        <h1>WELCOME</h1>
+        <h3>USERS INVENTORY PAGE</h3>
+
+    </div>
+
+    <div class="Container container-sm text-center">
+
+        <a href="/users/add-user"><button type="submit" id="cancelBtn" class="btn btn-primary">Add</button></a>
+        <a href="/"><button type="submit" id="submitBtn" class="btn btn-primary">BACK</button></a>
+
+    </div>
+</div>
+
+<div class="Container container-sm text-center">
+    <div class="table-responsive-sm">
+
+        {% if user_dict %}
+        <table class="table table-sm table-bordered">
+
+            <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+                <th style="width:40%">NAME/USERS</th>
+                <th style="width:40%">EMAIL</th>
+                <th style="width:20%">ACTION</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            {% for eachUser in user_dict %}
+
+            <tr>
+                <td>{{ loop.counter }}</td>
+                <td>{{ eachUser.first_name }} {{ eachUser.second_name }}</td>
+                <td>{{ user email}}</td>
+                <td>
+                    <a href=""><button type="submit" id="viewBtn" class="btn btn-primary mr-2">View</button></a>
+                    <a href=""><button type="submit" id="editBtn" class="btn btn-primary btn-dark mr-2">Edit</button></a>
+                    <a href=""><button type="submit" id="deleteBtn" class="btn btn-primary btn-danger">Delete</button></a>
+                </td>
+            </tr>
+
+            {% end-for %}
+
+            </tbody>
+
+        </table>
+        {% else %}
+        <p>No User records found...</p>
+        {% endif %}
+
+    </div>
+</div>
+
+<%- include('include/_footer') %>
