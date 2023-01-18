@@ -6,7 +6,8 @@ const viewAllUsers = function (req, res){
 
     userDB.User.find()
         .then(data => {
-            res.render('usersInfoPage', data)
+            console.log(data)
+            res.render('usersInfoPage', {users: data})
         })
         .catch(err => {
             res.status(500).send({message: err.message || "Error occured while retrieveing all users..."});
@@ -25,7 +26,7 @@ const viewUser = function (req, res){
                     res.status(404).send({message: "User not found..."})
                 }
                 else{
-                    res.send(data)
+                    res.render('usersInfoPage', {user: data})
                 }
             })
             .catch(err => {
@@ -38,12 +39,12 @@ const viewUser = function (req, res){
 // create new user
 const addUser = function (req, res){
 
+    res.render('../views/addNewUser');
+
     if(!req.body){
         res.status(400).send({message:'Content cannot be empty!'});
         return;
     }
-
-    // res.render('../views/addNewUser');
 
     const user = new userDB.User({
         Name: req.body.name,
@@ -55,14 +56,13 @@ const addUser = function (req, res){
     user
         .save(user)
         .then(data => {
-            res.send(data)
+            res.redirect('/users/add-user')
         })
         .catch(err=>{
             res.status(500).send({
                 message: err.message || "Some error occurred while creating a new user..."
             });
         });
-
 
 };
 
