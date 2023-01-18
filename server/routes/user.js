@@ -6,7 +6,7 @@ const router = express.Router();
 // Render views according to address
 router.get('/', userController.getAllUsers);
 router.get('/add-user', services.viewAddUserPage);
-router.put('/update-user', services.viewUpdateUserPage);
+router.get('/update-user', services.viewUpdateUserPage);
 
 // API for CRUD operations
 router.get('/view-user/:id', userController.getUser);

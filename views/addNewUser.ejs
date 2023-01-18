@@ -7,7 +7,7 @@
         <h1>WELCOME</h1>
         <h3>ADDING A NEW USER</h3>
 
-        <a href="/users"><button type="submit" id="submitBtn" class="btn btn-primary">BACK</button></a>
+        <a href="/users"><button class="btn btn-primary">BACK</button></a>
 
     </div>
 </div>
@@ -17,43 +17,8 @@
     <form action="/users/add-user" method="POST" id="add-user">
         <div class="new_user">
 
-            <div class="form-group">
-                <label for="name" class="text-bold">Name:</label>
-                <input type="text" id="name" value="" placeholder="John Wick">
-            </div>
+        <%- include('include/_form')  %>
 
-            <div class="form-group">
-                <label for="email" class="text-bold">Email:</label>
-                <input type="email" id="email" value="" placeholder="example@gmail.com">
-            </div>
-
-            <div class="form-group">
-                <label for="gender" class="text-bold">Gender:</label>
-                <div class="radio inline">
-                    <input type="radio" id="radio-1" name="gender" value="Male">
-                    <label for="radio-1" class="radio-label">Male</label>
-                </div>
-                <div class="radio inline">
-                    <input type="radio" id="radio-2" name="Gender" value="Female">
-                    <label for="radio-2" class="radio-label">Female</label>
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <label for="status" class="text-bold">Status:</label>
-                <div class="radio inline">
-                    <input type="radio" id="radio-3" name="status" value="Employed">
-                    <label for="radio-3" class="radio-label">Employed</label>
-                </div>
-                <div class="radio inline">
-                    <input type="radio" id="radio-4" name="Status" value="Unemployed">
-                    <label for="radio-4" class="radio-label">Unemployed</label>
-                </div>
-            </div>
-
-            <input type="submit" class="btn btn-primary" value="SUBMIT">
-            <input type="reset" class="btn btn-primary" value="RESET">
         </div>
     </form>
 

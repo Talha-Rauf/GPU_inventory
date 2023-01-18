@@ -1,10 +1,10 @@
-const userDB = require('../model/index');
+const {User} = require('../model/index');
 const services = require('../services/render');
 
 // view user(s)
 const getAllUsers = function (req, res){
-
-    userDB.User.find()
+    console.log('in getAllUsers function');
+    User.find()
         .then(data => {
             console.log(data)
             res.render('usersInfoPage', {users: data})
@@ -15,25 +15,25 @@ const getAllUsers = function (req, res){
 
 }
 
-const getUser = function (req, res){
+const getUser = async (req, res) => {
+    try {
+        if (req.params.id) {
+            const id = req.params.id;
+            const user = await User.findById(id);
 
-    if(req.query.id){
-        const id = req.query.id;
-
-        userDB.User.findById(id)
-            .then(data => {
-                if(!data){
-                    res.status(404).send({message: "User not found..."})
-                }
-                else{
-                    res.render('selectedUserInfo', {user: data})
-                }
-            })
-            .catch(err => {
-                res.status(500).send({message: err.message || "Error occured while retrieveing user..."});
-            });
+            if (!user) {
+                res.status(400).send({message: "User not found..."});
+            } else {
+                res.render('selectedUserInfo', {user});
+            }
+        }
+        else{
+            res.status(400).send({message: "ID is required..."});
+        }
     }
-
+    catch (err) {
+        res.status(500).send({message: err.message || "Error occured while retrieveing user..."});
+    }
 }
 
 // create new user
@@ -44,7 +44,7 @@ const addUser = function (req, res){
         return;
     }
 
-    const user = new userDB.User({
+    const user = new User({
         name: req.body.name,
         email: req.body.email,
         gender: req.body.gender,
@@ -67,22 +67,33 @@ const addUser = function (req, res){
 };
 
 // Update a user
-const updateUser = function(req, res){
+const updateUser = async (req, res) => {
 
     if(!req.body){
         res.status(400).send({message:'Content cannot be empty!'});
-        return;
+    }
+    else{
+        const user = await User.findById(req.params.id);
+
+        if(!user){
+            res.status(400).send({message: "User not found..."});
+        }
+        else{
+            Object.assign(user, req.body);
+            user.save();
+            await getAllUsers(req, res);
+        }
     }
 
     const id = req.params.id;
 
-    userDB.User.findByIdAndUpdate(id, req.body, {userFindAndModify:false})
+    User.findByIdAndUpdate(id, req.body, {userFindAndModify:false})
         .then(data => {
             if(!data){
                 res.status(404).send({message: `User not found or given id:${id} is wrong...`});
             }
             else{
-                res.send(data);
+                res.create(data);
             }
         })
         .catch(err => {
@@ -93,7 +104,7 @@ const updateUser = function(req, res){
 
 // Delete a user
 const deleteUser = function(req, res){
-    userDB.User.deleteOne({_id:req.param.id});
+    User.deleteOne({_id:req.param.id});
 }
 
 module.exports = {

@@ -11,8 +11,8 @@
 
     <div class="Container container-sm text-center">
 
-        <a href=""><button type="submit" id="editBtn" class="btn btn-primary">Edit</button></a>
-        <a href=""><button type="submit" id="submitBtn" class="btn btn-primary">BACK</button></a>
+        <a href="/users/update-user"><button class="btn btn-primary">Edit</button></a>
+        <a href="/users"><button class="btn btn-primary">BACK</button></a>
 
     </div>
 </div>
@@ -20,10 +20,10 @@
 <div class="Container container-sm">
 
     <ol>
-        <li><% user.Name %></li>
-        <li><% user.Email %></li>
-        <li><% user.Gender %></li>
-        <li><% user.Status %></li>
+        <li><%= user.name %></li>
+        <li><%= user.email %></li>
+        <li><%= user.gender %></li>
+        <li><%= user.status %></li>
     </ol>
 
 </div>
