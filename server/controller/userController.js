@@ -1,8 +1,8 @@
 const userDB = require('../model/index');
-const axios = require('axios')
+const services = require('../services/render');
 
 // view user(s)
-const viewAllUsers = function (req, res){
+const getAllUsers = function (req, res){
 
     userDB.User.find()
         .then(data => {
@@ -15,7 +15,7 @@ const viewAllUsers = function (req, res){
 
 }
 
-const viewUser = function (req, res){
+const getUser = function (req, res){
 
     if(req.query.id){
         const id = req.query.id;
@@ -26,7 +26,7 @@ const viewUser = function (req, res){
                     res.status(404).send({message: "User not found..."})
                 }
                 else{
-                    res.render('usersInfoPage', {user: data})
+                    res.render('selectedUserInfo', {user: data})
                 }
             })
             .catch(err => {
@@ -39,19 +39,19 @@ const viewUser = function (req, res){
 // create new user
 const addUser = function (req, res){
 
-    res.render('../views/addNewUser');
-
     if(!req.body){
         res.status(400).send({message:'Content cannot be empty!'});
         return;
     }
 
     const user = new userDB.User({
-        Name: req.body.name,
-        Email: req.body.email,
-        Gender: req.body.gender,
-        Status: req.body.status
+        name: req.body.name,
+        email: req.body.email,
+        gender: req.body.gender,
+        status: req.body.status
     });
+
+    console.log(user.name)
 
     user
         .save(user)
@@ -97,8 +97,8 @@ const deleteUser = function(req, res){
 }
 
 module.exports = {
-    viewAllUsers,
-    viewUser,
+    getAllUsers,
+    getUser,
     addUser,
     updateUser,
     deleteUser,

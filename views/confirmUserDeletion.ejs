@@ -1,0 +1,24 @@
+<%- include('include/_header') %>
+
+<div class="jumbotron">
+    <div class="container">
+
+        <h1>WELCOME</h1>
+        <h3>--- HOME PAGE ---</h3>
+
+    </div>
+</div>
+
+<div class="Container text-center">
+
+    <form action="/users/delete-user/" method="POST">
+
+        <p>Are you sure you want to delete <%= user%>?</p>
+        <input type="submit" value="Confirm"><p></p>
+        <a href="">Cancel</a>
+
+    </form>
+
+</div>
+
+<%- include('include/_footer') %>

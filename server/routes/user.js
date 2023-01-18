@@ -1,10 +1,16 @@
 const userController = require('../controller/userController');
+const services = require('../services/render');
 const express = require("express");
 const router = express.Router();
 
-router.get('/', userController.viewAllUsers);
-router.get('/:id', userController.viewUser);
-router.post('/add_user', userController.addUser);
+// Render views according to address
+router.get('/', userController.getAllUsers);
+router.get('/add-user', services.viewAddUserPage);
+router.put('/update-user', services.viewUpdateUserPage);
+
+// API for CRUD operations
+router.get('/view-user/:id', userController.getUser);
+router.post('/add-user', userController.addUser);
 router.put('/update-user/:id', userController.updateUser);
 router.delete('/delete-user/:id', userController.deleteUser);
 

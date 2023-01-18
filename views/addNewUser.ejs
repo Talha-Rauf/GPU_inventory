@@ -14,40 +14,40 @@
 
 <div class="Container container-sm">
 
-    <form action="/users/add-user" method="POST" id="add_user">
+    <form action="/users/add-user" method="POST" id="add-user">
         <div class="new_user">
 
             <div class="form-group">
-                <label for="name" class="text-bold">Name</label>
-                <input type="hidden" name="id" value="">
+                <label for="name" class="text-bold">Name:</label>
                 <input type="text" id="name" value="" placeholder="John Wick">
             </div>
 
             <div class="form-group">
-                <label for="email" class="text-bold">Email</label>
-                <input type="text" id="email" value="" placeholder="example@gmail.com">
+                <label for="email" class="text-bold">Email:</label>
+                <input type="email" id="email" value="" placeholder="example@gmail.com">
             </div>
 
             <div class="form-group">
-                <label for="gender" class="text-light">Gender</label>
+                <label for="gender" class="text-bold">Gender:</label>
                 <div class="radio inline">
                     <input type="radio" id="radio-1" name="gender" value="Male">
                     <label for="radio-1" class="radio-label">Male</label>
                 </div>
                 <div class="radio inline">
-                    <input type="radio" id="radio-2" name="gender" value="Female">
+                    <input type="radio" id="radio-2" name="Gender" value="Female">
                     <label for="radio-2" class="radio-label">Female</label>
                 </div>
             </div>
 
+
             <div class="form-group">
-                <label for="status" class="text-light">Status</label>
+                <label for="status" class="text-bold">Status:</label>
                 <div class="radio inline">
-                    <input type="radio" id="radio-3" name="employed" value="Employed">
+                    <input type="radio" id="radio-3" name="status" value="Employed">
                     <label for="radio-3" class="radio-label">Employed</label>
                 </div>
                 <div class="radio inline">
-                    <input type="radio" id="radio-4" name="unemployed" value="Unemployed">
+                    <input type="radio" id="radio-4" name="Status" value="Unemployed">
                     <label for="radio-4" class="radio-label">Unemployed</label>
                 </div>
             </div>
