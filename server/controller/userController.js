@@ -1,12 +1,12 @@
 const userDB = require('../model/index');
-const mongoose = require('mongoose');
+const axios = require('axios')
 
 // view user(s)
 const viewAllUsers = function (req, res){
 
     userDB.User.find()
-        .then(user => {
-            res.send(user)
+        .then(data => {
+            res.render('usersInfoPage', data)
         })
         .catch(err => {
             res.status(500).send({message: err.message || "Error occured while retrieveing all users..."});
@@ -94,7 +94,6 @@ const updateUser = function(req, res){
 // Delete a user
 const deleteUser = function(req, res){
     userDB.User.deleteOne({_id:req.param.id});
-    res.render('../views/usersInfoPage');
 }
 
 module.exports = {
