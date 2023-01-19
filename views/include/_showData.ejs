@@ -19,7 +19,7 @@
         <td><%= users[i].email %></td>
         <td>
             <a href=" <%= "/users/view-user/" + users[i].id %> "><button type="submit" id="viewBtn" class="btn btn-primary mr-1">View</button></a>
-            <a href=""><button type="submit" id="editBtn" class="btn btn-primary btn-dark mr-1">Edit</button></a>
+            <a href=" <%= "/users/update-user/" + users[i].id %> "><button type="submit" id="editBtn" class="btn btn-primary btn-dark mr-1">Edit</button></a>
             <a href=""><button type="submit" id="deleteBtn" class="btn btn-primary btn-danger">Delete</button></a>
         </td>
     </tr>

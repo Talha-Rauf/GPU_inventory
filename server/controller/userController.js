@@ -2,17 +2,21 @@ const {User} = require('../model/index');
 const services = require('../services/render');
 
 // view user(s)
-const getAllUsers = function (req, res){
-    console.log('in getAllUsers function');
-    User.find()
-        .then(data => {
-            console.log(data)
-            res.render('usersInfoPage', {users: data})
-        })
-        .catch(err => {
-            res.status(500).send({message: err.message || "Error occured while retrieveing all users..."});
-        });
+const getAllUsers = async (req, res) => {
 
+    try {
+            const data = await User.find();
+
+            if (!data) {
+                res.status(400).send({message: "Users not found..."});
+            }
+            else {
+                res.render('usersInfoPage', {users: data});
+            }
+    }
+    catch (err) {
+        res.status(500).send({message: err.message || "Error occurred while retrieving all users..."});
+    }
 }
 
 const getUser = async (req, res) => {
@@ -32,74 +36,59 @@ const getUser = async (req, res) => {
         }
     }
     catch (err) {
-        res.status(500).send({message: err.message || "Error occured while retrieveing user..."});
+        res.status(500).send({message: err.message || "Error occurred while retrieving user..."});
     }
 }
 
 // create new user
-const addUser = function (req, res){
-
-    if(!req.body){
-        res.status(400).send({message:'Content cannot be empty!'});
-        return;
-    }
-
-    const user = new User({
-        name: req.body.name,
-        email: req.body.email,
-        gender: req.body.gender,
-        status: req.body.status
-    });
-
-    console.log(user.name)
-
-    user
-        .save(user)
-        .then(data => {
-            res.redirect('/users/add-user')
-        })
-        .catch(err=>{
-            res.status(500).send({
-                message: err.message || "Some error occurred while creating a new user..."
+const addUser = async (req, res) => {
+    try{
+        if(!req.body){
+            res.status(400).send({message:'Content cannot be empty!'});
+        }
+        else{
+            const user = new User({
+                name: req.body.name,
+                email: req.body.email,
+                gender: req.body.gender,
+                status: req.body.status
             });
-        });
 
+            if (!user) {
+                res.status(400).send({message: "User data missing..."});
+            }
+            else {
+                user.save();
+                res.redirect('/users');
+            }
+        }
+    }
+    catch (err) {
+        res.status(500).send({message: err.message || "Error occurred while saving user..."});
+    }
 };
 
 // Update a user
 const updateUser = async (req, res) => {
+    try {
+        if (!req.body) {
+            res.status(400).send({message: 'Content cannot be empty!'});
+        } else {
+            const user = await User.findById(req.params.id);
 
-    if(!req.body){
-        res.status(400).send({message:'Content cannot be empty!'});
-    }
-    else{
-        const user = await User.findById(req.params.id);
-
-        if(!user){
-            res.status(400).send({message: "User not found..."});
-        }
-        else{
-            Object.assign(user, req.body);
-            user.save();
-            await getAllUsers(req, res);
-        }
-    }
-
-    const id = req.params.id;
-
-    User.findByIdAndUpdate(id, req.body, {userFindAndModify:false})
-        .then(data => {
-            if(!data){
-                res.status(404).send({message: `User not found or given id:${id} is wrong...`});
+            if (!user) {
+                res.status(400).send({message: "User data missing..."});
             }
-            else{
-                res.create(data);
+            else {
+                Object.assign(user, req.body);
+                user.create();
+                await getAllUsers(req, res);
             }
-        })
-        .catch(err => {
-            res.status(500).send({message: "Error updating user info..."})
-        })
-
+        }
+    }
+    catch (err) {
+        res.status(500).send({message: err.message || "Error occured while updating user..."});
+    }
 }
 
 // Delete a user

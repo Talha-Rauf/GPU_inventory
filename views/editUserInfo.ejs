@@ -7,17 +7,17 @@
         <h1>WELCOME</h1>
         <h3>ADDING A NEW USER</h3>
 
-        <a href=""><button type="submit" id="submitBtn" class="btn btn-primary">BACK</button></a>
+        <a href="/users"><button type="submit" id="submitBtn" class="btn btn-primary">BACK</button></a>
 
     </div>
 </div>
 
 <div class="Container container-sm">
 
-    <form method="post">
-        {{ form.as_ul }}
-        {% csrf_token %}
-        <input type="submit" class="btn btn-primary" value="SUBMIT">
+    <form action="/users/update-user/" method="POST">
+
+        <%- include('include/_form')  %>
+
     </form>
 
 </div>
