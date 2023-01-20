@@ -27,7 +27,6 @@ const viewUpdateUserPage = async (req, res) => {
 }
 
 const viewDeleteUserPage = async (req, res) => {
-
     try {
         if (req.params.id) {
             const id = req.params.id;
@@ -44,7 +43,6 @@ const viewDeleteUserPage = async (req, res) => {
     } catch (err) {
         res.status(500).send({message: err.message || "Error occurred while retrieving user for editing..."});
     }
-
 }
 
 module.exports = {
