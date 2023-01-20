@@ -82,8 +82,8 @@ const updateUser = async (req, res) => {
             }
             else {
                 Object.assign(user, req.body);
-                User.update(user)
-                await getAllUsers(req, res);
+                user.save()
+                res.redirect('/users');
             }
         }
     }
@@ -93,9 +93,24 @@ const updateUser = async (req, res) => {
 }
 
 // Delete a user
-const deleteUser = function(req, res){
-    User.findByIdAndDelete(req.params.id);
-    res.redirect('/users');
+const deleteUser = async (req, res) => {
+    try {
+        if (req.params.id) {
+            const id = req.params.id;
+            const user = await User.findById(id);
+
+            if (!user) {
+                res.status(400).send({message: "User not found..."});
+            } else {
+                user.deleteOne();
+                res.redirect('/users');
+            }
+        } else {
+            res.status(400).send({message: "ID is required..."});
+        }
+    } catch (err) {
+        res.status(500).send({message: err.message || "Error occurred while retrieving user for editing..."});
+    }
 }
 
 module.exports = {

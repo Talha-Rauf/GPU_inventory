@@ -8,11 +8,11 @@ router.get('/', userController.getAllUsers);
 router.get('/add-user', services.viewAddUserPage);
 router.get('/update-user/:id', services.viewUpdateUserPage);
 router.get('/delete-user/:id', services.viewDeleteUserPage);
+router.get('/view-user/:id', userController.getUser);
 
 // API for CRUD operations
-router.get('/view-user/:id', userController.getUser);
 router.post('/add-user', userController.addUser);
-router.put('/update-user/:id', userController.updateUser);
-router.delete('/delete-user/:id', userController.deleteUser);
+router.post('/update-user/:id', userController.updateUser);
+router.post('/delete-user/:id', userController.deleteUser);
 
 module.exports = router;
