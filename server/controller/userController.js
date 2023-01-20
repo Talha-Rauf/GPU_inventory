@@ -73,7 +73,8 @@ const updateUser = async (req, res) => {
     try {
         if (!req.body) {
             res.status(400).send({message: 'Content cannot be empty!'});
-        } else {
+        }
+        else {
             const user = await User.findById(req.params.id);
 
             if (!user) {
@@ -81,7 +82,7 @@ const updateUser = async (req, res) => {
             }
             else {
                 Object.assign(user, req.body);
-                user.create();
+                User.update(user)
                 await getAllUsers(req, res);
             }
         }
@@ -93,7 +94,8 @@ const updateUser = async (req, res) => {
 
 // Delete a user
 const deleteUser = function(req, res){
-    User.deleteOne({_id:req.param.id});
+    User.findByIdAndDelete(req.params.id);
+    res.redirect('/users');
 }
 
 module.exports = {

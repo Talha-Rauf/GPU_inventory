@@ -1,21 +1,21 @@
 <%- include('include/_header') %>
 
 <div class="jumbotron">
-    <div class="container">
+    <div class="container text-center">
 
         <h1>WELCOME</h1>
-        <h3>--- HOME PAGE ---</h3>
+        <h3>--- CONFIRM DELETION OF USER ---</h3>
 
     </div>
 </div>
 
 <div class="Container text-center">
 
-    <form action="/users/delete-user/" method="POST">
+    <form action=" <%= "/users/delete-user/" + user.id %> " method="POST">
 
-        <p>Are you sure you want to delete <%= user%>?</p>
-        <input type="submit" value="Confirm"><p></p>
-        <a href="">Cancel</a>
+        <p>Are you sure you want to delete <%= user.name %>?</p>
+        <button type="submit" class="btn btn-primary mr-2 btn-danger" value="confirm">Confirm</button>
+        <a href="/users"><button type="button" class="btn btn-primary">Cancel</button></a>
 
     </form>
 
