@@ -14,7 +14,7 @@
 
 <div class="Container container-sm">
 
-    <form action="/users/update-user/" method="POST">
+    <form action=" <%= "/users/update-user/" + user.id %> " method="POST">
 
         <%- include('include/_form')  %>
 

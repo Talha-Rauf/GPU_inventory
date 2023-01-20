@@ -5,7 +5,7 @@ const viewAddUserPage = function (req, res){
 }
 
 const viewUpdateUserPage = function (req, res){
-    res.render('editUserInfo');
+    res.render('editUserInfo', {user: req.query.id});
 }
 
 const viewDeleteUserPage = function (req, res){
