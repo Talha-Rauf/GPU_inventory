@@ -5,10 +5,10 @@ const router = express.Router();
 
 // Render views according to address
 router.get('/', userController.getAllUsers);
+router.get('/view-user/:id', userController.getUser);
 router.get('/add-user', services.viewAddUserPage);
 router.get('/update-user/:id', services.viewUpdateUserPage);
 router.get('/delete-user/:id', services.viewDeleteUserPage);
-router.get('/view-user/:id', userController.getUser);
 
 // API for CRUD operations
 router.post('/add-user', userController.addUser);
