@@ -6,7 +6,7 @@ const routes = require('./server/routes/index');
 const PORT = process.env.PORT || 8080;
 const morgan = require("morgan");
 const connectDB = require('./server/database/mongoDB');
-const methodOverride = require('method-override');
+// const methodOverride = require('method-override');
 
 // log requests
 app.use(morgan("tiny"))

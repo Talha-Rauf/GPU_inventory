@@ -1,0 +1,27 @@
+
+<%- include('include/_header') %>
+
+<div class="jumbotron">
+    <div class="container text-center">
+
+        <h1>WELCOME</h1>
+        <h3>--- LOGIN PAGE ---</h3>
+
+        <a href="/"><button class="btn btn-primary">BACK</button></a>
+
+    </div>
+</div>
+
+<div class="Container container-sm">
+
+    <form action="/user-login" method="POST" id="login-user">
+        <div class="new_user">
+
+            <%- include('include/_form')  %>
+
+        </div>
+    </form>
+
+</div>
+
+<%- include('include/_footer') %>
