@@ -1,3 +1,4 @@
+const auth = require('../services/authService');
 const {User} = require('../model/index');
 
 const createUserAndSave = async (req, res, webPage) => {
@@ -9,6 +10,7 @@ const createUserAndSave = async (req, res, webPage) => {
             const user = new User({
                 name: req.body.name,
                 email: req.body.email,
+                password: req.body.password,
                 gender: req.body.gender,
                 status: req.body.status
             });
@@ -17,6 +19,7 @@ const createUserAndSave = async (req, res, webPage) => {
                 res.status(400).send({message: "User data missing..."});
             }
             else {
+                user.password = auth.encryptPassword(user.password);
                 user.save();
                 res.redirect(webPage);
             }
@@ -73,6 +76,7 @@ const getByIdAndUpdate = async (req, res, webPage) => {
                 res.status(400).send({message: "Data is missing or not found..."});
             }
             else {
+                req.body.password = auth.encryptPassword(req.body.password);
                 Object.assign(user, req.body);
                 user.save()
                 res.redirect(webPage);
@@ -104,10 +108,15 @@ const getByIdAndDelete = async (req, res, webPage) => {
     }
 }
 
+const findByEmail = (email) => {
+    return User.find({email: email});
+};
+
 module.exports = {
     createUserAndSave,
     getAllByIDAndRender,
     getByIDAndRender,
     getByIdAndUpdate,
-    getByIdAndDelete
+    getByIdAndDelete,
+    findByEmail
 }
