@@ -16,6 +16,7 @@ router.post('/login', [
 
 router.post('/signup', [
     verification.verifyAuthValidFields,
+    verification.verifyUserAlreadyExists,
     userController.addUser
 ]);
 
