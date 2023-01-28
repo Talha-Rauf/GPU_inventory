@@ -11,7 +11,7 @@ router.get('/logout', services.logoutUser);
 
 router.post('/login', [
     verification.verifyAuthValidFields,
-    verification.verifyUserAndPassword,
+    verification.authenticateUser,
     userController.getAllUsers
 ]);
 

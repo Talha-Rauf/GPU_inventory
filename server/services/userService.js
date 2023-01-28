@@ -21,9 +21,9 @@ const createUserAndSave = async (req, res, webPage) => {
                 res.status(400).send({message: "User data missing..."});
             }
             else {
-                let salt = crypto.randomBytes(16).toString('base64');
-                let hash = crypto.createHmac('sha512', salt).update(req.body.password).digest("base64");
-                user.password = salt + "$" + hash;
+                //let salt = crypto.randomBytes(16).toString('base64');
+                //let hash = crypto.createHmac('sha512', salt).update(req.body.password).digest("base64");
+                //user.password = salt + "$" + hash;
                 user.save();
                 res.redirect(webPage);
             }

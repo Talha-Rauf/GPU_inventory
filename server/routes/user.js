@@ -1,14 +1,30 @@
 const userController = require('../controller/userController');
 const services = require('../services/render');
 const express = require("express");
+const connectEnsureLogin = require("connect-ensure-login");
 const router = express.Router();
 
 // Render views according to address
-router.get('/', userController.getAllUsers);
-router.get('/view-user/:id', userController.getUser);
-router.get('/add-user', services.viewAddUserPage);
-router.get('/update-user/:id', services.viewUpdateUserPage);
-router.get('/delete-user/:id', services.viewDeleteUserPage);
+router.get('/', [
+    connectEnsureLogin.ensureLoggedIn(),
+    userController.getAllUsers
+]);
+router.get('/view-user/:id', [
+    connectEnsureLogin.ensureLoggedIn(),
+    userController.getUser
+]);
+router.get('/add-user', [
+    connectEnsureLogin.ensureLoggedIn(),
+    services.viewAddUserPage
+]);
+router.get('/update-user/:id', [
+    connectEnsureLogin.ensureLoggedIn(),
+    services.viewUpdateUserPage
+]);
+router.get('/delete-user/:id', [
+    connectEnsureLogin.ensureLoggedIn(),
+    services.viewDeleteUserPage
+]);
 
 // API for CRUD operations
 router.post('/add-user', userController.addUser);

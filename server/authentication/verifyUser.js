@@ -1,5 +1,6 @@
 const services = require('../services/userService');
 const auth = require('../services/authService');
+const passport = require("passport");
 const crypto = require('crypto');
 
 const verifyAuthValidFields = async (req, res, next) => {
@@ -70,8 +71,32 @@ const verifyUserAlreadyExists = async (req, res, next) => {
     }
 }
 
+const authenticateUser = async (req, res, next) => {
+    passport.authenticate('local',
+        (err, user, info) => {
+        console.log(info)
+            if (err) {
+                return next(err);
+            }
+
+            if (!user) {
+                return res.redirect('/login?info=' + info);
+            }
+
+            req.logIn(user, function(err) {
+                if (err) {
+                    return next(err);
+                }
+
+                return res.redirect('/users');
+            });
+
+        })(req, res, next);
+}
+
 module.exports = {
     verifyAuthValidFields,
     verifyUserAndPassword,
-    verifyUserAlreadyExists
+    verifyUserAlreadyExists,
+    authenticateUser
 }

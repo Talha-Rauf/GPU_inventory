@@ -1,18 +1,8 @@
-const crypto = require("crypto");
+const passport = require("passport");
+const {User} = require("../model/index")
 
-const encryptPassword = async (req, res, pass) => {
-    let password = pass;
-    if (password) {
-        let salt = crypto.randomBytes(16).toString('base64');
-        let hash = crypto.createHmac('sha512', salt).update(req.body.password).digest("base64");
-        password = salt + "$" + hash;
-        return password;
-    }
-    else{
-        return {};
-    }
-}
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
-module.exports = {
-    encryptPassword,
-}
+module.exports = passport;

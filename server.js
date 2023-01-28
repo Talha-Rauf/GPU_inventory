@@ -6,6 +6,7 @@ const routes = require('./server/routes/index');
 const PORT = process.env.PORT || 8080;
 const morgan = require("morgan");
 const connectDB = require('./server/database/mongoDB');
+const passport = require("passport");
 // const methodOverride = require('method-override');
 
 // log requests
@@ -16,6 +17,20 @@ connectDB();
 
 // parse request to body-parser
 app.use(bodyParser.urlencoded({extended:true}));
+
+// setting up passport for local authentication
+const expressSession = require("express-session")({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false
+});
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(expressSession);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // set view engine
 app.set("view engine", "ejs");
@@ -30,6 +45,9 @@ app.use('/js', express.static(path.resolve(__dirname, "assets/js")));
 app.use(express.json());
 
 app.use('/', routes);
+
+// Implementing local authentication
+
 
 app.listen(PORT, ()=> console.log(`Listening on port: ${PORT}...`));
 
