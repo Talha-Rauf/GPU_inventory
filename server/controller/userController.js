@@ -2,7 +2,6 @@ const userServices = require('../services/userService');
 
 // view user(s)
 const getAllUsers = async (req, res) => {
-    console.log('I am in users inventory function but cant load ejs and css...');
     await userServices.getAllByIDAndRender(req, res, 'usersInfoPage');
 }
 

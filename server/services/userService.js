@@ -11,7 +11,7 @@ const createUserAndSave = async (req, res, webPage) => {
             const user = new User({
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
-                email: req.body.email,
+                email: req.body.email.toLowerCase(),
                 password: req.body.password,
                 gender: req.body.gender,
                 status: req.body.status
@@ -83,6 +83,7 @@ const getByIdAndUpdate = async (req, res, webPage) => {
                 let salt = crypto.randomBytes(16).toString('base64');
                 let hash = crypto.createHmac('sha512', salt).update(req.body.password).digest("base64");
                 req.body.password = salt + "$" + hash;
+                req.body.email = req.body.email.toLowerCase();
 
                 Object.assign(user, req.body);
                 user.save()
@@ -116,7 +117,7 @@ const getByIdAndDelete = async (req, res, webPage) => {
 }
 
 const findByEmail = (email) => {
-    let results = User.find(
+    let results = User.findOne(
         {email: email},
         '-email',
         {lean: true}

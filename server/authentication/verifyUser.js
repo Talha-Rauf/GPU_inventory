@@ -29,6 +29,7 @@ const verifyAuthValidFields = async (req, res, next) => {
 const verifyUserAndPassword = async (req, res, next) => {
     try {
         let user = services.findByEmail(req.body.email);
+        console.log(user);
         if (!user[0]) {
             res.status(404).send({});
         }
