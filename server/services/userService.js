@@ -23,7 +23,7 @@ const createUserAndSave = async (req, res, webPage) => {
             else {
                 let salt = crypto.randomBytes(16).toString('base64');
                 let hash = crypto.createHmac('sha512', salt).update(req.body.password).digest("base64");
-                req.body.password = salt + "$" + hash;
+                user.password = salt + "$" + hash;
                 user.save();
                 res.redirect(webPage);
             }
@@ -80,7 +80,10 @@ const getByIdAndUpdate = async (req, res, webPage) => {
                 res.status(400).send({message: "Data is missing or not found..."});
             }
             else {
-                req.body.password = auth.encryptPassword(req.body.password);
+                let salt = crypto.randomBytes(16).toString('base64');
+                let hash = crypto.createHmac('sha512', salt).update(req.body.password).digest("base64");
+                req.body.password = salt + "$" + hash;
+
                 Object.assign(user, req.body);
                 user.save()
                 res.redirect(webPage);
