@@ -1,6 +1,6 @@
 const crypto = require("crypto");
 
-const encryptPassword = (pass) => {
+const encryptPassword = async (req, res, pass) => {
     let password = pass;
     if (password) {
         let salt = crypto.randomBytes(16).toString('base64');

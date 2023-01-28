@@ -57,11 +57,12 @@ const verifyUserAndPassword = async (req, res, next) => {
 const verifyUserAlreadyExists = async (req, res, next) => {
     try {
         let user = services.findByEmail(req.body.email);
+
         if (!user) {
             return next();
         }
         else {
-            res.status(400).send({message: "Email already exists..."});
+            res.status(400).send({message: `The email: ${user.email} already has an existing account...`});
         }
     } catch (err) {
         res.status(500).send({message: err.message || "Error occurred while retrieving Data for authentication..."});

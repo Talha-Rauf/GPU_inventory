@@ -7,6 +7,7 @@ const router = express.Router();
 router.get('/', services.viewHomePage);
 router.get('/login', services.viewLoginPage);
 router.get('/signup', services.viewSignUpPage);
+router.get('/logout', services.logoutUser);
 
 router.post('/login', [
     verification.verifyAuthValidFields,

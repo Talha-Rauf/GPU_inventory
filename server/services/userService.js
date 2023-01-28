@@ -1,4 +1,5 @@
 const auth = require('../services/authService');
+const crypto = require("crypto");
 const {User} = require('../model/index');
 
 const createUserAndSave = async (req, res, webPage) => {
@@ -8,7 +9,8 @@ const createUserAndSave = async (req, res, webPage) => {
         }
         else{
             const user = new User({
-                name: req.body.name,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
                 email: req.body.email,
                 password: req.body.password,
                 gender: req.body.gender,
@@ -19,7 +21,9 @@ const createUserAndSave = async (req, res, webPage) => {
                 res.status(400).send({message: "User data missing..."});
             }
             else {
-                user.password = auth.encryptPassword(user.password);
+                let salt = crypto.randomBytes(16).toString('base64');
+                let hash = crypto.createHmac('sha512', salt).update(req.body.password).digest("base64");
+                req.body.password = salt + "$" + hash;
                 user.save();
                 res.redirect(webPage);
             }
@@ -109,7 +113,12 @@ const getByIdAndDelete = async (req, res, webPage) => {
 }
 
 const findByEmail = (email) => {
-    return User.find({email: email});
+    let results = User.find(
+        {email: email},
+        '-email',
+        {lean: true}
+    )
+    return results[0];
 };
 
 module.exports = {

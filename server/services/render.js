@@ -16,6 +16,11 @@ const viewAddUserPage = (req, res) => {
     res.render('addNewUser');
 }
 
+const logoutUser = (req, res) => {
+    req.logout();
+    req.redirect('/');
+}
+
 const viewUpdateUserPage = async (req, res) => {
 
     try {
@@ -61,6 +66,7 @@ module.exports = {
     viewHomePage,
     viewLoginPage,
     viewSignUpPage,
+    logoutUser,
     viewAddUserPage,
     viewUpdateUserPage,
     viewDeleteUserPage
