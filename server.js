@@ -1,12 +1,12 @@
 const express = require("express");
 const app = express();
+require('dotenv').config();
 const path = require("path");
 const bodyParser = require("body-parser");
 const routes = require('./server/routes/index');
 const morgan = require("morgan");
 const connectDB = require('./server/database/mongoDB');
 const passport = require("passport");
-require('dotenv').config();
 const PORT = process.env.PORT || 8080;
 // const methodOverride = require('method-override');
 
