@@ -1,5 +1,5 @@
 module.exports = {
-    url : 'mongodb+srv://blaze-mustang:mango123@blazecluster.deaxo2z.mongodb.net/user_database',
+    url : process.env.MONGO_URL,
     options : {
         useNewUrlParser: true,
         useUnfiedTopology: true,
