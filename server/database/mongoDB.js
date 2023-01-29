@@ -3,11 +3,9 @@ const dbConfig = require('./dbConfig');
 
 const connectDB = async () => {
     try {
-        const con = await mongoose.connect(dbConfig.url, dbConfig.options);
-
+        const con = await mongoose.connect(dbConfig.url);
         console.log(`MongoDB connected: ${con.connection.host}`)
     }
-
     catch (err){
         console.log(err);
         process.exit(1);
