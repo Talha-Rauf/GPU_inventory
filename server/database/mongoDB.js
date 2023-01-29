@@ -1,14 +1,9 @@
 const mongoose = require('mongoose');
 const dbConfig = require('./dbConfig');
 
-// mongoose.connect(dbConfig.url, dbConfig.options).then(()=>{
-//        console.log('Connected to MongoDB!');
-//        app.listen(PORT, ()=> console.log(`Listening on port: ${PORT}...`));
-//});
-
 const connectDB = async () => {
     try {
-        const con = await mongoose.connect(dbConfig.url); // unable to add options
+        const con = await mongoose.connect(dbConfig.url, dbConfig.options);
 
         console.log(`MongoDB connected: ${con.connection.host}`)
     }
