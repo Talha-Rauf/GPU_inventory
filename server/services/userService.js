@@ -117,12 +117,17 @@ const getByIdAndDelete = async (req, res, webPage) => {
 }
 
 const findByEmail = (email) => {
-    let results = User.findOne(
-        {email: email},
-        '-email',
-        {lean: true}
-    )
-    return results[0];
+    let results = User.find(
+        {email}, 
+        (err, docs) => {
+        if (err) {
+            console.log(err);
+        }
+        else{
+            console.log('Second function call :', docs);
+        }
+    });
+    return results;
 };
 
 module.exports = {
