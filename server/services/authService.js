@@ -44,7 +44,7 @@ exports.isUserAlreadyInDB = async (req, res, next) => {
 exports.isUserAndPasswordCorrect = async (email, password, done) => {
     console.log(email);
     const user = findByEmail(email);
-    console.log(user);
+    console.log(user.email);
     if(user == null){
         return done(null, false, {message: 'No user with that email!'});
     }
@@ -62,8 +62,14 @@ exports.isUserAndPasswordCorrect = async (email, password, done) => {
     }
 }
 const findByEmail = (email) => {
-    User.findOne({email: "email"}, function (err, myUser) {
-        if (!err) return myUser;
-        else console.log(err.message);
-    });
+    let user = User.findOne({email}, (err, docs) => {
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log('Second function call : ' + docs);
+        }
+    })
+
+    return user;
 };

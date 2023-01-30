@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const passLocalMongo = require("passport-local-mongoose")
 
 var mySchema = new mongoose.Schema({
 
@@ -23,5 +22,4 @@ var mySchema = new mongoose.Schema({
     status: String
 });
 
-mySchema.plugin(passLocalMongo);
-module.exports = mongoose.model('user', mySchema, 'user');
+module.exports = mongoose.model('user', mySchema);
