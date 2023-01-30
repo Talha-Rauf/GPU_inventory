@@ -28,7 +28,7 @@ exports.isUsernameAndPasswordEmpty = async (req, res, next) => {
 
 exports.isUserAlreadyInDB = async (req, res, next) => {
     try {
-        let user = services.findByEmail(req.body.email);
+        let user = findByEmail(req.body.email);
 
         if (user == null) {
             return next();
@@ -43,9 +43,9 @@ exports.isUserAlreadyInDB = async (req, res, next) => {
 
 exports.isUserAndPasswordCorrect = async (email, password, done) => {
     console.log(email);
-    const user = findByEmail(email);
-    console.log(user.email);
-    if(user == null){
+    const user = await services.findByEmail(email);
+    console.log(user);
+    if(!user){
         return done(null, false, {message: 'No user with that email!'});
     }
 
@@ -61,15 +61,3 @@ exports.isUserAndPasswordCorrect = async (email, password, done) => {
         return done(err);
     }
 }
-const findByEmail = (email) => {
-    let user = User.findOne({email}, (err, docs) => {
-        if(err){
-            console.log(err);
-        }
-        else{
-            console.log('Second function call : ' + docs);
-        }
-    })
-
-    return user;
-};

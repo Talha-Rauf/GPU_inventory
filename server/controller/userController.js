@@ -11,7 +11,7 @@ const getUser = async (req, res) => {
 
 // create new user
 const addUser = async (req, res) => {
-    await userServices.createUserAndSave(req, res, '/');
+    await userServices.createUserAndSave(req, res, '/users');
 };
 
 // Update a user

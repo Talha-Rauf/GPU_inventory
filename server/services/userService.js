@@ -112,8 +112,12 @@ const getByIdAndDelete = async (req, res, webPage) => {
     }
 }
 
-const findByEmail = (email) => {
-    
+const findByEmail = async (email) => {
+    return await User.findOne({email});
+};
+
+const findByID = async (id) => {
+    return await User.findById(id);
 };
 
 module.exports = {
@@ -121,5 +125,7 @@ module.exports = {
     getAllByIDAndRender,
     getByIDAndRender,
     getByIdAndUpdate,
-    getByIdAndDelete
+    getByIdAndDelete,
+    findByEmail,
+    findByID
 }

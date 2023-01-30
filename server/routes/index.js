@@ -13,10 +13,10 @@ const homeRoute = require('./home')
 // Passport configuration
 const passport = require("passport");
 const initializePassport = require('../authentication/passportConfig');
-const {findByEmail} = require("../services/userService");
+const {findByEmail, findByID} = require("../services/userService");
 const flash = require('express-flash');
 const session = require('express-session');
-initializePassport(passport, findByEmail);
+initializePassport(passport, findByEmail, findByID);
 
 router.use(flash());
 router.use(session({
