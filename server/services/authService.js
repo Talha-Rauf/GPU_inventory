@@ -44,7 +44,7 @@ exports.isUserAlreadyInDB = async (req, res, next) => {
 exports.isUserAndPasswordCorrect = async (email, password, done) => {
 
     const user = await services.findByEmail(email);
-    
+
     if(!user){
         return done(null, false, {message: 'No user with that email!'});
     }
