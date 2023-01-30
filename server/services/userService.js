@@ -1,5 +1,5 @@
 const auth = require('../services/authService');
-const crypto = require("crypto");
+const bcrypt = require("bcrypt");
 const {User} = require('../model/index');
 
 const createUserAndSave = async (req, res, webPage) => {
@@ -8,11 +8,12 @@ const createUserAndSave = async (req, res, webPage) => {
             res.status(400).send({message:'Content cannot be empty!'});
         }
         else{
+            const hashedPassword = await bcrypt.hash(req.body.password, 10);
             const user = new User({
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 email: req.body.email.toLowerCase(),
-                password: req.body.password,
+                password: hashedPassword,
                 gender: req.body.gender,
                 status: req.body.status
             });
@@ -21,9 +22,6 @@ const createUserAndSave = async (req, res, webPage) => {
                 res.status(400).send({message: "User data missing..."});
             }
             else {
-                //let salt = crypto.randomBytes(16).toString('base64');
-                //let hash = crypto.createHmac('sha512', salt).update(req.body.password).digest("base64");
-                //user.password = salt + "$" + hash;
                 user.save();
                 res.redirect(webPage);
             }
@@ -49,6 +47,7 @@ const getAllByIDAndRender = async (req, res, webPage) => {
         res.status(500).send({message: err.message || "Error occurred while retrieving all data..."});
     }
 }
+
 const getByIDAndRender = async (req, res, webPage) => {
     try {
         const id = req.params.id;
@@ -80,11 +79,8 @@ const getByIdAndUpdate = async (req, res, webPage) => {
                 res.status(400).send({message: "Data is missing or not found..."});
             }
             else {
-                let salt = crypto.randomBytes(16).toString('base64');
-                let hash = crypto.createHmac('sha512', salt).update(req.body.password).digest("base64");
-                req.body.password = salt + "$" + hash;
+                req.body.password = await bcrypt.hash(req.body.password, 10);
                 req.body.email = req.body.email.toLowerCase();
-
                 Object.assign(user, req.body);
                 user.save()
                 res.redirect(webPage);
@@ -92,7 +88,7 @@ const getByIdAndUpdate = async (req, res, webPage) => {
         }
     }
     catch (err) {
-        res.status(500).send({message: err.message || "Error occured while updating data..."});
+        res.status(500).send({message: err.message || "Error occurred while updating data..."});
     }
 }
 
@@ -117,17 +113,7 @@ const getByIdAndDelete = async (req, res, webPage) => {
 }
 
 const findByEmail = (email) => {
-    let results = User.find(
-        {email}, 
-        (err, docs) => {
-        if (err) {
-            console.log(err);
-        }
-        else{
-            console.log('Second function call :', docs);
-        }
-    });
-    return results;
+    
 };
 
 module.exports = {
@@ -135,6 +121,5 @@ module.exports = {
     getAllByIDAndRender,
     getByIDAndRender,
     getByIdAndUpdate,
-    getByIdAndDelete,
-    findByEmail
+    getByIdAndDelete
 }
