@@ -61,3 +61,18 @@ exports.isUserAndPasswordCorrect = async (email, password, done) => {
         return done(err);
     }
 }
+
+exports.checkAuthenticated = (req, res, next) => {
+    if (req.isAuthenticated){
+        console.log('USER IN SESSION')
+        return next();
+    }
+    res.redirect('/login');
+}
+
+exports.checkNotAuthenticated = (req, res, next) => {
+    if (req.isAuthenticated){
+        return res.redirect('/users');
+    }
+    return next();
+}

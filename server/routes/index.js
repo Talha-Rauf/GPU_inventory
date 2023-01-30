@@ -5,6 +5,7 @@ if(process.env.NODE_ENV !== 'production'){
 // Express configuration
 const express = require('express');
 const router = express.Router();
+const methodOverride = require('method-override');
 
 // Sub-routes
 const userRoute = require('./user');
@@ -27,6 +28,7 @@ router.use(session({
 
 router.use(passport.initialize());
 router.use(passport.session());
+router.use(methodOverride('_method'));
 
 router.use('/', homeRoute);
 router.use('/users', userRoute);

@@ -1,15 +1,15 @@
 const {User} = require('../model/index');
 
 const viewHomePage = (req, res) => {
-    res.render('index')
+    res.render('index');
 }
 
 const viewLoginPage = (req, res) => {
-    res.render('loginPage')
+    res.render('loginPage');
 }
 
 const viewSignUpPage = (req, res) => {
-    res.render('SignUpPage')
+    res.render('SignUpPage');
 }
 
 const viewAddUserPage = (req, res) => {
@@ -17,8 +17,10 @@ const viewAddUserPage = (req, res) => {
 }
 
 const logoutUser = (req, res) => {
-    req.logout();
-    req.redirect('/');
+    req.logOut(function(err) {
+        if (err) { res.status(500).send({message: err}) }
+        res.redirect('/');
+    });
 }
 
 const viewUpdateUserPage = async (req, res) => {
