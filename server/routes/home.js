@@ -4,6 +4,7 @@ const {checkNotAuthenticated, authenticateUser} = require('../services/authServi
 const express = require("express");
 const router = express.Router();
 const flash = require("connect-flash");
+const passport = require("passport");
 
 router.use(flash());
 

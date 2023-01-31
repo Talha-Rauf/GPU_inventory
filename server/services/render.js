@@ -1,4 +1,5 @@
 const {User} = require('../model/index');
+const {findByID} = require("./userService");
 
 const viewHomePage = (req, res) => {
     res.render('index');
@@ -17,10 +18,9 @@ const viewAddUserPage = (req, res) => {
 }
 
 const logoutUser = (req, res, next) => {
-    console.log("Clearing current session for: " + req.body.id);
-    req.logOut(function(err) {
+    req.logout(function(err) {
         if (err) { return next(err); }
-        res.redirect('/');
+        return res.redirect('/');
     });
 }
 

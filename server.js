@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 require('dotenv').config();
 const path = require("path");
-const flash = require("connect-flash");
 const bodyParser = require("body-parser");
 const routes = require('./server/routes/index');
 const morgan = require("morgan");
@@ -31,7 +30,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressSession);
 
-app.use(flash());
+// Passport configuration
+const initializePassport = require('./server/authentication/passportConfig');
+const {findByEmail, findByID} = require("./server/services/userService");
+const session = require('express-session');
+initializePassport(passport, findByEmail, findByID);
+
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
+}))
+
 app.use(passport.initialize());
 app.use(passport.session());
 

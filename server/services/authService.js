@@ -64,14 +64,14 @@ exports.isUserAndPasswordCorrect = async (email, password, done) => {
 }
 
 exports.checkAuthenticated = (req, res, next) => {
-    if (req.isAuthenticated){
+    if (req.isAuthenticated()){
         return next();
     }
     res.redirect('/login');
 }
 
 exports.checkNotAuthenticated = (req, res, next) => {
-    if (req.isAuthenticated){
+    if (req.isAuthenticated()){
         return res.redirect('/users');
     }
     return next();
@@ -92,7 +92,7 @@ exports.authenticateUser = (req, res, next) => {
 
             if (!theUser) {
                 // Unauthorized, `failureDetails` contains the error messages from our logic in "LocalStrategy" {message: '…'}.
-                res.render('/login', {errorMessage: 'Wrong password or username'});
+                res.render('loginPage', {errorMessage: 'Wrong password or username'});
                 return;
             }
 
@@ -106,5 +106,16 @@ exports.authenticateUser = (req, res, next) => {
                 // All good, we are now logged in and `req.user` is now set
                 res.redirect('/users')
             });
-        });
+        })(req, res, next);
+}
+
+exports.checkLoggedInOut = (req, res, next) => {
+    const status = req.isAuthenticated() ? 'logged in' : 'logged out';
+    console.log(
+        'status:', status, // '\n',
+        // req.sessionStore,
+        // req.sessionID,
+        // req.session
+    );
+    next();
 }

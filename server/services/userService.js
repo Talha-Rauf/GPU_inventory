@@ -34,7 +34,7 @@ const createUserAndSave = async (req, res, webPage) => {
 
 const getAllByIDAndRender = async (req, res, webPage) => {
     try {
-        const data = await User.find();
+        const data = await User.find().sort('firstName');
 
         if (!data) {
             res.status(400).send({message: "Data entries not found..."});

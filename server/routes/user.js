@@ -1,11 +1,12 @@
 const userController = require('../controller/userController');
-const {checkAuthenticated} = require('../services/authService');
+const {checkAuthenticated, checkLoggedInOut} = require('../services/authService');
 const services = require('../services/render');
 const express = require("express");
 const router = express.Router();
 
 // Render views according to address
 router.get('/', [
+    checkLoggedInOut,
     checkAuthenticated,
     userController.getAllUsers
 ]);
