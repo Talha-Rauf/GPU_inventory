@@ -5,7 +5,7 @@ const viewHomePage = (req, res) => {
 }
 
 const viewLoginPage = (req, res) => {
-    res.render('loginPage');
+    res.render('loginPage', { "errorMessage": req.flash("error") });
 }
 
 const viewSignUpPage = (req, res) => {
@@ -16,10 +16,10 @@ const viewAddUserPage = (req, res) => {
     res.render('addNewUser');
 }
 
-const logoutUser = (req, res) => {
+const logoutUser = (req, res, next) => {
     console.log("Clearing current session for: " + req.body.id);
-    req.session.destroy(function() {
-        res.clearCookie('connect.sid');
+    req.logOut(function(err) {
+        if (err) { return next(err); }
         res.redirect('/');
     });
 }

@@ -17,6 +17,10 @@
     <form action="/login" method="POST" id="user-login">
         <div class="new_user">
 
+            <% if (errorMessage) {%>
+            <div class="error-message"><%= errorMessage %></div>
+            <% } %>
+
             <%- include('include/_loginForm')  %>
 
         </div>

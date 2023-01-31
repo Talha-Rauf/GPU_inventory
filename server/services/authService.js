@@ -1,6 +1,7 @@
 const services = require("./userService");
 const bcrypt = require("bcrypt");
 const {User} = require("../model");
+const passport = require("passport");
 
 exports.isUsernameAndPasswordEmpty = async (req, res, next) => {
     let errors = [];
@@ -74,4 +75,36 @@ exports.checkNotAuthenticated = (req, res, next) => {
         return res.redirect('/users');
     }
     return next();
+}
+
+exports.authenticateUser = (req, res, next) => {
+    passport.authenticate(
+        "local",
+        {
+            successRedirect: '/users',
+            failureRedirect: '/login',
+            failureFLash: true},
+        (err, theUser, failureDetails) => {
+            if (err) {
+                // Something went wrong authenticating user
+                return next(err);
+            }
+
+            if (!theUser) {
+                // Unauthorized, `failureDetails` contains the error messages from our logic in "LocalStrategy" {message: '…'}.
+                res.render('/login', {errorMessage: 'Wrong password or username'});
+                return;
+            }
+
+            // save user in session: req.user
+            req.login(theUser, (err) => {
+                if (err) {
+                    // Session save went bad
+                    return next(err);
+                }
+
+                // All good, we are now logged in and `req.user` is now set
+                res.redirect('/users')
+            });
+        });
 }

@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 require('dotenv').config();
 const path = require("path");
+const flash = require("connect-flash");
 const bodyParser = require("body-parser");
 const routes = require('./server/routes/index');
 const morgan = require("morgan");
@@ -30,6 +31,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressSession);
 
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -46,9 +48,6 @@ app.use('/js', express.static(path.resolve(__dirname, "assets/js")));
 app.use(express.json());
 
 app.use('/', routes);
-
-// Implementing local authentication
-
 
 app.listen(PORT, ()=> console.log(`Listening on port: ${PORT}...`));
 
