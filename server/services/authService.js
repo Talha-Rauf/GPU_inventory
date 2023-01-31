@@ -34,7 +34,7 @@ exports.isUserAlreadyInDB = async (req, res, next) => {
             return next();
         }
         else {
-            res.status(400).send({message: `The email: ${user.email} already has an existing account...`});
+            res.status(400).send({message: `The user: ${user.email} already exists...`});
         }
     } catch (err) {
         res.status(500).send({message: err.message || "Error occurred while retrieving Data for authentication..."});
@@ -64,7 +64,6 @@ exports.isUserAndPasswordCorrect = async (email, password, done) => {
 
 exports.checkAuthenticated = (req, res, next) => {
     if (req.isAuthenticated){
-        console.log('USER IN SESSION')
         return next();
     }
     res.redirect('/login');

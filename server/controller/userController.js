@@ -14,6 +14,10 @@ const addUser = async (req, res) => {
     await userServices.createUserAndSave(req, res, '/users');
 };
 
+const signupUser = async (req, res) => {
+    await userServices.createUserAndSave(req, res, '/');
+};
+
 // Update a user
 const updateUser = async (req, res) => {
     await userServices.getByIdAndUpdate(req, res, '/users');
@@ -30,4 +34,5 @@ module.exports = {
     addUser,
     updateUser,
     deleteUser,
+    signupUser
 }

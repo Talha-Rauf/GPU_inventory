@@ -11,7 +11,7 @@
 
     <div class="Container container-sm text-center">
 
-        <a href=" <%= "/users/update-user/" + user.id %> "><button class="btn btn-primary">Edit</button></a>
+        <a href=" <%= "/users/update-user/" + user.id%> "><button class="btn btn-primary">Edit</button></a>
         <a href="/users"><button class="btn btn-primary">BACK</button></a>
 
     </div>
@@ -20,10 +20,10 @@
 <div class="Container container-sm">
 
     <ol>
-        <li><%= user.firstName + " " + user.lastName %></li>
-        <li><%= user.email %></li>
-        <li><%= user.gender %></li>
-        <li><%= user.status %></li>
+        <li>Name: <%= user.firstName + " " + user.lastName %></li>
+        <li>Email: <%= user.email %></li>
+        <li>Gender: <%= user.gender %></li>
+        <li>Status: <%= user.status %></li>
     </ol>
 
 </div>

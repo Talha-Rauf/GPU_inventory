@@ -17,8 +17,9 @@ const viewAddUserPage = (req, res) => {
 }
 
 const logoutUser = (req, res) => {
-    req.logOut(function(err) {
-        if (err) { res.status(500).send({message: err}) }
+    console.log("Clearing current session for: " + req.body.id);
+    req.session.destroy(function() {
+        res.clearCookie('connect.sid');
         res.redirect('/');
     });
 }
@@ -56,6 +57,7 @@ const viewDeleteUserPage = async (req, res) => {
             } else {
                 res.render('confirmUserDeletion', {user});
             }
+
         } else {
             res.status(400).send({message: "ID is required..."});
         }

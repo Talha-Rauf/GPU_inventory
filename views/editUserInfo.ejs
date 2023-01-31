@@ -14,8 +14,7 @@
 
 <div class="Container container-sm">
 
-    <form action=" <%= "/users/update-user/" + user.id %> " method="POST" id="update_user">
-
+    <form action=" <%= "/users/update-user/" + user.id + "?_method=PATCH"%> " method="POST" id="update_user">
 
         <%- include('include/_editForm', {data: 'user'}); %>
 

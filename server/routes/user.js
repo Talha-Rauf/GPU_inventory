@@ -28,7 +28,7 @@ router.get('/delete-user/:id', [
 
 // API for CRUD operations
 router.post('/add-user', userController.addUser);
-router.post('/update-user/:id', userController.updateUser);
-router.post('/delete-user/:id', userController.deleteUser);
+router.patch('/update-user/:id', userController.updateUser);
+router.delete('/delete-user/:id', userController.deleteUser);
 
 module.exports = router;
