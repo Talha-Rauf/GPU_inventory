@@ -1,4 +1,3 @@
-const auth = require('../services/authService');
 const bcrypt = require("bcrypt");
 const {User} = require('../model/index');
 
@@ -15,7 +14,8 @@ const createUserAndSave = async (req, res, webPage) => {
                 email: req.body.email.toLowerCase(),
                 password: hashedPassword,
                 gender: req.body.gender,
-                status: req.body.status
+                status: req.body.status,
+                role: req.body.role
             });
 
             if (!user) {

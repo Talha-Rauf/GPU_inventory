@@ -1,7 +1,7 @@
 const services = require("./userService");
 const bcrypt = require("bcrypt");
-const {User} = require("../model");
 const passport = require("passport");
+const {User} = require("../model");
 
 exports.isUsernameAndPasswordEmpty = async (req, res, next) => {
     let errors = [];
@@ -44,7 +44,8 @@ exports.isUserAlreadyInDB = async (req, res, next) => {
 
 exports.isUserAndPasswordCorrect = async (email, password, done) => {
 
-    const user = await services.findByEmail(email);
+    const user = await findByEmail(email);
+    console.log(password);
 
     if(!user){
         return done(null, false, {message: 'No user with that email!'});
@@ -62,6 +63,10 @@ exports.isUserAndPasswordCorrect = async (email, password, done) => {
         return done(err);
     }
 }
+
+findByEmail = async (email) => {
+    return await User.findOne({email});
+};
 
 exports.checkAuthenticated = (req, res, next) => {
     if (req.isAuthenticated()){

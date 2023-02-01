@@ -1,12 +1,11 @@
 const {User} = require('../model/index');
-const {findByID} = require("./userService");
 
 const viewHomePage = (req, res) => {
     res.render('index');
 }
 
 const viewLoginPage = (req, res) => {
-    res.render('loginPage', { "errorMessage": req.flash("error") });
+    res.render('loginPage', { "errorMessage": req.flash("Error loading login page...") });
 }
 
 const viewSignUpPage = (req, res) => {

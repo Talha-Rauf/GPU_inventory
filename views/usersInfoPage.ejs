@@ -17,6 +17,11 @@
         </form>
 
     </div>
+
+    <% if (errorMessage) {%>
+        <div class="error-message"><%= errorMessage %></div>
+    <% } %>
+
 </div>
 
 <div class="Container container-sm text-center">

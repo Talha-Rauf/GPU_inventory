@@ -2,6 +2,7 @@ const userController = require('../controller/userController');
 const {checkAuthenticated, checkLoggedInOut} = require('../services/authService');
 const services = require('../services/render');
 const express = require("express");
+const {permissionLevelRequired} = require("../services/userRoutesConfig");
 const router = express.Router();
 
 // Render views according to address
@@ -16,6 +17,7 @@ router.get('/view-user/:id', [
 ]);
 router.get('/add-user', [
     checkAuthenticated,
+    permissionLevelRequired('Admin'),
     services.viewAddUserPage
 ]);
 router.get('/update-user/:id', [
