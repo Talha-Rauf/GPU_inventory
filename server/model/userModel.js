@@ -57,7 +57,8 @@ var mySchema = new mongoose.Schema({
         required: true
     },
     gender: String,
-    status: String
+    status: String,
+    role: String
 });
 
 module.exports = mongoose.model('user', mySchema);

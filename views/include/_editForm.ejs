@@ -41,3 +41,15 @@
         <label for="radio-4" class="radio-label">Unemployed</label>
     </div>
 </div>
+
+<div class="form-group">
+    <label for="role" class="text-bold">Role:</label>
+    <div class="radio inline">
+        <input type="radio" id="radio-5" name="role" value="Admin" <%= user.status === 'Admin' ? 'checked' : ''%> >
+        <label for="radio-5" class="radio-label">Admin</label>
+    </div>
+    <div class="radio inline">
+        <input type="radio" id="radio-6" name="role" value="User" <%= user.status === 'User' ? 'checked' : ''%> >
+        <label for="radio-6" class="radio-label">User</label>
+    </div>
+</div>
