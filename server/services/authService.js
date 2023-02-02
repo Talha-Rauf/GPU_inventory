@@ -44,8 +44,7 @@ exports.isUserAlreadyInDB = async (req, res, next) => {
 
 exports.isUserAndPasswordCorrect = async (email, password, done) => {
 
-    const user = await findByEmail(email);
-    console.log(password);
+    const user = await User.findOne({email});
 
     if(!user){
         return done(null, false, {message: 'No user with that email!'});
@@ -63,10 +62,6 @@ exports.isUserAndPasswordCorrect = async (email, password, done) => {
         return done(err);
     }
 }
-
-findByEmail = async (email) => {
-    return await User.findOne({email});
-};
 
 exports.checkAuthenticated = (req, res, next) => {
     if (req.isAuthenticated()){
@@ -90,6 +85,7 @@ exports.authenticateUser = (req, res, next) => {
             failureRedirect: '/login',
             failureFLash: true},
         (err, theUser, failureDetails) => {
+
             if (err) {
                 // Something went wrong authenticating user
                 return next(err);

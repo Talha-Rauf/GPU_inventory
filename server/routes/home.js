@@ -24,7 +24,7 @@ router.delete('/logout', [
     authService.checkLoggedInOut
 ]);
 
-router.post('/login', authService.authenticateUser, (req,res)=>{console.log("Current user in session has ID: " + req.user.usernameField)});
+router.post('/login', authService.authenticateUser);
 
 router.post('/signup', [
     authService.checkNotAuthenticated,
