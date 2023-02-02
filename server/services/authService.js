@@ -113,7 +113,8 @@ exports.authenticateUser = (req, res, next) => {
 exports.checkLoggedInOut = (req, res, next) => {
     const status = req.isAuthenticated() ? 'logged in' : 'logged out';
     console.log(
-        'status:', status, // '\n',
+        'status: ', status, // '\n',
+        'role: ', req.user.role
         // req.sessionStore,
         // req.sessionID,
         // req.session

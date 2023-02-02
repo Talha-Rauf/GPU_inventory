@@ -9,7 +9,7 @@ exports.permissionLevelRequired = (userRole) => {
         if (user_role.toLowerCase() && userRole.toLowerCase()) {
             return next();
         } else {
-            return res.render('usersInfoPage', { "errorMessage": req.flash("ONLY ADMINS CAN PERFORM THIS ACTION!") });
+            return res.redirect('/users', { "errorMessage": req.flash("ONLY ADMINS CAN PERFORM THIS ACTION!") });
         }
     };
 }
