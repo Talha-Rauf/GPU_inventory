@@ -23,6 +23,7 @@ exports.sameUserOrAdminRequired = (req, res, next) => {
     let user_role = user.role.toLowerCase();
     let userId = req.user.id;
 
+    // Only users with admin role or their ID and session ID match
     if (req.params && req.params.id && userId === req.params.id) {
         return next();
     } else {
