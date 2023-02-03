@@ -6,7 +6,7 @@ const {permissionLevelRequired} = require("../services/userRoutesConfig");
 const router = express.Router();
 
 // Render views according to address
-router.get('/', [
+router.get('/:id', [
     checkLoggedInOut,
     checkAuthenticated,
     userController.getAllUsers
@@ -15,9 +15,9 @@ router.get('/view-user/:id', [
     checkAuthenticated,
     userController.getUser
 ]);
-router.get('/add-user', [
+router.get('/add-user/:id', [
     checkAuthenticated,
-    permissionLevelRequired('Admin'),
+    permissionLevelRequired('admin'),
     services.viewAddUserPage
 ]);
 router.get('/update-user/:id', [
@@ -30,7 +30,7 @@ router.get('/delete-user/:id', [
 ]);
 
 // API for CRUD operations
-router.post('/add-user', userController.addUser);
+router.post('/add-user/:id', userController.addUser);
 router.patch('/update-user/:id', userController.updateUser);
 router.delete('/delete-user/:id', userController.deleteUser);
 

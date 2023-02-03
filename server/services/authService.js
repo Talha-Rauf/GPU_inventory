@@ -2,6 +2,7 @@ const services = require("./userService");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 const {User} = require("../model");
+const {findByID} = require("./userService");
 
 exports.isUsernameAndPasswordEmpty = async (req, res, next) => {
     let errors = [];
@@ -105,16 +106,17 @@ exports.authenticateUser = (req, res, next) => {
                 }
 
                 // All good, we are now logged in and `req.user` is now set
-                res.redirect('/users')
+                res.redirect('/users/' + req.user.id,)
             });
         })(req, res, next);
 }
 
-exports.checkLoggedInOut = (req, res, next) => {
+exports.checkLoggedInOut = async (req, res, next) => {
     const status = req.isAuthenticated() ? 'logged in' : 'logged out';
+    const user = await findByID(req.params.id);
     console.log(
-        'status: ', status, // '\n',
-        'role: ', req.user.role
+        'status: ', status, '\n',
+        'role: ', user.role
         // req.sessionStore,
         // req.sessionID,
         // req.session

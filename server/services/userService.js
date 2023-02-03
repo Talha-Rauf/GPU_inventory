@@ -40,7 +40,7 @@ const getAllByIDAndRender = async (req, res, webPage) => {
             res.status(400).send({message: "Data entries not found..."});
         }
         else {
-            res.render(webPage, {users: data, "errorMessage": req.flash("ONLY ADMINS CAN PERFORM THIS ACTION!")});
+            res.render(webPage, {userID: req.params.id, users: data, "errorMessage": req.flash("ONLY ADMINS CAN PERFORM THIS ACTION!")});
         }
     }
     catch (err) {
@@ -82,6 +82,7 @@ const getByIdAndUpdate = async (req, res, webPage) => {
                 let hashedPassword = await bcrypt.hash(req.body.password, 10);
 
                 const userUpdate = new User({
+                    _id: user._id,
                     firstName: req.body.firstName,
                     lastName: req.body.lastName,
                     email: req.body.email.toLowerCase(),
@@ -92,7 +93,7 @@ const getByIdAndUpdate = async (req, res, webPage) => {
                 });
 
                 Object.assign(user, userUpdate);
-                user.save()
+                user.save();
                 res.redirect(webPage);
             }
         }
