@@ -1,19 +1,18 @@
 const {findByID} = require("./userService");
 const {User} = require("../model");
+const passport = require("passport");
 
 
 exports.permissionLevelRequired = (userRole) => {
     return async (req, res, next) => {
-        const id = req.params.id;
-        const user = await User.findById(id);
-        let user_role = user.role;
+        let user = passport.session.user;
 
-        console.log("Current user: " + user.firstName + " is trying to add with role: " + user_role + ".");
+        console.log("Current user: " + user.firstName + " is trying to add with role: " + user.role + ".");
 
-        if (user_role && userRole) {
+        if (user.role === userRole) {
             return next();
         } else {
-            return res.redirect('/users', { "errorMessage": req.flash("ONLY ADMINS CAN PERFORM THIS ACTION!") });
+            return res.redirect('/users');
         }
     };
 }

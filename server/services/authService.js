@@ -107,7 +107,7 @@ exports.authenticateUser = (req, res, next) => {
                 }
 
                 // All good, we are now logged in and `req.user` is now set
-                res.redirect('/users/' + req.user.id,)
+                res.redirect('/users');
             });
         })(req, res, next);
 }
