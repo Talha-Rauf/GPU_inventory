@@ -2,7 +2,6 @@ const services = require("./userService");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 const {User} = require("../model");
-const {findByID} = require("./userService");
 
 exports.isUsernameAndPasswordEmpty = async (req, res, next) => {
     let errors = [];
@@ -53,7 +52,9 @@ exports.isUserAndPasswordCorrect = async (email, password, done) => {
 
     try{
         if (await bcrypt.compare(password, user.password)) {
-            return done(null, user);
+            console.log('User session data:', user);
+            passport.session.user = user; // Saves user information in session
+            done(null, user);
         }
         else{
             return done(null, false, {message: 'Password incorrect!'});
@@ -111,12 +112,12 @@ exports.authenticateUser = (req, res, next) => {
         })(req, res, next);
 }
 
-exports.checkLoggedInOut = async (req, res, next) => {
+exports.checkLoggedInOut = (req, res, next) => {
     const status = req.isAuthenticated() ? 'logged in' : 'logged out';
-    const user = await findByID(req.params.id);
+    const user = passport.session.user;
     console.log(
         'status: ', status, '\n',
-        'role: ', user.role
+        'role: ', user.role, '\n',
         // req.sessionStore,
         // req.sessionID,
         // req.session

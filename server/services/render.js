@@ -12,25 +12,8 @@ const viewSignUpPage = (req, res) => {
     res.render('SignUpPage');
 }
 
-const viewAddUserPage = async (req, res) => {
-
-    try {
-        if (req.params.id) {
-            const user = await User.findById(req.params.id);
-
-            if (!user) {
-                res.status(400).send({message: "User not found..."});
-            } else {
-                res.render('addNewUser', {user});
-            }
-        }
-        else{
-            res.status(400).send({message: "ID is required..."});
-        }
-    }
-    catch (err) {
-        res.status(500).send({message: err.message || "Error occurred while retrieving user for editing..."});
-    }
+const viewAddUserPage = (req, res) => {
+    res.render('addNewUser');
 }
 
 const logoutUser = (req, res, next) => {

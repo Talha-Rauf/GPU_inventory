@@ -40,7 +40,7 @@ const getAllByIDAndRender = async (req, res, webPage) => {
             res.status(400).send({message: "Data entries not found..."});
         }
         else {
-            res.render(webPage, {userID: req.params.id, users: data, "errorMessage": req.flash("ONLY ADMINS CAN PERFORM THIS ACTION!")});
+            res.render(webPage, {users: data, "errorMessage": req.flash("ONLY ADMINS CAN PERFORM THIS ACTION!")});
         }
     }
     catch (err) {
