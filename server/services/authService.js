@@ -116,8 +116,9 @@ exports.checkLoggedInOut = (req, res, next) => {
     const status = req.isAuthenticated() ? 'logged in' : 'logged out';
     const user = passport.session.user;
     console.log(
-        'status: ', status, '\n',
-        'role: ', user.role, '\n',
+        'user:',user.firstName + ' ' + user.lastName,'\n',
+        'role:',user.role,'\n',
+        'status:',status, // '\n',
         // req.sessionStore,
         // req.sessionID,
         // req.session

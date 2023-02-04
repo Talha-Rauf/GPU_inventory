@@ -1,13 +1,10 @@
 const {findByID} = require("./userService");
-const {User} = require("../model");
 const passport = require("passport");
 
 
 exports.permissionLevelRequired = (userRole) => {
     return async (req, res, next) => {
         let user = passport.session.user;
-
-        console.log("Current user: " + user.firstName + " is trying to add with role: " + user.role + ".");
 
         if (user.role === userRole) {
             return next();
@@ -17,24 +14,34 @@ exports.permissionLevelRequired = (userRole) => {
     };
 }
 
-exports.sameUserOrAdminRequired = (req, res, next) => {
+exports.sameUserOrAdminRequired = async (req, res, next) => {
 
-    let user = findByID(req.params.id);
-    let user_role = user.role.toLowerCase();
-    let userId = req.user.id;
+    let user = await findByID(req.params.id);
+    let userInSession = passport.session.user;
 
+    console.log(user.id + ' ' + userInSession.id)
     // Only users with admin role or their ID and session ID match
-    if (req.params && req.params.id && userId === req.params.id) {
+    if (user.id === userInSession.id) {
         return next();
-    } else {
-        if (user_role && 'admin') {
+    }
+    else {
+        if (userInSession.role === 'admin') {
             return next();
         } else {
-            return res.status(403).send();
+            return res.redirect('/users');
         }
     }
 }
 
-exports.sameUserCannotPerformAction = (req, res, next) => {
+exports.sameUserCannotPerformAction = async (req, res, next) => {
 
+    let user = await findByID(req.params.id);
+    let userInSession = passport.session.user;
+
+    if (user.id !== userInSession.id) {
+        return next();
+    }
+    else {
+        return res.redirect('/users');
+    }
 }

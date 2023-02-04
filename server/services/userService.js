@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const {User} = require('../model/index');
+const passport = require("passport");
 
 const createUserAndSave = async (req, res, webPage) => {
     try{
@@ -74,6 +75,7 @@ const getByIdAndUpdate = async (req, res, webPage) => {
         }
         else {
             const user = await User.findById(req.params.id);
+            const userInSession = passport.session.user;
 
             if (!user) {
                 res.status(400).send({message: "Data is missing or not found..."});
@@ -89,7 +91,7 @@ const getByIdAndUpdate = async (req, res, webPage) => {
                     password: req.body.password === '' ? user.password : hashedPassword,
                     gender: req.body.gender,
                     status: req.body.status,
-                    role: req.body.role === '' ? 'user' : req.body.role
+                    role: userInSession.role === 'admin' ? req.body.role : user.role
                 });
 
                 Object.assign(user, userUpdate);

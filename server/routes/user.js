@@ -2,7 +2,7 @@ const userController = require('../controller/userController');
 const {checkAuthenticated, checkLoggedInOut} = require('../services/authService');
 const services = require('../services/render');
 const express = require("express");
-const {permissionLevelRequired} = require("../services/userRoutesConfig");
+const routeConfig = require("../services/userRoutesConfig");
 const router = express.Router();
 
 // Render views according to address
@@ -17,15 +17,18 @@ router.get('/view-user/:id', [
 ]);
 router.get('/add-user', [
     checkAuthenticated,
-    permissionLevelRequired('admin'),
+    routeConfig.permissionLevelRequired('admin'),
     services.viewAddUserPage
 ]);
 router.get('/update-user/:id', [
     checkAuthenticated,
+    routeConfig.sameUserOrAdminRequired,
     services.viewUpdateUserPage
 ]);
 router.get('/delete-user/:id', [
     checkAuthenticated,
+    routeConfig.permissionLevelRequired('admin'),
+    routeConfig.sameUserCannotPerformAction,
     services.viewDeleteUserPage
 ]);
 
