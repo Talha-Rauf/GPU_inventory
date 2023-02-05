@@ -1,6 +1,5 @@
-const {findByID} = require("./userService");
-const passport = require("passport");
-
+const {findByID} = require('./userService');
+const passport = require('passport');
 
 exports.permissionLevelRequired = (userRole) => {
     return async (req, res, next) => {
@@ -9,6 +8,7 @@ exports.permissionLevelRequired = (userRole) => {
         if (user.role === userRole) {
             return next();
         } else {
+            // window.alert('Only Admins can perform this action!');
             return res.redirect('/users');
         }
     };
