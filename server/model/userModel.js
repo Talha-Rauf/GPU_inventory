@@ -1,4 +1,33 @@
 const mongoose = require("mongoose");
+
+var mySchema = new mongoose.Schema({
+
+    firstName:{
+        type: String,
+        required: true
+    },
+    lastName:{
+        type: String,
+        required: true
+    },
+    email:{
+        type: String,
+        //validate: emailValidator,
+        required: true
+    },
+    password:{
+        type: String,
+        //validate: passwordValidator,
+        required: true
+    },
+    gender: String,
+    status: String,
+    role: String
+});
+
+module.exports = mongoose.model('user', mySchema);
+
+// Goes inside the above function:
 // const validate = require('mongoose-validator');
 //
 // const emailValidator = [
@@ -35,30 +64,3 @@ const mongoose = require("mongoose");
 //         message: 'Password should contain a special characters like !@#$%^&*()_+'
 //     })
 // ];
-
-var mySchema = new mongoose.Schema({
-
-    firstName:{
-        type: String,
-        required: true
-    },
-    lastName:{
-        type: String,
-        required: true
-    },
-    email:{
-        type: String,
-        //validate: emailValidator,
-        required: true
-    },
-    password:{
-        type: String,
-        //validate: passwordValidator,
-        required: true
-    },
-    gender: String,
-    status: String,
-    role: String
-});
-
-module.exports = mongoose.model('user', mySchema);
