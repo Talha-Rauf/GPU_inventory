@@ -24,7 +24,9 @@ router.delete('/logout', [
     authService.checkLoggedInOut
 ]);
 
-router.post('/login', authService.authenticateUser);
+router.post('/login',
+    authService.authenticateUser
+);
 
 router.post('/signup', [
     authService.checkNotAuthenticated,

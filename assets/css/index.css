@@ -1,49 +1,8 @@
-h1, p{
-    text-align: center;
-}
 
-body{
-    background-color: #eeeeee;
-}
-header{
-    text-align: center;
-    height: 100px;
-    padding-top: 1px;
-    background-color: #3399ff;
-    color: #FFFFFF;
-    font-size: x-large;
-}
-h3{
-    margin-top: 2px;
-    padding: 10px;
-    text-align: center;
-    background-color: #bcbcbc;
-}
-form{
-    width: 150px;
-    display: inline-block;
-    margin: auto;
-    padding: inherit;
-    text-align: right;
-}
-footer{
-    margin-top: 3%;
-    text-align: center;
-}
-
-table{
-    text-align: center;
-    margin: 8px auto;
-}
-
-td{
-    border: 1px solid black;
-    background-color: lightgray;
-    text-align: center;
-}
-
-.table tr:hover{
-    background-color: aquamarine;
+html,
+body,
+.login {
+    height: 100%;
 }
 
 @media only screen and (max-width:1024px){
@@ -52,83 +11,27 @@ td{
     }
 }
 
-/* add user and update user */
-
-.form-title{
-    margin: 2em;
+@media (min-width: 560px) and (max-width: 750px) {
+    html,
+    body,
+    .myForm {
+        height: 830px;
+    }
 }
 
-form-title > h2{
-    padding: 2em;
+@media (min-width: 800px) and (max-width: 850px) {
+    html,
+    body,
+    .myForm {
+        height: 830px;
+    }
 }
 
-.new_user{
-    max-width: 786px;
-    margin: auto;
-}
+.gradient-custom {
 
-#update_user .form-group,
-#add_user .form-group{
-    margin: .4em 0;
-}
+    background: #667eea;
 
-#add-user .form-group input[type="text"],
-#update-user .form-group input[type="text"]{
-    width: 20%;
-    padding: .6em 1em;
-    margin: .5em 0;
-    border: 1px solid black;
-    font-family: Calibri, sans-serif;
-    font-size: 1em;
-    border-radius: .2em;
-}
+    background: -webkit-linear-gradient(to bottom, rgba(102, 126, 234, 1), rgba(118, 75, 162, 1));
 
-#add-user .form-group .radio,
-#update-user .form-group .radio{
-    margin: 1em 2em;
-}
-
-.radio input[type="radio"] + .radio-label[before]{
-    content: "";
-    background: white;
-    border-radius: 100%;
-    border: 1px solid black;
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    position: relative;
-    top: -0em;
-    margin-right: .5em;
-    vertical-align: top;
-    cursor: pointer;
-    text-align: center;
-    -webkit-transition: all 250ms ease;
-    transition: all 250ms ease;
-}
-
-
-.radio input[type="radio"]:checked + .radio-label:before{
-    background-color: limegreen;
-    box-shadow: inset 0 0 0 4px #e9ecef;
-}
-
-.radio input[type="radio"]:focus + .radio-label:before{
-    outline: none;
-    border-color: lime;
-}
-
-.radio input[type="radio"]:disabled + .radio-label:before{
-    box-shadow: inset 0 0 0 4px white;
-    border-color: white;
-    background: white;
-}
-
-#add-user .form-group .btn,
-#update-user .form-group .btn{
-    width: 100%;
-    padding: .9em 1em;
-    background-color: #3399ff;
-    border: none;
-    margin: .5em 0;
-    border-radius: .2em;
+    background: linear-gradient(to bottom, rgba(102, 126, 234, 1), rgba(118, 75, 162, 1));
 }

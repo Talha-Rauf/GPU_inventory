@@ -1,31 +1,44 @@
 
 <%- include('include/_header') %>
 
-<div class="jumbotron">
-    <div class="container text-center">
+<section class="myForm">
+    <div class="mask d-flex align-items-center h-100" style="background-color: rgba(255,255,255,.6);">
+        <div class="Container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card gradient-custom" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+                            <div class="my-md-5">
 
-        <h1>WELCOME</h1>
-        <h3>--- LOGIN PAGE ---</h3>
+                                <form action="/login" method="POST" id="user-login">
 
-        <a href="/"><button class="btn btn-primary">BACK</button></a>
+                                    <!--In case of wrong username or password, error msg will appear-->
+                                    <% if (errorMessage) {%>
+                                        <%= errorMessage %>
+                                    <% } %>
 
-    </div>
-</div>
+                                    <div class="form-outline form-white mb-4">
+                                        <input id="email" type="email" class="form-control form-control-lg" name="email">
+                                        <label for="email" class="form-label">Email</label>
+                                    </div>
 
-<div class="Container container-sm text-center">
+                                    <div class="form-outline form-white mb-4">
+                                        <input id="password" type="password" class="form-control form-control-lg" name="password">
+                                        <label for="password" class="form-label">Password</label>
+                                    </div>
 
-    <form action="/login" method="POST" id="user-login">
-        <div class="new_user">
 
-            <% if (errorMessage) {%>
-            <div class="error-message"><%= errorMessage %></div>
-            <% } %>
+                                    <button class="btn btn-light btn-lg btn-rounded px-5" type="submit">LOGIN</button>
+                                    <a href="/"><button class="btn btn-light btn-lg btn-rounded px-5" type="button">BACK</button></a>
 
-            <%- include('include/_loginForm')  %>
+                                </form>
 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </form>
+    </div>
+</section>
 
-</div>
-
-<%- include('include/_footer') %>
