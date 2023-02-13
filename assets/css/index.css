@@ -1,15 +1,15 @@
 
 html,
 body,
-.login {
+.myForm {
     height: 100%;
 }
 
-@media only screen and (max-width:1024px){
-    table, thead, tbody, th, td, tr{
-        display: block;
-    }
-}
+/*@media only screen and (max-width:1024px){*/
+/*    table, thead, tbody, th, td, tr{*/
+/*        display: block;*/
+/*    }*/
+/*}*/
 
 @media (min-width: 560px) and (max-width: 750px) {
     html,
