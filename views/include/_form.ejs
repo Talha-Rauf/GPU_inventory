@@ -1,58 +1,79 @@
-<div class="form-group">
-    <label for="firstName" class="text-bold">First Name:</label>
-    <input type="text" id="firstName" name="firstName" placeholder="John">
+<div class="form-outline form-white mb-4">
+    <input type="text" id="firstName" class="form-control form-control-md" name="firstName" required>
+    <label for="firstName" class="form-label">First Name</label>
 </div>
 
-<div class="form-group">
-    <label for="lastName" class="text-bold">Last Name:</label>
-    <input type="text" id="lastName" name="lastName" placeholder="Wick">
+<div class="form-outline form-white mb-4">
+    <input type="text" id="lastName" class="form-control form-control-md" name="lastName" required>
+    <label for="lastName" class="form-label">Last Name</label>
 </div>
 
-<div class="form-group">
-    <label for="email" class="text-bold">Email:</label>
-    <input type="email" id="email" name="email" placeholder="example@gmail.com">
+<div class="form-outline form-white mb-4">
+    <input id="typeEmail" type="email" class="form-control form-control-md" name="email" required>
+    <label for="typeEmail" class="form-label">Email</label>
 </div>
 
-<div class="form-group">
-    <label for="password" class="text-bold">Password:</label>
-    <input type="password" id="password" name="password" placeholder="abc123">
+<div class="form-outline form-white mb-4">
+    <input id="typePassword" type="password" class="form-control form-control-md" name="password" value="" required>
+    <label for="typePassword" class="form-label">Password</label>
 </div>
 
-<div class="form-group">
-    <label for="gender" class="text-bold">Gender:</label>
-    <div class="radio inline">
-        <input type="radio" id="radio-1" name="gender" value="Male">
-        <label for="radio-1" class="radio-label">Male</label>
+<div class="form-group form-white">
+    <label for="gender" class="text-uppercase text-white">Gender</label><br>
+
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" value="Male" name="gender" id="radio1">
+        <label class="form-check-label text-white" for="radio1">
+            Male
+        </label>
     </div>
-    <div class="radio inline">
-        <input type="radio" id="radio-2" name="gender" value="Female">
-        <label for="radio-2" class="radio-label">Female</label>
+
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" value="Male" name="gender" id="radio2">
+        <label class="form-check-label text-white" for="radio2">
+            Female
+        </label>
     </div>
+
 </div>
 
-<div class="form-group">
-    <label for="status" class="text-bold">Status:</label>
-    <div class="radio inline">
-        <input type="radio" id="radio-3" name="status" value="Employed">
-        <label for="radio-3" class="radio-label">Employed</label>
+<div class="form-group form-white">
+    <label for="status" class="text-uppercase text-white">Status</label><br>
+
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" value="Employed" name="status" id="radio3">
+        <label class="form-check-label text-white" for="radio3">
+            Employed
+        </label>
     </div>
-    <div class="radio inline">
-        <input type="radio" id="radio-4" name="status" value="Unemployed">
-        <label for="radio-4" class="radio-label">Unemployed</label>
+
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" value="Unemployed" name="status" id="radio4">
+        <label class="form-check-label text-white" for="radio4">
+            Unemployed
+        </label>
     </div>
+
 </div>
 
-<div class="form-group">
-    <label for="role" class="text-bold">Role:</label>
-    <div class="radio inline">
-        <input type="radio" id="radio-5" name="role" value="admin">
-        <label for="radio-5" class="radio-label">Admin</label>
+<div class="form-group form-white">
+    <label for="role" class="text-uppercase text-white">Status</label><br>
+
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" value="Admin" name="role" id="radio5">
+        <label class="form-check-label text-white" for="radio5">
+            Admin
+        </label>
     </div>
-    <div class="radio inline">
-        <input type="radio" id="radio-6" name="role" value="user">
-        <label for="radio-6" class="radio-label">User</label>
+
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" value="User" name="role" id="radio6">
+        <label class="form-check-label text-white" for="radio6">
+            User
+        </label>
     </div>
+
 </div>
 
-<input type="submit" class="btn btn-primary" value="SUBMIT">
-<input type="reset" class="btn btn-primary" value="RESET">
+<button class="btn btn-light btn-lg btn-rounded px-5 mr-3" type="submit">SUBMIT</button>
+<a href="/users"><button class="btn btn-light btn-lg btn-rounded px-5" type="button">BACK</button></a>

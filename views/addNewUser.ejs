@@ -1,27 +1,32 @@
 
 <%- include('include/_header') %>
 
-<div class="jumbotron">
-    <div class="container text-center">
+<section class="myForm">
+    <div class="mask bg-dark d-flex align-items-center h-100">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card gradient-custom" style="border-radius: 1rem; background: linear-gradient(to bottom, rgba(50,69,231,0.66), rgba(155,42,232,0.74));">
+                        <div class="card-body p-5 text-center">
+                            <div class="my-md-5">
 
-        <h1>WELCOME</h1>
-        <h3>--- ADDING A NEW USER ---</h3>
+                                <div class="text-center pt-1">
+                                    <h1 class="fw-bold my-3 text-white text-uppercase">Add User</h1>
+                                </div>
 
-        <a href="/users"><button class="btn btn-primary">BACK</button></a>
+                                <form action="/users/add-user/" method="POST" id="add-user">
 
-    </div>
-</div>
+                                    <%- include('include/_form')  %>
 
-<div class="Container container-sm">
+                                </form>
 
-    <form action="/users/add-user/" method="POST" id="add-user">
-        <div class="new_user">
-
-        <%- include('include/_form')  %>
-
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </form>
-
-</div>
+    </div>
+</section>
 
 <%- include('include/_footer') %>

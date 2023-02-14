@@ -36,12 +36,13 @@ const createUserAndSave = async (req, res, webPage) => {
 const getAllByIDAndRender = async (req, res, webPage) => {
     try {
         const data = await User.find().sort('firstName');
+        const current_user = passport.session.user;
 
         if (!data) {
             res.status(400).send({message: "Data entries not found..."});
         }
         else {
-            res.render(webPage, {users: data, "errorMessage": req.flash("ONLY ADMINS CAN PERFORM THIS ACTION!")});
+            res.render(webPage, {users: data, current_user: current_user, "errorMessage": req.flash("ONLY ADMINS CAN PERFORM THIS ACTION!")});
         }
     }
     catch (err) {
@@ -58,7 +59,7 @@ const getByIDAndRender = async (req, res, webPage) => {
             if (!user) {
                 res.status(400).send({message: "Data not found..."});
             } else {
-                res.render(webPage, {user});
+                res.render(webPage, {user: user});
             }
         } else {
             res.status(400).send({message: "ID is required or missing..."});

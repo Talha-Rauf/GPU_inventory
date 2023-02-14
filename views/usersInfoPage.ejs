@@ -1,35 +1,16 @@
 
 <%- include('include/_header') %>
 
-<div class="jumbotron">
-    <div class="container text-center">
+<%- include('include/_usersPgNavbar') %>
 
-        <h1>WELCOME</h1>
-        <h3>--- USERS INVENTORY PAGE ---</h3>
-
-    </div>
-
-    <div class="Container container-sm text-center">
-
-        <a href="/users/add-user"><button class="btn btn-primary mb-2">Add</button></a>
-        <form action="/logout?_method=DELETE" method="POST">
-            <button type="submit" class="btn btn-primary">LOGOUT</button>
-        </form>
-
-    </div>
+<div class="Container container-sm text-center">
 
     <% if (errorMessage) {%>
         <div class="error-message"><%= errorMessage %></div>
     <% } %>
 
-</div>
+    <%- include('include/_usersTable') %>
 
-<div class="Container container-sm text-center">
-    <div class="table-responsive-sm">
-
-        <%- include('include/_showData') %>
-
-    </div>
 </div>
 
 <%- include('include/_footer') %>
