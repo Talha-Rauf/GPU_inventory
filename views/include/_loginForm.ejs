@@ -1,2 +1,18 @@
+<!--In case of wrong username or password, error msg will appear-->
+<% if (errorMessage) {%>
+    <%= errorMessage %>
+<% } %>
+
+<div class="form-outline form-white mb-4">
+    <input id="typeEmail" type="email" class="form-control form-control-lg" name="email">
+    <label for="typeEmail" class="form-label">Email</label>
+</div>
+
+<div class="form-outline form-white mb-4">
+    <input id="typePassword" type="password" class="form-control form-control-lg" name="password">
+    <label for="typePassword" class="form-label">Password</label>
+</div>
 
 
+<button class="btn btn-light btn-lg btn-rounded px-5" type="submit">LOGIN</button>
+<a href="/"><button class="btn btn-light btn-lg btn-rounded px-5" type="button">BACK</button></a>
