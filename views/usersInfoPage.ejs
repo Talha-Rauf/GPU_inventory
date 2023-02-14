@@ -3,14 +3,23 @@
 
 <%- include('include/_usersPgNavbar') %>
 
-<div class="Container container-sm text-center">
+<div class="p-5 bg-image" style="
+        background-image: url('https://mdbootstrap.com/img/new/textures/full/252.jpg');
+        height: 300px;
+        "></div>
+<!-- Background image -->
 
-    <% if (errorMessage) {%>
-        <div class="error-message"><%= errorMessage %></div>
-    <% } %>
+<% if (errorMessage) {%>
+<div class="error-message"><%= errorMessage %></div>
+<% } %>
 
-    <%- include('include/_usersTable') %>
+<section>
+    <div class="gradient-custom-2 h-100">
+        <div class="mask d-flex align-items-center mt-5 h-100">
+            <%- include('include/_usersTable') %>
+        </div>
+    </div>
+</section>
 
-</div>
 
 <%- include('include/_footer') %>
