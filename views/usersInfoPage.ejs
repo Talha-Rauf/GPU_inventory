@@ -1,25 +1,38 @@
 
 <%- include('include/_header') %>
 
-<%- include('include/_usersPgNavbar') %>
-
-<div class="p-5 bg-image" style="
-        background-image: url('https://mdbootstrap.com/img/new/textures/full/252.jpg');
-        height: 300px;
-        "></div>
-<!-- Background image -->
-
-<% if (errorMessage) {%>
-<div class="error-message"><%= errorMessage %></div>
-<% } %>
-
 <section>
+
+    <div class="mask p-5 bg-image" style="
+            background-image: url('https://mdbootstrap.com/img/new/textures/full/252.jpg');
+            height: 100%;
+            position: fixed;
+            "></div>
+    <!-- Background image -->
+
+    <%- include('include/_usersPgNavbar') %>
+
+    <% if (errorMessage) {%>
+    <div class="error-message"><%= errorMessage %></div>
+    <% } %>
+
     <div class="gradient-custom-2 h-100">
-        <div class="mask d-flex align-items-center mt-5 h-100">
+        <div class="d-flex align-items-center h-100 mt-5">
             <%- include('include/_usersTable') %>
         </div>
     </div>
+
+    <div class="container p-4 pb-0 text-center">
+        <!-- Section: Social media -->
+        <section class="mb-4">
+            <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/Talha-Rauf" role="button"
+            ><i class="fab fa-github"></i
+                ></a>
+        </section>
+
+    </div>
+
 </section>
 
-
 <%- include('include/_footer') %>
+

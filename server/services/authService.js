@@ -112,16 +112,18 @@ exports.authenticateUser = (req, res, next) => {
         })(req, res, next);
 }
 
-exports.checkLoggedInOut = (req, res, next) => {
+exports.checkUserInSession = (req, res, next) => {
     const status = req.isAuthenticated() ? 'logged in' : 'logged out';
     const user = passport.session.user;
-    console.log(
-        'user:',user.firstName + ' ' + user.lastName,'\n',
-        'role:',user.role,'\n',
-        'status:',status, // '\n',
-        // req.sessionStore,
-        // req.sessionID,
-        // req.session
-    );
+    if (user) {
+        console.log(
+            'user:',user.firstName + ' ' + user.lastName,'\n',
+            'role:',user.role,'\n',
+            'status:',status, // '\n',
+            // req.sessionStore,
+            // req.sessionID,
+            // req.session
+        );
+    }
     next();
 }

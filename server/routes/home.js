@@ -20,8 +20,7 @@ router.get('/signup', [
 ]);
 
 router.delete('/logout', [
-    services.logoutUser,
-    authService.checkLoggedInOut
+    services.logoutUser
 ]);
 
 router.post('/login',

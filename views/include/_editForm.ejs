@@ -1,79 +1,84 @@
-<div class="form-outline form-white mb-4">
-    <input type="text" id="firstName" class="form-control form-control-md" name="firstName" value="<%= user.firstName %>" required>
-    <label for="firstName" class="form-label">First Name</label>
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="form-outline">
+            <input type="text" id="firstName" class="form-control" name="firstName" value="<%= user.firstName %>" required>
+            <label for="firstName" class="form-label">First Name</label>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="form-outline">
+            <input type="text" id="lastName" class="form-control" name="lastName" value="<%= user.lastName %>" required>
+            <label for="lastName" class="form-label">Last Name</label>
+        </div>
+    </div>
 </div>
 
-<div class="form-outline form-white mb-4">
-    <input type="text" id="lastName" class="form-control form-control-md" name="lastName" value="<%= user.lastName %>" required>
-    <label for="lastName" class="form-label">Last Name</label>
-</div>
-
-<div class="form-outline form-white mb-4">
+<div class="form-outline mb-4">
     <input id="typeEmail" type="email" class="form-control form-control-md" name="email" value="<%= user.email %>" required>
     <label for="typeEmail" class="form-label">Email</label>
 </div>
 
-<div class="form-outline form-white mb-4">
-    <input id="typePassword" type="password" class="form-control form-control-md" name="password" value="" required>
+<div class="form-outline mb-4">
+    <input id="typePassword" type="password" class="form-control form-control-md" name="password" value="">
     <label for="typePassword" class="form-label">Password</label>
 </div>
 
-<div class="form-group form-white">
-    <label for="gender" class="text-uppercase text-white">Gender</label><br>
+<div class="form-group">
+    <h5><label for="gender" class="text-uppercase">Gender</label></h5>
 
     <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" value="Male" name="gender" id="radio1" <%= user.gender === 'Male' ? 'checked' : ''%>>
-        <label class="form-check-label text-white" for="radio1">
+        <label class="form-check-label" for="radio1">
             Male
         </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" value="Male" name="gender" id="radio2" <%= user.gender === 'Female' ? 'checked' : ''%>>
-        <label class="form-check-label text-white" for="radio2">
+        <input class="form-check-input" type="radio" value="Female" name="gender" id="radio2" <%= user.gender === 'Female' ? 'checked' : ''%>>
+        <label class="form-check-label" for="radio2">
             Female
         </label>
     </div>
 
 </div>
 
-<div class="form-group form-white">
-    <label for="status" class="text-uppercase text-white">Status</label><br>
+<div class="form-group">
+    <h5><label for="status" class="text-uppercase">Status</label><br></h5>
 
     <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" value="Employed" name="status" id="radio3" <%= user.status === 'Employed' ? 'checked' : ''%>>
-        <label class="form-check-label text-white" for="radio3">
+        <label class="form-check-label" for="radio3">
             Employed
         </label>
     </div>
 
     <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" value="Unemployed" name="status" id="radio4" <%= user.status === 'Unemployed' ? 'checked' : ''%>>
-        <label class="form-check-label text-white" for="radio4">
+        <label class="form-check-label" for="radio4">
             Unemployed
         </label>
     </div>
 
 </div>
 
-<div class="form-group form-white">
-    <label for="role" class="text-uppercase text-white">Status</label><br>
+<div class="form-group">
+    <h5><label for="role" class="text-uppercase">Role</label></h5>
 
     <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" value="Admin" name="role" id="radio5" <%= user.role === 'admin' ? 'checked' : ''%>>
-        <label class="form-check-label text-white" for="radio5">
+        <label class="form-check-label" for="radio5">
             Admin
         </label>
     </div>
 
     <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" value="User" name="role" id="radio6" <%= user.role === 'user' ? 'checked' : ''%>>
-        <label class="form-check-label text-white" for="radio6">
+        <label class="form-check-label" for="radio6">
             User
         </label>
     </div>
 
 </div>
 
-<button class="btn btn-light btn-lg btn-rounded px-5 mr-3" type="submit">SUBMIT</button>
-<a href="/users"><button class="btn btn-light btn-lg btn-rounded px-5" type="button">BACK</button></a>
+<button class="btn btn-dark btn-lg btn-rounded px-5 mr-3" type="submit">SUBMIT</button>
+<a href="/users"><button class="btn btn-dark btn-lg btn-rounded px-5" type="button">BACK</button></a>

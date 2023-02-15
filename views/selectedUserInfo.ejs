@@ -1,32 +1,55 @@
 
 <%- include('include/_header') %>
 
-<div class="jumbotron">
-    <div class="container text-center">
+<section class="text-center">
+    <!-- Background image -->
+    <div class="p-5 bg-image" style="
+        background-image: url('https://mdbootstrap.com/img/new/textures/full/252.jpg');
+        height: 300px;
+        "></div>
+    <!-- Background image -->
 
-        <h1>WELCOME</h1>
-        <h3>--- USER INFORMATION ---</h3>
+    <div class="container container-sm">
+        <div class="card mx-4 mx-md-5 shadow-5-strong"
+             style="
+             margin-top: -100px;
+             background: hsla(0, 0%, 100%, 0.8);
+             backdrop-filter: blur(30px);">
 
+            <div class="card-body py-5 px-md-5">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-8">
+                        <h2 class="fw-bold mb-3"><%= user.firstName + " " + user.lastName %></h2>
+                        <hr>
+                    </div>
+                </div>
+
+                <div class="row d-flex justify-content-center mb-3">
+                    <div class="col-lg-8 text-left">
+                        <h3 class="">Email: <%= user.email %></h3>
+                        <h3 class="">Gender: <%= user.gender %></h3>
+                        <h3 class="">Status: <%= user.status %></h3>
+                        <h3 class="">Role: <%= user.role %></h3>
+                    </div>
+                </div>
+
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-8">
+                        <a href=" <%= "/users/update-user/" + user.id%> ">
+                            <button type="button" class="btn btn-dark btn-lg btn-rounded px-5 mr-3">Edit</button>
+                        </a>
+
+                        <a href="/users">
+                            <button type="button" class="btn btn-dark btn-lg btn-rounded px-5 mr-3">BACK</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <div class="Container container-sm text-center">
+</section>
 
-        <a href=" <%= "/users/update-user/" + user.id%> "><button class="btn btn-primary">Edit</button></a>
-        <a href="/users"><button class="btn btn-primary">BACK</button></a>
-
-    </div>
-</div>
-
-<div class="Container container-sm">
-
-    <ol>
-        <li>Name: <%= user.firstName + " " + user.lastName %></li>
-        <li>Email: <%= user.email %></li>
-        <li>Gender: <%= user.gender %></li>
-        <li>Status: <%= user.status %></li>
-        <li>Role: <%= user.role %></li>
-    </ol>
-
-</div>
 
 <%- include('include/_footer') %>

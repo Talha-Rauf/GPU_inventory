@@ -1,24 +1,40 @@
 <%- include('include/_header') %>
 
-<div class="jumbotron">
-    <div class="container text-center">
+<section class="text-center">
+    <!-- Background image -->
+    <div class="p-5 bg-image" style="
+        background-image: url('https://mdbootstrap.com/img/new/textures/full/252.jpg');
+        height: 300px;
+        "></div>
+    <!-- Background image -->
 
-        <h1>WELCOME</h1>
-        <h3>--- CONFIRM DELETION OF USER ---</h3>
+    <div class="container container-sm">
+        <div class="card mx-4 mx-md-5 shadow-5-strong"
+             style="
+             margin-top: -100px;
+             background: hsla(0, 0%, 100%, 0.8);
+             backdrop-filter: blur(30px);">
 
+            <div class="card-body py-5 px-md-5">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-8">
+
+                        <form action=" <%= "/users/delete-user/" + user.id + "?_method=DELETE"%> " method="POST">
+
+                            <h3>Are you sure you want to delete <%= '"' + user.firstName + ' ' + user.lastName + '"' %>?</h3>
+                            <hr>
+                            <button type="submit" class="btn btn-danger btn-lg btn-rounded px-5 mr-3" value="confirm">Confirm</button>
+                            <a href="/users"><button type="button" class="btn btn-dark btn-lg btn-rounded px-5 mr-3">Cancel</button></a>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-</div>
 
-<div class="Container text-center">
-
-    <form action=" <%= "/users/delete-user/" + user.id + "?_method=DELETE"%> " method="POST">
-
-        <p>Are you sure you want to delete <%= user.name %>?</p>
-        <button type="submit" class="btn btn-primary mr-2 btn-danger" value="confirm">Confirm</button>
-        <a href="/users"><button type="button" class="btn btn-primary">Cancel</button></a>
-
-    </form>
-
-</div>
+</section>
 
 <%- include('include/_footer') %>

@@ -1,5 +1,5 @@
 const userController = require('../controller/userController');
-const {checkAuthenticated, checkLoggedInOut} = require('../services/authService');
+const {checkAuthenticated, checkUserInSession} = require('../services/authService');
 const services = require('../services/render');
 const express = require("express");
 const routeConfig = require("../services/userRoutesConfig");
@@ -7,8 +7,8 @@ const router = express.Router();
 
 // Render views according to address
 router.get('/', [
-    checkLoggedInOut,
     checkAuthenticated,
+    checkUserInSession,
     userController.getAllUsers
 ]);
 router.get('/view-user/:id', [

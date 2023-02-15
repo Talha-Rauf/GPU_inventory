@@ -37,16 +37,12 @@
 
             <div class="d-flex align-items-center">
 
-                <a href="/users/add-user">
-                    <button type="button" class="btn btn-primary px-3 me-2">ADD USER</button>
-                </a>
-
                 <a href=" <%= "/users/update-user/" + current_user.id %> ">
-                    <button type="button" class="btn btn-primary px-3 me-2">ACCOUNT</button>
+                    <button type="button" class="btn btn-primary px-3 me-2"><i class="fa fa-user-edit"></i> ACCOUNT</button>
                 </a>
 
                 <form action="/logout?_method=DELETE" method="POST">
-                    <button type="submit" class="btn btn-outline-danger px-3">LOGOUT</button>
+                    <button type="submit" class="btn btn-outline-danger px-3 me-2"><i class="fa fa-sign-out"></i> LOGOUT</button>
                 </form>
 
             </div>
