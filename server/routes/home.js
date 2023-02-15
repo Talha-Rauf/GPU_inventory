@@ -32,4 +32,8 @@ router.post('/signup', [
     userController.signupUser,
 ]);
 
+router.get('/userpage',
+    services.viewUserPage
+);
+
 module.exports = router;

@@ -1,4 +1,5 @@
 const {User} = require('../model/index');
+const passport = require("passport");
 
 const viewHomePage = (req, res) => {
     res.render('index');
@@ -9,7 +10,7 @@ const viewLoginPage = (req, res) => {
 }
 
 const viewSignUpPage = (req, res) => {
-    res.render('SignUpPage');
+    res.render('signUpPage');
 }
 
 const viewAddUserPage = (req, res) => {
@@ -65,6 +66,10 @@ const viewDeleteUserPage = async (req, res) => {
     }
 }
 
+const viewUserPage = (req, res) => {
+    res.render('userPage', {user: passport.session.user});
+}
+
 module.exports = {
     viewHomePage,
     viewLoginPage,
@@ -72,5 +77,6 @@ module.exports = {
     logoutUser,
     viewAddUserPage,
     viewUpdateUserPage,
-    viewDeleteUserPage
+    viewDeleteUserPage,
+    viewUserPage
 }
