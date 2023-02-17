@@ -1,0 +1,27 @@
+
+<div class="card mb-4">
+    <div class="card-body">
+        <!-- Grid row -->
+        <div class="row">
+            <!-- Grid column -->
+            <div class="col-md-12 text-center">
+                <h2 class="pt-3 pb-2 text-center font-bold font-up">Session Details <i class="fa fa-user"></i></h2>
+
+                <div class="text-center">
+                    <p>Logged in as</p>
+                    <p class="font-italic">" <%= user.email %> "</p>
+                </div>
+
+                <% if (user.role === 'admin') {%>
+                    <a href="/users"><button class="btn btn-primary px-3 me-2" type="button">User Inventory</button></a>
+                <%}%>
+
+                <a href=" <%= "/userpage/update-user/" + user.id %> ">
+                    <button type="button" class="btn btn-primary px-3 me-2">Edit Account</button>
+                </a>
+
+            </div>
+            <!-- Grid column -->
+        </div>
+    </div>
+</div>

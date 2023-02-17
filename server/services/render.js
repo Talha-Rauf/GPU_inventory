@@ -1,4 +1,4 @@
-const {User} = require('../model/index');
+const {User, Gpu} = require('../model/index');
 const passport = require("passport");
 
 const viewHomePage = (req, res) => {
@@ -46,6 +46,49 @@ const viewUpdateUserPage = async (req, res) => {
     }
 }
 
+const viewUpdateUserSelfPage = async (req, res) => {
+
+    try {
+        const user = passport.session.user;
+        if (user) {
+
+            if (!user) {
+                res.status(400).send({message: "User not found..."});
+            } else {
+                res.render('editUserSelf', {user});
+            }
+        }
+        else{
+            res.status(400).send({message: "ID is required..."});
+        }
+    }
+    catch (err) {
+        res.status(500).send({message: err.message || "Error occurred while retrieving user for editing..."});
+    }
+}
+
+const updateGPUPage = async (req, res, webpage) => {
+
+    try {
+        if (req.params.id) {
+            const id = req.params.id;
+            const gpu = await User.findById(id);
+
+            if (!gpu) {
+                res.status(400).send({message: "Data not found..."});
+            } else {
+                res.render(webpage, {gpu});
+            }
+        }
+        else{
+            res.status(400).send({message: "ID is required..."});
+        }
+    }
+    catch (err) {
+        res.status(500).send({message: err.message || "Error occurred while retrieving Data for editing..."});
+    }
+}
+
 const viewDeleteUserPage = async (req, res) => {
     try {
         if (req.params.id) {
@@ -62,12 +105,34 @@ const viewDeleteUserPage = async (req, res) => {
             res.status(400).send({message: "ID is required..."});
         }
     } catch (err) {
-        res.status(500).send({message: err.message || "Error occurred while retrieving user for editing..."});
+        res.status(500).send({message: err.message || "Error occurred while retrieving user for deletion..."});
     }
 }
 
-const viewUserPage = (req, res) => {
-    res.render('userPage', {user: passport.session.user});
+const viewDeleteGPUPage = async (req, res, webpage) => {
+    try {
+        if (req.params.id) {
+            const id = req.params.id;
+            const gpu = await User.findById(id);
+
+            if (!gpu) {
+                res.status(400).send({message: "Data not found..."});
+            } else {
+                res.render(webpage, {gpu});
+            }
+
+        } else {
+            res.status(400).send({message: "ID is required..."});
+        }
+    } catch (err) {
+        res.status(500).send({message: err.message || "Error occurred while retrieving data for deletion..."});
+    }
+}
+
+const viewUserPage = async (req, res) => {
+    let gpu = await Gpu.find().sort('model');
+    let user = passport.session.user;
+    res.render('userPage', {user, gpu});
 }
 
 module.exports = {
@@ -77,6 +142,9 @@ module.exports = {
     logoutUser,
     viewAddUserPage,
     viewUpdateUserPage,
+    viewUpdateUserSelfPage,
+    updateGPUPage,
     viewDeleteUserPage,
+    viewDeleteGPUPage,
     viewUserPage
 }

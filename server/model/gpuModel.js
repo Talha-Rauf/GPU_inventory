@@ -2,17 +2,24 @@ const mongoose = require("mongoose");
 
 var mySchema = new mongoose.Schema({
 
-    Company:{
+    company:{
         type: String,
         required: true
     },
-    Model:{
+    model:{
         type: String,
         required: true
     },
-    Size:{
+    size:{
         type: String,
         required: true
+    },
+    condition:{
+        type: String,
+        required: true
+    },
+    details:{
+        type: String
     },
     assignedID:{
         type: String,

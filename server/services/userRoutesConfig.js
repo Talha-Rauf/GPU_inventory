@@ -9,7 +9,7 @@ exports.permissionLevelRequired = (userRole) => {
         if (user.role === userRole) {
             return next();
         } else {
-            return res.redirect('/users');
+            return res.redirect('/userpage');
         }
     };
 }

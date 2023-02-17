@@ -23,6 +23,10 @@ const updateUser = async (req, res) => {
     await userServices.getByIdAndUpdate(req, res, '/users');
 }
 
+const updateUserSelf = async (req, res) => {
+    await userServices.getByIdAndUpdate(req, res, '/userpage');
+}
+
 // Delete a user
 const deleteUser = async (req, res) => {
     await userServices.getByIdAndDelete(req, res, '/users');
@@ -33,6 +37,7 @@ module.exports = {
     getUser,
     addUser,
     updateUser,
+    updateUserSelf,
     deleteUser,
     signupUser
 }

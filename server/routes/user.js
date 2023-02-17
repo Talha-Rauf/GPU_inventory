@@ -8,11 +8,12 @@ const router = express.Router();
 // Render views according to address
 router.get('/', [
     checkAuthenticated,
-    checkUserInSession,
+    routeConfig.permissionLevelRequired('admin'),
     userController.getAllUsers
 ]);
 router.get('/view-user/:id', [
     checkAuthenticated,
+    routeConfig.permissionLevelRequired('admin'),
     userController.getUser
 ]);
 router.get('/add-user', [
@@ -33,8 +34,14 @@ router.get('/delete-user/:id', [
 ]);
 
 // API for CRUD operations
-router.post('/add-user', userController.addUser);
-router.patch('/update-user/:id', userController.updateUser);
-router.delete('/delete-user/:id', userController.deleteUser);
+router.post('/add-user',
+    userController.addUser
+);
+router.patch('/update-user/:id',
+    userController.updateUser
+);
+router.delete('/delete-user/:id',
+    userController.deleteUser
+);
 
 module.exports = router;

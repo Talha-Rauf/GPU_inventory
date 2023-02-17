@@ -74,7 +74,7 @@ exports.checkAuthenticated = (req, res, next) => {
 
 exports.checkNotAuthenticated = (req, res, next) => {
     if (req.isAuthenticated()){
-        return res.redirect('/users');
+        return res.redirect('/userpage');
     }
     return next();
 }
@@ -83,7 +83,7 @@ exports.authenticateUser = (req, res, next) => {
     passport.authenticate(
         "local",
         {
-            successRedirect: '/users',
+            successRedirect: '/userpage',
             failureRedirect: '/login',
             failureFLash: true},
         (err, theUser, failureDetails) => {
@@ -107,7 +107,7 @@ exports.authenticateUser = (req, res, next) => {
                 }
 
                 // All good, we are now logged in and `req.user` is now set
-                res.redirect('/users');
+                res.redirect('/userpage');
             });
         })(req, res, next);
 }
