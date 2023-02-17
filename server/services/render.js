@@ -111,9 +111,8 @@ const viewDeleteUserPage = async (req, res) => {
 
 const viewDeleteGPUPage = async (req, res, webpage) => {
     try {
-        if (req.params.id) {
-            const id = req.params.id;
-            const gpu = await User.findById(id);
+        if(req.params.id) {
+            const gpu = await User.findById(req.params.id);
 
             if (!gpu) {
                 res.status(400).send({message: "Data not found..."});

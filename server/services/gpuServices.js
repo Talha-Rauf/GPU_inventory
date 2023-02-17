@@ -1,11 +1,10 @@
-const {User, Gpu} = require('../model/index');
+const {Gpu} = require('../model/index');
 const passport = require("passport");
 
 const getGPUandRender = async (req, res, webPage) => {
     try {
-        const id = req.params.id;
-        if (id) {
-            let gpu = await Gpu.findByID(id);
+        if (req.params.id) {
+            const gpu = await Gpu.findById(req.params.id);
 
             if (!gpu) {
                 res.status(400).send({message: "Data not found..."});
