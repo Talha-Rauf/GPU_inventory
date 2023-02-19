@@ -1,6 +1,7 @@
 const {User, Gpu} = require('../model/index');
 const passport = require("passport");
 
+// Rendering Authentication Pages
 const viewHomePage = (req, res) => {
     res.render('index');
 }
@@ -13,15 +14,9 @@ const viewSignUpPage = (req, res) => {
     res.render('signUpPage');
 }
 
+// Rendering User Inventory Pages
 const viewAddUserPage = (req, res) => {
     res.render('addNewUser');
-}
-
-const logoutUser = (req, res, next) => {
-    req.logout(function(err) {
-        if (err) { return next(err); }
-        return res.redirect('/');
-    });
 }
 
 const viewUpdateUserPage = async (req, res) => {
@@ -67,32 +62,6 @@ const viewUpdateUserSelfPage = async (req, res) => {
     }
 }
 
-const addGPUPage = async (req, res, webpage) => {
-    res.render(webpage);
-}
-
-const updateGPUPage = async (req, res, webpage) => {
-
-    try {
-        if (req.params.id) {
-            const id = req.params.id;
-            const gpu = await User.findById(id);
-
-            if (!gpu) {
-                res.status(400).send({message: "Data not found..."});
-            } else {
-                res.render(webpage, {gpu});
-            }
-        }
-        else{
-            res.status(400).send({message: "ID is required..."});
-        }
-    }
-    catch (err) {
-        res.status(500).send({message: err.message || "Error occurred while retrieving Data for editing..."});
-    }
-}
-
 const viewDeleteUserPage = async (req, res) => {
     try {
         if (req.params.id) {
@@ -113,10 +82,46 @@ const viewDeleteUserPage = async (req, res) => {
     }
 }
 
+// Rendering User-page
+const viewUserPage = async (req, res) => {
+    let gpu = await Gpu.find().sort('model');
+    let user = passport.session.user;
+    res.render('userPage', {user, gpu, ref: '/userpage/add-gpu'});
+}
+
+// Rendering GPU Inventory Pages
+const addGPUPage = async (req, res, webpage) => {
+    let data = await User.find().sort('firstName');
+    let user = passport.session.user;
+    res.render(webpage, {users: data, user: user});
+}
+
+const updateGPUPage = async (req, res, webpage) => {
+
+    try {
+        if (req.params.id) {
+            const id = req.params.id;
+            const gpu = await Gpu.findById(id);
+
+            if (!gpu) {
+                res.status(400).send({message: "Data not found..."});
+            } else {
+                res.render(webpage, {gpu});
+            }
+        }
+        else{
+            res.status(400).send({message: "ID is required..."});
+        }
+    }
+    catch (err) {
+        res.status(500).send({message: err.message || "Error occurred while retrieving Data for editing..."});
+    }
+}
+
 const viewDeleteGPUPage = async (req, res, webpage) => {
     try {
         if(req.params.id) {
-            const gpu = await User.findById(req.params.id);
+            const gpu = await Gpu.findById(req.params.id);
 
             if (!gpu) {
                 res.status(400).send({message: "Data not found..."});
@@ -132,17 +137,10 @@ const viewDeleteGPUPage = async (req, res, webpage) => {
     }
 }
 
-const viewUserPage = async (req, res) => {
-    let gpu = await Gpu.find().sort('model');
-    let user = passport.session.user;
-    res.render('userPage', {user, gpu});
-}
-
 module.exports = {
     viewHomePage,
     viewLoginPage,
     viewSignUpPage,
-    logoutUser,
     viewAddUserPage,
     viewUpdateUserPage,
     viewUpdateUserSelfPage,

@@ -10,7 +10,7 @@ const getAllGPUAndRender = async (req, res, webPage) => {
             res.status(400).send({message: "Data entries not found..."});
         }
         else {
-            res.render(webPage, {gpu: gpus, user: current_user, "errorMessage": req.flash("ONLY ADMINS CAN PERFORM THIS ACTION!")});
+            res.render(webPage, {gpu: gpus, user: current_user, "errorMessage": req.flash("ONLY ADMINS CAN PERFORM THIS ACTION!"), ref: '/gpu/add-gpu'});
         }
     }
     catch (err) {

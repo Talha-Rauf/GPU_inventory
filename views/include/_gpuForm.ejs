@@ -14,14 +14,16 @@
     <label for="size" class="form-label">Size</label>
 </div>
 
-<div class="form-outline mb-4">
-    <input id="condition" type="text" class="form-control form-control-md" name="condition" required>
-    <label for="condition" class="form-label">Condition</label>
-</div>
-
-<div class="form-outline mb-4">
-    <input id="assignedID" type="text" class="form-control form-control-md" name="assignedID" required>
-    <label for="assignedID" class="form-label">Assigned to</label>
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="form-outline mb-4">
+            <input id="condition" type="text" class="form-control form-control-md" name="condition" required>
+            <label for="condition" class="form-label">Condition</label>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <%- include('_selectUser') %>
+    </div>
 </div>
 
 <div class="form-outline form-text mb-4">
