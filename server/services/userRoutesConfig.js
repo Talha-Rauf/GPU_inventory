@@ -1,5 +1,6 @@
 const {findByID} = require('./userService');
 const passport = require('passport');
+const {Gpu} = require("../model");
 
 
 exports.permissionLevelRequired = (userRole) => {
@@ -19,7 +20,6 @@ exports.sameUserOrAdminRequired = async (req, res, next) => {
     let user = await findByID(req.params.id);
     let userInSession = passport.session.user;
 
-    console.log(user.id + ' ' + userInSession.id)
     // Only users with admin role or their ID and session ID match
     if (user.id === userInSession.id) {
         return next();
@@ -28,7 +28,25 @@ exports.sameUserOrAdminRequired = async (req, res, next) => {
         if (userInSession.role === 'admin') {
             return next();
         } else {
-            return res.redirect('/users');
+            return res.redirect('/gpu');
+        }
+    }
+}
+
+exports.sameUserOrAdminRequiredForGPU = async (req, res, next) => {
+
+    let gpu = await Gpu.findById(req.params.id);
+    let userInSession = passport.session.user;
+
+    // Only users with admin role or their ID and session ID match
+    if (gpu.assignedID === userInSession.id) {
+        return next();
+    }
+    else {
+        if (userInSession.role === 'admin') {
+            return next();
+        } else {
+            return res.redirect('/gpu');
         }
     }
 }

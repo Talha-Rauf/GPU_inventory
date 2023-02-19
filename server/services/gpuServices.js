@@ -10,7 +10,7 @@ const getAllGPUAndRender = async (req, res, webPage) => {
             res.status(400).send({message: "Data entries not found..."});
         }
         else {
-            res.render(webPage, {gpu: gpus, user: current_user, "errorMessage": req.flash("ONLY ADMINS CAN PERFORM THIS ACTION!"), ref: '/gpu/add-gpu'});
+            res.render(webPage, {gpu: gpus, user: current_user, "errorMessage": req.flash("ONLY ADMINS CAN PERFORM THIS ACTION!")});
         }
     }
     catch (err) {
@@ -22,11 +22,12 @@ const getGPUandRender = async (req, res, webPage) => {
     try {
         if (req.params.id) {
             const gpu = await Gpu.findById(req.params.id);
+            const current_user = passport.session.user;
 
             if (!gpu) {
                 res.status(400).send({message: "Data not found..."});
             } else {
-                res.render(webPage, {gpu});
+                res.render(webPage, {gpu: gpu, user: current_user});
             }
         } else {
             res.status(400).send({message: "ID is required or missing..."});

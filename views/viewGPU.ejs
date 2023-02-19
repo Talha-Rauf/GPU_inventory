@@ -60,11 +60,14 @@
 
                 <div class="row d-flex justify-content-center">
                     <div class="col-lg-8">
-                        <a href=" <%= "/gpu-list/update-gpu/" + gpu.id%> ">
-                            <button type="button" class="btn btn-dark btn-lg btn-rounded px-5 mr-3">Edit</button>
-                        </a>
 
-                        <a href="/gpupage">
+                        <% if (gpu.assignedID === user.id) {%>
+                            <a href=" <%= "/gpu/update-gpu/" + gpu.id%> ">
+                                <button type="button" class="btn btn-dark btn-lg btn-rounded px-5 mr-3">Edit</button>
+                            </a>
+                        <% } %>
+
+                        <a href="/gpu">
                             <button type="button" class="btn btn-dark btn-lg btn-rounded px-5 mr-3">BACK</button>
                         </a>
                     </div>

@@ -3,7 +3,7 @@ const services = require('../services/render');
 const express = require("express");
 const gpuController = require("../controller/gpuController");
 const gpuServices = require("../services/gpuRoutes");
-const {sameUserOrAdminRequired} = require("../services/userRoutesConfig");
+const {sameUserOrAdminRequiredForGPU} = require("../services/userRoutesConfig");
 const router = express.Router();
 
 router.get('/',
@@ -11,7 +11,7 @@ router.get('/',
     gpuServices.viewGPUPage
 );
 
-router.get('/gpu/:id',
+router.get('/:id',
     checkAuthenticated,
     gpuController.getGPU
 );
@@ -23,25 +23,25 @@ router.get('/add-gpu',
 
 router.get('/update-gpu/:id',
     checkAuthenticated,
-    sameUserOrAdminRequired,
+    sameUserOrAdminRequiredForGPU,
     gpuServices.viewUpdateGPUPage
 );
 
 router.get('/delete-gpu/:id',
     checkAuthenticated,
-    sameUserOrAdminRequired,
+    sameUserOrAdminRequiredForGPU,
     gpuServices.viewDeleteGPUPage
 );
 
 router.patch('/update-gpu/:id',
     checkAuthenticated,
-    sameUserOrAdminRequired,
+    sameUserOrAdminRequiredForGPU,
     gpuController.updateGPU
 );
 
 router.delete('/delete-gpu/:id',
     checkAuthenticated,
-    sameUserOrAdminRequired,
+    sameUserOrAdminRequiredForGPU,
     gpuController.deleteGPU
 );
 
