@@ -12,6 +12,11 @@ router.get('/', [
     services.viewUserPage
 ]);
 
+router.get('/add-gpu',
+    checkAuthenticated,
+    gpuServices.viewAddMyGPUPage
+);
+
 router.get('/update-user/:id', [
     checkAuthenticated,
     services.viewUpdateUserSelfPage

@@ -67,6 +67,10 @@ const viewUpdateUserSelfPage = async (req, res) => {
     }
 }
 
+const addGPUPage = async (req, res, webpage) => {
+    res.render(webpage);
+}
+
 const updateGPUPage = async (req, res, webpage) => {
 
     try {
@@ -142,6 +146,7 @@ module.exports = {
     viewAddUserPage,
     viewUpdateUserPage,
     viewUpdateUserSelfPage,
+    addGPUPage,
     updateGPUPage,
     viewDeleteUserPage,
     viewDeleteGPUPage,

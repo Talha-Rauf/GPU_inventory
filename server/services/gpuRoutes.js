@@ -1,5 +1,12 @@
-const gpuServices = require("./gpuServices");
 const services = require('./render');
+
+const viewAddGPUPage = async (req, res) => {
+    await services.addGPUPage(req, res, 'addGPU');
+}
+
+const viewAddMyGPUPage = async (req, res) => {
+    await services.addGPUPage(req, res, 'addMyGPU');
+}
 
 const viewUpdateGPUPage = async (req, res) => {
     await services.updateGPUPage(req, res, 'editGPU');
@@ -18,6 +25,8 @@ const viewDeleteMyGPUPage = async (req, res) => {
 }
 
 module.exports = {
+    viewAddGPUPage,
+    viewAddMyGPUPage,
     viewUpdateGPUPage,
     viewUpdateMyGPUPage,
     viewDeleteGPUPage,
