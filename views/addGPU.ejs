@@ -22,9 +22,12 @@
                         <h2 class="fw-bold mb-5">ADD NEW</h2>
                         <hr>
 
-                        <form action="/users/add-user/" method="POST" id="add-user">
+                        <form action="/gpu/add-gpu/" method="POST" id="add-user">
 
-                            <%- include('include/_form')  %>
+                            <%- include('include/_gpuForm')  %>
+
+                            <button class="btn btn-dark btn-lg btn-rounded px-5 mr-3" type="submit">SUBMIT</button>
+                            <a href="/gpu"><button class="btn btn-dark btn-lg btn-rounded px-5" type="button">BACK</button></a>
 
                         </form>
 

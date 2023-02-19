@@ -6,6 +6,11 @@ const gpuServices = require("../services/gpuRoutes");
 const {sameUserOrAdminRequired} = require("../services/userRoutesConfig");
 const router = express.Router();
 
+router.get('/',
+    checkAuthenticated,
+    gpuServices.viewGPUPage
+);
+
 router.get('/gpu/:id',
     checkAuthenticated,
     gpuController.getGPU

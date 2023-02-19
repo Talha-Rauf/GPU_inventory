@@ -1,6 +1,23 @@
 const {Gpu} = require('../model/index');
 const passport = require("passport");
 
+const getAllGPUAndRender = async (req, res, webPage) => {
+    try {
+        const gpus = await Gpu.find().sort('model');
+        const current_user = passport.session.user;
+
+        if (!gpus) {
+            res.status(400).send({message: "Data entries not found..."});
+        }
+        else {
+            res.render(webPage, {gpu: gpus, user: current_user, "errorMessage": req.flash("ONLY ADMINS CAN PERFORM THIS ACTION!")});
+        }
+    }
+    catch (err) {
+        res.status(500).send({message: err.message || "Error occurred while retrieving all data..."});
+    }
+}
+
 const getGPUandRender = async (req, res, webPage) => {
     try {
         if (req.params.id) {
@@ -104,6 +121,7 @@ const deleteGPU = async (req, res, webPage) => {
 }
 
 module.exports = {
+    getAllGPUAndRender,
     getGPUandRender,
     createGPUandSave,
     getGPUandUpdate,
