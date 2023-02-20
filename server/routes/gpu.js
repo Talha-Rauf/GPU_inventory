@@ -1,9 +1,9 @@
 const {checkAuthenticated, checkUserInSession} = require('../services/authService');
+const {sameUserOrAdminRequiredForGPU} = require("../services/userRoutesConfig");
 const services = require('../services/render');
 const express = require("express");
 const gpuController = require("../controller/gpuController");
 const gpuServices = require("../services/gpuRoutes");
-const {sameUserOrAdminRequiredForGPU} = require("../services/userRoutesConfig");
 const router = express.Router();
 
 router.get('/',

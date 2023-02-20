@@ -1,4 +1,4 @@
-const {Gpu} = require('../model/index');
+const {User, Gpu} = require('../model/index');
 const passport = require("passport");
 
 const getAllGPUAndRender = async (req, res, webPage) => {

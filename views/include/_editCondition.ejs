@@ -3,19 +3,19 @@
 
     <option name="">Select a user</option>
 
-    <option <% gpu.condition === 'Pristine' ? 'selected' : '' %> name="condition" value="Pristine">
+    <option <%= gpu.condition === 'Pristine' ? 'selected' : '' %> name="condition" value="Pristine">
         Pristine
     </option>
 
-    <option <% gpu.condition === 'New' ? 'selected' : '' %> name="condition" value="New">
+    <option <%= gpu.condition === 'New' ? 'selected' : '' %> name="condition" value="New">
         New
     </option>
 
-    <option <% gpu.condition === 'Used' ? 'selected' : '' %> name="condition" value="Used">
+    <option <%= gpu.condition === 'Used' ? 'selected' : '' %> name="condition" value="Used">
         Used
     </option>
 
-    <option <% gpu.condition === 'Repaired' ? 'selected' : '' %> name="condition" value="Repaired">
+    <option <%= gpu.condition === 'Repaired' ? 'selected' : '' %> name="condition" value="Repaired">
         Repaired
     </option>
 

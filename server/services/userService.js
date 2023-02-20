@@ -16,7 +16,7 @@ const createUserAndSave = async (req, res, webPage) => {
                 password: hashedPassword,
                 gender: req.body.gender,
                 status: req.body.status,
-                role: req.body.role === '' ? 'user' : req.body.role
+                role: req.body.role
             });
 
             if (!user) {
@@ -24,6 +24,7 @@ const createUserAndSave = async (req, res, webPage) => {
             }
             else {
                 user.save();
+                console.log(user);
                 res.redirect(webPage);
             }
         }
