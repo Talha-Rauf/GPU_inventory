@@ -96,17 +96,17 @@ const addGPUPage = async (req, res, webpage) => {
     res.render(webpage, {users: data, user: user});
 }
 
-const updateGPUPage = async (req, res, webpage) => {
+const editGPUPage = async (req, res, webpage) => {
 
     try {
         if (req.params.id) {
-            const id = req.params.id;
-            const gpu = await Gpu.findById(id);
+            let user = passport.session.user;
+            let gpu = await Gpu.findById(req.params.id);
 
             if (!gpu) {
                 res.status(400).send({message: "Data not found..."});
             } else {
-                res.render(webpage, {gpu});
+                res.render(webpage, {gpu: gpu, user: user});
             }
         }
         else{
@@ -145,7 +145,7 @@ module.exports = {
     viewUpdateUserPage,
     viewUpdateUserSelfPage,
     addGPUPage,
-    updateGPUPage,
+    editGPUPage,
     viewDeleteUserPage,
     viewDeleteGPUPage,
     viewUserPage

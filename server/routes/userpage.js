@@ -30,7 +30,7 @@ router.patch('/update-user/:id',
 // GPU Related operations
 router.get('/:id',
     checkAuthenticated,
-    gpuController.getMyGPU
+    gpuController.viewMySelectedGPU
 );
 
 router.get('/update-gpu/:id',

@@ -52,7 +52,7 @@ exports.isUserAndPasswordCorrect = async (email, password, done) => {
 
     try{
         if (await bcrypt.compare(password, user.password)) {
-            console.log('User session data:', user);
+            //console.log('User session data:', user);
             passport.session.user = user; // Saves user information in session
             done(null, user);
         }

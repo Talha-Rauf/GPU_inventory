@@ -8,12 +8,12 @@ const router = express.Router();
 
 router.get('/',
     checkAuthenticated,
-    gpuServices.viewGPUPage
+    gpuServices.viewGlobalGPUPage
 );
 
 router.get('/:id',
     checkAuthenticated,
-    gpuController.getGPU
+    gpuController.viewSelectedGPU
 );
 
 router.get('/add-gpu',

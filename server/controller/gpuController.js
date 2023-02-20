@@ -1,9 +1,9 @@
 const gpuServices = require("../services/gpuServices");
-const getGPU = async (req, res) => {
+const viewSelectedGPU = async (req, res) => {
     await gpuServices.getGPUandRender(req, res, 'viewGPU');
 }
 
-const getMyGPU = async (req, res) => {
+const viewMySelectedGPU = async (req, res) => {
     await gpuServices.getGPUandRender(req, res, 'viewMyGPU');
 }
 
@@ -32,8 +32,8 @@ const deleteMyGPU = async (req, res) => {
 }
 
 module.exports = {
-    getGPU,
-    getMyGPU,
+    viewSelectedGPU,
+    viewMySelectedGPU,
     addGPU,
     addMyGPU,
     updateGPU,
