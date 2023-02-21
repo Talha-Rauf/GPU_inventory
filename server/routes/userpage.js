@@ -43,6 +43,10 @@ router.get('/delete-gpu/:id',
     gpuServices.viewDeleteMyGPUPage
 );
 
+router.post('/add-gpu',
+    gpuController.addMyGPU
+);
+
 router.patch('/update-gpu/:id',
     checkAuthenticated,
     gpuController.updateMyGPU

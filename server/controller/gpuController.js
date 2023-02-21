@@ -8,27 +8,27 @@ const viewMySelectedGPU = async (req, res) => {
 }
 
 const addGPU = async (req, res) => {
-    await gpuServices.createGPUandSave(req, res, 'gpuInfoPage');
+    await gpuServices.createGPUandSave(req, res, '/gpu');
 }
 
 const addMyGPU = async (req, res) => {
-    await gpuServices.createGPUandSave(req, res, 'userpage');
+    await gpuServices.createGPUandSave(req, res, '/userpage');
 }
 
 const updateGPU = async (req, res) => {
-    await gpuServices.getGPUandUpdate(req, res, 'gpuInfoPage');
+    await gpuServices.getGPUandUpdate(req, res, '/gpu');
 }
 
 const updateMyGPU = async (req, res) => {
-    await gpuServices.getGPUandUpdate(req, res, 'userpage');
+    await gpuServices.getGPUandUpdate(req, res, '/userpage');
 }
 
 const deleteGPU = async (req, res) => {
-    await gpuServices.deleteGPU(req, res, 'gpuInfoPage');
+    await gpuServices.deleteGPU(req, res, '/gpu');
 }
 
 const deleteMyGPU = async (req, res) => {
-    await gpuServices.deleteGPU(req, res, 'userpage');
+    await gpuServices.deleteGPU(req, res, '/userpage');
 }
 
 module.exports = {

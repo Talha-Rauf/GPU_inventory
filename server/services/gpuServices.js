@@ -44,13 +44,13 @@ const createGPUandSave = async (req, res, webPage) => {
             res.status(400).send({message:'Content cannot be empty!'});
         }
         else{
-            let user = passport.session.user;
             const gpu = new Gpu({
                 company: req.body.company,
                 model: req.body.model,
                 size: req.body.size,
                 condition: req.body.condition,
-                assignedID: req.body.assignedID === '' ? user.id : req.body.assignedID
+                assignedID: req.body.assignedID,
+                details: req.body.details
             });
 
             if (!gpu) {
@@ -87,7 +87,8 @@ const getGPUandUpdate = async (req, res, webPage) => {
                     model: req.body.model,
                     size: req.body.size,
                     condition: req.body.condition,
-                    assignedID: req.body.assignedID === '' ? user.id : req.body.assignedID
+                    assignedID: req.body.assignedID === '' ? user.id : req.body.assignedID,
+                    details: req.body.details
                 });
 
                 Object.assign(gpu, gpuUpdate);
@@ -104,8 +105,7 @@ const getGPUandUpdate = async (req, res, webPage) => {
 const deleteGPU = async (req, res, webPage) => {
     try {
         if (req.params.id) {
-            const id = req.params.id;
-            const gpu = await Gpu.findById(id);
+            const gpu = await Gpu.findById(req.params.id);
 
             if (!gpu) {
                 res.status(400).send({message: "Data not found..."});

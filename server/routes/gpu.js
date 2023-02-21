@@ -6,6 +6,11 @@ const gpuController = require("../controller/gpuController");
 const gpuServices = require("../services/gpuRoutes");
 const router = express.Router();
 
+router.get('/add-gpu',
+    checkAuthenticated,
+    gpuServices.viewAddGPUPage
+);
+
 router.get('/',
     checkAuthenticated,
     gpuServices.viewGlobalGPUPage
@@ -14,11 +19,6 @@ router.get('/',
 router.get('/:id',
     checkAuthenticated,
     gpuController.viewSelectedGPU
-);
-
-router.get('/add-gpu',
-    checkAuthenticated,
-    gpuServices.viewAddGPUPage
 );
 
 router.get('/update-gpu/:id',
@@ -31,6 +31,10 @@ router.get('/delete-gpu/:id',
     checkAuthenticated,
     sameUserOrAdminRequiredForGPU,
     gpuServices.viewDeleteGPUPage
+);
+
+router.post('/add-gpu',
+    gpuController.addGPU
 );
 
 router.patch('/update-gpu/:id',

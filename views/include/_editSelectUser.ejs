@@ -1,9 +1,10 @@
 
-<select class="form-select" aria-label="Default select example" <% user.role === 'admin' ? '' : 'disabled' %>>
+<select name="assignedID" class="form-select" aria-label="Default select example">
 
-    <option name="assignedID" value="<% user.id %>">Select a user</option>
+    <option name="assignedID" value="<%= user.id %>"><%= user.firstName + " " + user.lastName %></option>
     <% for (var i = 0; i < users.length; i++) { %>
-        <option <%= users[i].id === gpu.assignedID ? 'selected' : '' %>
+        <option <%= user.role === 'admin' ? '' : 'hidden' %>
+                <%= users[i].id === gpu.assignedID ? 'selected' : '' %>
                 name="assignedID"
                 value="<%= users[i].id %>">
             <%= users[i].firstName + " " + users[i].lastName %>
