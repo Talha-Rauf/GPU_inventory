@@ -6,6 +6,7 @@ const viewGlobalGPUPage = async (req, res) => {
 }
 
 const viewAddGPUPage = async (req, res) => {
+    console.log('LOADING ADD-GPU PAGE...');
     await services.addGPUPage(req, res, 'addGPU');
 }
 

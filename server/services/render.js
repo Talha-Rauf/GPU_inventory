@@ -91,8 +91,6 @@ const viewUserPage = async (req, res) => {
 
 // Rendering GPU Inventory Pages
 const addGPUPage = async (req, res, webpage) => {
-    console.log("I AM IN tHE ADD USER PAGE FUNCTION!");
-    console.log(passport.session.user);
     try {
         if (passport.session.user) {
             let data = await User.find().sort('firstName');
