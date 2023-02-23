@@ -9,7 +9,7 @@ const getAllUsers = catchAsync(async (req, res) => {
     const all_users = await userServices.queryUsers('firstName');
     const current_user = passport.session.user;
     if (!all_users) {throw new ApiError(httpStatus.NOT_FOUND, 'User not found');}
-    res.render('usersInfoPage', {users: all_users, user: current_user, "errorMessage": req.flash("ONLY ADMINS CAN PERFORM THIS ACTION!")});
+    res.render('usersInfoPage', {users: all_users, user: current_user});
 });
 
 const getUser = catchAsync(async (req, res) => {
@@ -20,8 +20,9 @@ const getUser = catchAsync(async (req, res) => {
 
 // create new user
 const addUser = catchAsync(async (req, res) => {
-    await userServices.createUser(req.body);
-    res.redirect('/users');
+    const user = await userServices.createUser(req.body);
+    if (!user) {res.render('addNewUser', {errorMessage: 'User with this email already exists!'});}
+    else {res.redirect('/users');}
 });
 
 const signupUser = catchAsync(async (req, res) => {
@@ -30,12 +31,13 @@ const signupUser = catchAsync(async (req, res) => {
     else {res.redirect('/login');}
 });
 
-// Update a user
+// Update a user through the user inventory page
 const updateUser = catchAsync(async (req, res) => {
     await userServices.updateUser(req.params.id, req.body);
     res.redirect('/users/view-user/' + req.params.id);
 });
 
+// update a user through the userpage
 const updateUserSelf = catchAsync(async (req, res) => {
     await userServices.updateUser(req.params.id, req.body);
     res.redirect('/userpage');
