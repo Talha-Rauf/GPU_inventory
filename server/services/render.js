@@ -7,11 +7,11 @@ const viewHomePage = (req, res) => {
 }
 
 const viewLoginPage = (req, res) => {
-    res.render('loginPage', { "errorMessage": req.flash("Error loading login page...") });
+    res.render('loginPage', { errorMessage: '' });
 }
 
 const viewSignUpPage = (req, res) => {
-    res.render('signUpPage');
+    res.render('signUpPage', { errorMessage: '' });
 }
 
 // Rendering User Inventory Pages

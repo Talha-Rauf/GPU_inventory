@@ -1,145 +1,67 @@
+const httpStatus = require('http-status');
 const bcrypt = require("bcrypt");
 const {User} = require('../model/index');
 const passport = require("passport");
+const ApiError = require('../utils/ApiError');
 
-const createUserAndSave = async (req, res, webPage) => {
-    try{
-        if(!req.body){
-            res.status(400).send({message:'Content cannot be empty!'});
-        }
-        else{
-            const hashedPassword = await bcrypt.hash(req.body.password, 10);
-            const user = new User({
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                email: req.body.email.toLowerCase(),
-                password: hashedPassword,
-                gender: req.body.gender,
-                status: req.body.status,
-                role: req.body.role
-            });
-
-            if (!user) {
-                res.status(400).send({message: "User data missing..."});
-            }
-            else {
-                user.save();
-                console.log(user);
-                res.redirect(webPage);
-            }
-        }
-    }
-    catch (err) {
-        res.status(500).send({message: err.message || "Error occurred while saving user..."});
-    }
-}
-
-const getAllByIDAndRender = async (req, res, webPage) => {
-    try {
-        const data = await User.find().sort('firstName');
-        const current_user = passport.session.user;
-
-        if (!data) {
-            res.status(400).send({message: "Data entries not found..."});
-        }
-        else {
-            res.render(webPage, {users: data, user: current_user, "errorMessage": req.flash("ONLY ADMINS CAN PERFORM THIS ACTION!")});
-        }
-    }
-    catch (err) {
-        res.status(500).send({message: err.message || "Error occurred while retrieving all data..."});
-    }
-}
-
-const getByIDAndRender = async (req, res, webPage) => {
-    try {
-        const id = req.params.id;
-        if (id) {
-            const user = await User.findById(id);
-
-            if (!user) {
-                res.status(400).send({message: "Data not found..."});
-            } else {
-                res.render(webPage, {user: user});
-            }
-        } else {
-            res.status(400).send({message: "ID is required or missing..."});
-        }
-    } catch (err) {
-        res.status(500).send({message: err.message || "Error occurred while retrieving Data..."});
-    }
-}
-
-const getByIdAndUpdate = async (req, res, webPage) => {
-    try {
-        if (!req.body) {
-            res.status(400).send({message: 'Content cannot be empty!'});
-        }
-        else {
-            const user = await User.findById(req.params.id);
-            const userInSession = passport.session.user;
-
-            if (!user) {
-                res.status(400).send({message: "Data is missing or not found..."});
-            }
-            else {
-                let hashedPassword = await bcrypt.hash(req.body.password, 10);
-
-                const userUpdate = new User({
-                    _id: user._id,
-                    firstName: req.body.firstName,
-                    lastName: req.body.lastName,
-                    email: req.body.email.toLowerCase(),
-                    password: req.body.password === '' ? user.password : hashedPassword,
-                    gender: req.body.gender,
-                    status: req.body.status,
-                    role: userInSession.role === 'admin' ? req.body.role : user.role
-                });
-
-                Object.assign(user, userUpdate);
-                user.save();
-                res.redirect(webPage);
-            }
-        }
-    }
-    catch (err) {
-        res.status(500).send({message: err.message || "Error occurred while updating data..."});
-    }
-}
-
-const getByIdAndDelete = async (req, res, webPage) => {
-    try {
-        if (req.params.id) {
-            const id = req.params.id;
-            const user = await User.findById(id);
-
-            if (!user) {
-                res.status(400).send({message: "Data not found..."});
-            } else {
-                user.deleteOne();
-                res.redirect(webPage);
-            }
-        } else {
-            res.status(400).send({message: "ID is required..."});
-        }
-    } catch (err) {
-        res.status(500).send({message: err.message || "Error occurred while retrieving Data for deletion..."});
-    }
+const queryUsers = async (filter) => {
+    return await User.find().sort(filter);
 }
 
 const findByID = async (id) => {
     return await User.findById(id);
 };
 
-module.exports.findByEmail = async (email) => {
+const findByEmail = async (email) => {
     return await User.findOne({email});
 };
 
+const createUser = async (userBody) => {
+    if (await User.isEmailTaken(userBody.email)) {
+        return undefined;
+    }
+    userBody.password = await bcrypt.hash(userBody.password, 10);
+    return await User.create(userBody);
+}
+
+const updateUser = async (userID, updateBody) => {
+    const user = await findByID(userID); // User found by ID in db
+    const userInSession = passport.session.user; // User logged in current session
+
+    if (!user) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+    }
+
+    let hashedPassword = await bcrypt.hash(updateBody.password, 10);
+
+    const userUpdate = new User({
+        _id: user._id,
+        firstName: updateBody.firstName,
+        lastName: updateBody.lastName,
+        email: updateBody.email.toLowerCase(),
+        password: updateBody.password === '' ? user.password : hashedPassword,
+        gender: updateBody.gender,
+        status: updateBody.status,
+        role: userInSession.role === 'admin' ? updateBody.role : user.role
+    });
+
+    Object.assign(user, userUpdate);
+    await user.save();
+}
+
+const deleteUser = async (userID) => {
+    const user = await findByID(userID);
+    if (!user) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+    }
+    await user.remove();
+}
+
 module.exports = {
-    createUserAndSave,
-    getAllByIDAndRender,
-    getByIDAndRender,
-    getByIdAndUpdate,
-    getByIdAndDelete,
-    findByID
+    queryUsers,
+    findByID,
+    findByEmail,
+    createUser,
+    updateUser,
+    deleteUser
 }

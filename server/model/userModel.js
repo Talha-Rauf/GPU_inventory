@@ -13,17 +13,27 @@ var mySchema = new mongoose.Schema({
     email:{
         type: String,
         //validate: emailValidator,
+        lowercase: true,
         required: true
     },
     password:{
         type: String,
         //validate: passwordValidator,
+        minlength: 2,
         required: true
     },
     gender: String,
     status: String,
-    role: String
+    role: {
+        type: String,
+        default: 'user'
+    }
 });
+
+mySchema.statics.isEmailTaken = async function (email, excludeUserId) {
+    const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
+    return !!user;
+};
 
 module.exports = mongoose.model('user', mySchema);
 
