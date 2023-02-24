@@ -49,6 +49,31 @@ const deleteUser = catchAsync(async (req, res) => {
     res.redirect('/users');
 });
 
+const changePassword = catchAsync(async (req, res) => {
+    const user = await userServices.findByID(req.params.id);
+    if (req.body.password === req.body.conpassword) {
+        await userServices.changePassword(req.params.id, req.body);
+        await userServices.changeCheckToFalse(req.params.id);
+        res.render('resetPassword', { user: user, errorMessage: 'Password changed successfully!' }); // Not an error
+    }
+    else {
+        res.render('resetPassword', { user: user, errorMessage: 'Passwords do not match!' })
+    }
+});
+
+const confirmEmail = catchAsync(async (req, res) => {
+    const user = await userServices.findByEmail(req.body.email);
+    let message = '';
+
+    if (!user) {message = 'Email does not exist or incorrect!';}
+    else {
+        // <-- function to actually send the email -->
+        await userServices.changeCheckToTrue(req.params.id);
+        message = 'Email sent password reset link!';
+    }
+    res.render('resetByEmail', {errorMessage: message});
+});
+
 module.exports = {
     getAllUsers,
     getUser,
@@ -56,5 +81,7 @@ module.exports = {
     updateUser,
     updateUserSelf,
     deleteUser,
-    signupUser
+    signupUser,
+    changePassword,
+    confirmEmail
 }

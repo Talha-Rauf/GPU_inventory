@@ -42,7 +42,9 @@ const updateUser = async (userID, updateBody) => {
         password: updateBody.password === '' ? user.password : hashedPassword,
         gender: updateBody.gender,
         status: updateBody.status,
-        role: user_in_session.role === 'admin' ? updateBody.role : user.role
+        role: user_in_session.role === 'admin' ? updateBody.role : user.role,
+        emailVerified: updateBody.emailVerified,
+        checkFalse: updateBody.checkFalse
     });
 
     Object.assign(user, userUpdate);
@@ -57,11 +59,42 @@ const deleteUser = async (userID) => {
     await user.remove();
 }
 
+const changePassword = async (userID, updateBody) => {
+    const user = await findByID(userID);
+    let hashedPassword = await bcrypt.hash(updateBody.password, 10);
+    await user.updateOne(
+        { _id: userID },
+        { $set: { password: hashedPassword } },
+        { new: true }
+    );
+}
+
+const changeCheckToTrue = async (userID) => {
+    const user = await findByID(userID);
+    await user.updateOne(
+        { _id: userID },
+        { $set: { check: true } },
+        { new: true }
+    );
+}
+
+const changeCheckToFalse = async (userID) => {
+    const user = await findByID(userID);
+    await user.updateOne(
+        { _id: userID },
+        { $set: { check: false } },
+        { new: true }
+    );
+}
+
 module.exports = {
     queryUsers,
     findByID,
     findByEmail,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    changePassword,
+    changeCheckToTrue,
+    changeCheckToFalse
 }

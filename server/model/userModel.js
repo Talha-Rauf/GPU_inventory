@@ -27,7 +27,15 @@ var mySchema = new mongoose.Schema({
     role: {
         type: String,
         default: 'user'
-    }
+    },
+    emailVerified: {
+        type: Boolean,
+        defaultValue: false,
+    },
+    checkFalse: {
+        type: Boolean,
+        defaultValue: false,
+    },
 });
 
 mySchema.statics.isEmailTaken = async function (email, excludeUserId) {

@@ -16,7 +16,7 @@ const viewSignUpPage = (req, res) => {
 
 // Rendering User Inventory Pages
 const viewAddUserPage = (req, res) => {
-    res.render('addNewUser');
+    res.render('addNewUser', { errorMessage: '' });
 }
 
 const viewUpdateUserPage = async (req, res) => {
@@ -87,6 +87,15 @@ const viewUserPage = async (req, res) => {
     let gpu = await Gpu.find().sort('model');
     let user = passport.session.user;
     res.render('userPage', {user, gpu});
+}
+
+const viewConfirmEmailPage = (req, res) => {
+    res.render('resetByEmail', {errorMessage: ''});
+}
+
+const viewPasswordResetPage = async (req, res) => {
+    const user = await User.findById(req.params.id);
+    res.render('resetPassword', {user, errorMessage: ''});
 }
 
 // Rendering GPU Inventory Pages
@@ -160,6 +169,8 @@ module.exports = {
     viewAddUserPage,
     viewUpdateUserPage,
     viewUpdateUserSelfPage,
+    viewPasswordResetPage,
+    viewConfirmEmailPage,
     addGPUPage,
     editGPUPage,
     viewDeleteUserPage,

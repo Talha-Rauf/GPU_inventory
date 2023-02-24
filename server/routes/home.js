@@ -19,6 +19,14 @@ router.get('/signup', [
     services.viewSignUpPage
 ]);
 
+router.get('/reset',
+    services.viewConfirmEmailPage
+);
+
+router.get('/password-reset/:id',
+    services.viewPasswordResetPage
+);
+
 router.delete('/logout', [
     authService.logoutUser
 ]);
@@ -31,5 +39,13 @@ router.post('/signup', [
     authService.checkNotAuthenticated,
     userController.signupUser,
 ]);
+
+router.patch('/password-reset/:id',
+    userController.changePassword
+);
+
+router.post('/reset',
+    userController.confirmEmail
+);
 
 module.exports = router;
