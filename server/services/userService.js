@@ -26,7 +26,7 @@ const createUser = async (userBody) => {
 
 const updateUser = async (userID, updateBody) => {
     const user = await findByID(userID); // User found by ID in db
-    const userInSession = passport.session.user; // User logged in current session
+    const user_in_session = passport.session.user; // User logged in current session
 
     if (!user) {
         throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
@@ -42,7 +42,7 @@ const updateUser = async (userID, updateBody) => {
         password: updateBody.password === '' ? user.password : hashedPassword,
         gender: updateBody.gender,
         status: updateBody.status,
-        role: userInSession.role === 'admin' ? updateBody.role : user.role
+        role: user_in_session.role === 'admin' ? updateBody.role : user.role
     });
 
     Object.assign(user, userUpdate);

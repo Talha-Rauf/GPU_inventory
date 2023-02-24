@@ -1,9 +1,4 @@
 const services = require('./render');
-const gpuService = require('./gpuServices')
-
-const viewGlobalGPUPage = async (req, res) => {
-    await gpuService.getAllGPUAndRender(req, res, 'GPUPage')
-}
 
 const viewAddGPUPage = async (req, res) => {
     console.log('LOADING ADD-GPU PAGE...');

@@ -7,9 +7,9 @@ const passport = require("passport");
 // view user(s)
 const getAllUsers = catchAsync(async (req, res) => {
     const all_users = await userServices.queryUsers('firstName');
-    const current_user = passport.session.user;
+    const user_in_session = passport.session.user;
     if (!all_users) {throw new ApiError(httpStatus.NOT_FOUND, 'User not found');}
-    res.render('usersInfoPage', {users: all_users, user: current_user});
+    res.render('usersInfoPage', {users: all_users, user: user_in_session});
 });
 
 const getUser = catchAsync(async (req, res) => {

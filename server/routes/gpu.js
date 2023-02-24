@@ -13,12 +13,12 @@ router.get('/add-gpu',
 
 router.get('/',
     checkAuthenticated,
-    gpuServices.viewGlobalGPUPage
+    gpuController.getAllGPUs
 );
 
 router.get('/:id',
     checkAuthenticated,
-    gpuController.viewSelectedGPU
+    gpuController.getGPU
 );
 
 router.get('/update-gpu/:id',

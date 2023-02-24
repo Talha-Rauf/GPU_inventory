@@ -1,39 +1,62 @@
 const gpuServices = require("../services/gpuServices");
-const viewSelectedGPU = async (req, res) => {
-    await gpuServices.getGPUandRender(req, res, 'viewGPU');
-}
+const passport = require("passport");
+const ApiError = require("../utils/ApiError");
+const httpStatus = require("http-status");
+const gpuService = require("../services/gpuServices");
+const catchAsync = require("../utils/catchAsync");
 
-const viewMySelectedGPU = async (req, res) => {
-    await gpuServices.getGPUandRender(req, res, 'viewMyGPU');
-}
+const getAllGPUs = catchAsync(async (req, res) => {
+    const gpus_data = await gpuService.queryGpuData('model');
+    if (!gpus_data) {throw new ApiError(httpStatus.NOT_FOUND, 'GPUs data not found');}
+    res.render('GPUPage', {gpu: gpus_data, user: passport.session.user});
+});
 
-const addGPU = async (req, res) => {
-    await gpuServices.createGPUandSave(req, res, '/gpu');
-}
+const getGPU = catchAsync(async (req, res) => {
+    const gpu = await gpuService.findGpuByID(req.params.id);
+    if (!gpu) {throw new ApiError(httpStatus.NOT_FOUND, 'GPU not found');}
+    res.render('viewGPU', {gpu: gpu, user: passport.session.user});
+});
 
-const addMyGPU = async (req, res) => {
-    await gpuServices.createGPUandSave(req, res, '/userpage');
-}
+const getMyGPU = catchAsync(async (req, res) => {
+    const gpu = await gpuService.findGpuByID(req.params.id);
+    if (!gpu) {throw new ApiError(httpStatus.NOT_FOUND, 'GPU not found');}
+    res.render('viewMyGPU', {gpu: gpu, user: passport.session.user});
+});
 
-const updateGPU = async (req, res) => {
-    await gpuServices.getGPUandUpdate(req, res, '/gpu');
-}
+const addGPU = catchAsync(async (req, res) => {
+    await gpuServices.createGPU(req.body);
+    res.redirect('/gpu');
+});
 
-const updateMyGPU = async (req, res) => {
-    await gpuServices.getGPUandUpdate(req, res, '/userpage');
-}
+const addMyGPU = catchAsync(async (req, res) => {
+    await gpuServices.createGPU(req.body);
+    res.redirect('/userpage');
+});
 
-const deleteGPU = async (req, res) => {
-    await gpuServices.deleteGPU(req, res, '/gpu');
-}
+const updateGPU = catchAsync(async (req, res) => {
+    await gpuServices.updateGPU(req.params.id, req.body);
+    res.redirect('/gpu/view-gpu/' + req.params.id);
+});
 
-const deleteMyGPU = async (req, res) => {
-    await gpuServices.deleteGPU(req, res, '/userpage');
-}
+const updateMyGPU = catchAsync(async (req, res) => {
+    await gpuServices.updateGPU(req.params.id, req.body);
+    res.redirect('/userpage/view-gpu/' + req.params.id);
+});
+
+const deleteGPU = catchAsync(async (req, res) => {
+    await gpuServices.deleteGPU(req.params.id);
+    res.redirect('/gpu');
+});
+
+const deleteMyGPU = catchAsync(async (req, res) => {
+    await gpuServices.deleteGPU(req.params.id);
+    res.redirect('/userpage');
+});
 
 module.exports = {
-    viewSelectedGPU,
-    viewMySelectedGPU,
+    getAllGPUs,
+    getGPU,
+    getMyGPU,
     addGPU,
     addMyGPU,
     updateGPU,
