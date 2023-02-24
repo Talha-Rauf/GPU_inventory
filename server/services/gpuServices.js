@@ -2,16 +2,14 @@ const {Gpu} = require('../model/index');
 const passport = require("passport");
 const ApiError = require("../utils/ApiError");
 const httpStatus = require("http-status");
-const {G} = require("mdb-ui-kit/src/js/mdb/util/keycodes");
 
 const queryGpuData = async (filter) => {
     return await Gpu.find().sort(filter);
 }
 
 const findGpuByID = async (gpuID) => {
-    return await Gpu.findOne(gpuID);
+    return await Gpu.findOne({gpuID});
 }
-
 
 const createGPU = async (userBody) => {
     return await Gpu.create(userBody);
@@ -25,17 +23,7 @@ const updateGPU = async (gpuID, updateBody) => {
         throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
     }
 
-    const gpuUpdate = new Gpu({
-        _id: gpu._id,
-        company: updateBody.company,
-        model: updateBody.model,
-        size: updateBody.size,
-        condition: updateBody.condition,
-        assignedID: updateBody.assignedID,
-        details: updateBody.details
-    });
-
-    Object.assign(gpu, gpuUpdate);
+    Object.assign(gpu, updateBody);
     await gpu.save();
 }
 

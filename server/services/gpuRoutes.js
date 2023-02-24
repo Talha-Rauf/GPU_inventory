@@ -26,7 +26,6 @@ const viewDeleteMyGPUPage = async (req, res) => {
 }
 
 module.exports = {
-    viewGlobalGPUPage,
     viewAddGPUPage,
     viewAddMyGPUPage,
     viewUpdateGPUPage,
