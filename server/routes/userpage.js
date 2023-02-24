@@ -1,4 +1,4 @@
-const {checkAuthenticated, checkUserInSession} = require('../services/authService');
+const {checkAuthenticated} = require('../services/authService');
 const services = require('../services/render');
 const gpuServices = require('../services/gpuRoutes')
 const express = require("express");
