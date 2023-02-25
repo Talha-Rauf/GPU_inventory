@@ -67,8 +67,8 @@ const confirmEmail = catchAsync(async (req, res) => {
 
     if (!user) {message = 'Email does not exist or incorrect!';}
     else {
-        // <-- function to actually send the email -->
-        await userServices.changeCheckToTrue(req.params.id);
+        await userServices.sendEmailToUser(user); // <-- function to actually send the email -->
+        await userServices.changeCheckToTrue(user.id);
         message = 'Email sent password reset link!';
     }
     res.render('resetByEmail', {errorMessage: message});
