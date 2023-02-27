@@ -86,10 +86,10 @@ const confirmEmail = catchAsync(async (req, res) => {
     const user = await userServices.findByID(req.params.id);
     if (!user.emailVerified) {
         await userServices.changeEmailVerifyToTrue(user.id);
-        res.render('emailVerification');
+        res.render('emailVerification', {errorMessage: ''});
     }
     else {
-        res.redirect('/login');
+        res.render('emailVerification', {errorMessage: 'Email already verified!'});
     }
 });
 
