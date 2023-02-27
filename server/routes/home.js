@@ -20,10 +20,12 @@ router.get('/signup', [
 ]);
 
 router.get('/reset',
+    authService.checkNotAuthenticated,
     services.viewConfirmEmailPage
 );
 
 router.get('/password-reset/:id',
+    authService.checkNotAuthenticated,
     services.viewPasswordResetPage
 );
 
@@ -49,6 +51,7 @@ router.post('/reset',
 );
 
 router.get('/email-verification/:id',
+    authService.checkNotAuthenticated,
     userController.confirmEmail
 );
 

@@ -3,7 +3,7 @@ const mailOptions = (user) =>
     return {
         from: 'no-reply@inventory_nodejs.com', // verified sender email
         to: user.email, // recipient email
-        subject: "PASSWORD RESET LINK", // Subject line
+        subject: "NEW ACCOUNT CREATED", // Subject line
         text:
             "New account create for: " + user.firstName + " " + user.lastName + ".\n" +
             "Before using your account kindly reset your password with the given link below." +
