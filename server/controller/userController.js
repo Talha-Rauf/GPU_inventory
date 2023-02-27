@@ -58,15 +58,18 @@ const deleteUser = catchAsync(async (req, res) => {
 
 const changePassword = catchAsync(async (req, res) => {
     const user = await userServices.findByID(req.params.id);
-    if (user.checkFalse) {
-        if (req.body.password === req.body.conpassword) { // If password and confirmation password match
-            await userServices.changePassword(user.id, req.body.password);
-            await userServices.changeCheckToFalse(user.id);
-            res.render('loginPage', { user: user, errorMessage: 'Password changed successfully!' });
-        }
-        else {res.render('resetPassword', { user: user, errorMessage: 'Passwords do not match!' })}
+    if (req.body.password === req.body.conpassword) { // If password and confirmation password match
+        await userServices.changePassword(user.id, req.body.password);
+        await userServices.changeCheckToFalse(user.id);
+        res.render('loginPage', { user: user, errorMessage: 'Password changed successfully!' });
     }
-    else {res.redirect('/login');}
+    else {res.render('resetPassword', { user: user, errorMessage: 'Passwords do not match!' })}
+});
+
+const checkIfFalse = catchAsync(async (req,res) => {
+    const user = await userServices.findByID(req.params.id);
+    if (user.checkFalse) { res.next(); }
+    else { res.redirect('/login'); }
 });
 
 const sendEmailForReset = catchAsync(async (req, res) => {
@@ -101,6 +104,7 @@ module.exports = {
     updateUserSelf,
     deleteUser,
     signupUser,
+    checkIfFalse,
     confirmEmail,
     changePassword,
     sendEmailForReset

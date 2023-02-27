@@ -43,6 +43,7 @@ router.post('/signup', [
 ]);
 
 router.patch('/password-reset/:id',
+    userController.checkIfFalse,
     userController.changePassword
 );
 
