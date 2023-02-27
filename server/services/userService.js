@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const {User} = require('../model/index');
 const passport = require("passport");
 const ApiError = require('../utils/ApiError');
-const sendmail = require('sendmail')();
+const {transporter, mailOptions} = require("../config");
 
 const queryUsers = async (filter) => {
     return await User.find().sort(filter);
@@ -89,15 +89,7 @@ const changeCheckToFalse = async (userID) => {
 }
 
 const sendEmailToUser = (user) => {
-    sendmail({
-        from: 'no-reply@yourdomain.com', // verified sender email
-        to: user.email, // recipient email
-        subject: "PASSWORD RESET LINK", // Subject line
-        text:
-            "Kindly click the link below for resetting your password!" + "\n" +
-            "http://localhost:3000/password-reset/" + user.id + "\n\n", // plain text body
-        html: "This is a html version: Kindly click the link <b> http://localhost:3000/password-reset/ + user.id </b>for resetting your password!", // html body
-    }, function(error, info){
+    transporter.sendMail(mailOptions(user), function(error, info) {
         if (error) {
             console.log(error);
         } else {

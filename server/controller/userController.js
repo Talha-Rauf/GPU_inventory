@@ -51,13 +51,18 @@ const deleteUser = catchAsync(async (req, res) => {
 
 const changePassword = catchAsync(async (req, res) => {
     const user = await userServices.findByID(req.params.id);
-    if (req.body.password === req.body.conpassword) {
-        await userServices.changePassword(req.params.id, req.body);
-        await userServices.changeCheckToFalse(req.params.id);
-        res.render('resetPassword', { user: user, errorMessage: 'Password changed successfully!' }); // Not an error
+    if (user.checkFalse) {
+        if (req.body.password === req.body.conpassword) {
+            await userServices.changePassword(req.params.id, req.body);
+            await userServices.changeCheckToFalse(req.params.id);
+            res.render('loginPage', { user: user, errorMessage: 'Password changed successfully!' });
+        }
+        else {
+            res.render('resetPassword', { user: user, errorMessage: 'Passwords do not match!' })
+        }
     }
     else {
-        res.render('resetPassword', { user: user, errorMessage: 'Passwords do not match!' })
+        res.redirect('/login');
     }
 });
 
