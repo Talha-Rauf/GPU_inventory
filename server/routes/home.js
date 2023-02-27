@@ -45,6 +45,10 @@ router.patch('/password-reset/:id',
 );
 
 router.post('/reset',
+    userController.sendEmailForReset
+);
+
+router.get('/email-verification/:id',
     userController.confirmEmail
 );
 

@@ -22,13 +22,20 @@ const getUser = catchAsync(async (req, res) => {
 const addUser = catchAsync(async (req, res) => {
     const user = await userServices.createUser(req.body);
     if (!user) {res.render('addNewUser', {errorMessage: 'User with this email already exists!'});}
-    else {res.redirect('/users');}
+    else {
+        await userServices.sendEmailForVerification(user);
+        await userServices.sendEmailForNewUser(user);
+        res.redirect('/users');
+    }
 });
 
 const signupUser = catchAsync(async (req, res) => {
-    const user = await userServices.createUser(req.body);
+    const user = await userServices.signUpUser(req.body);
     if (!user) {res.render('signUpPage', {errorMessage: 'Email is already taken!'});}
-    else {res.redirect('/login');}
+    else {
+        await userServices.sendEmailForVerification(user);
+        res.render('loginPage', {errorMessage: 'Email sent for verification!'});
+    }
 });
 
 // Update a user through the user inventory page
@@ -52,31 +59,38 @@ const deleteUser = catchAsync(async (req, res) => {
 const changePassword = catchAsync(async (req, res) => {
     const user = await userServices.findByID(req.params.id);
     if (user.checkFalse) {
-        if (req.body.password === req.body.conpassword) {
-            await userServices.changePassword(req.params.id, req.body);
-            await userServices.changeCheckToFalse(req.params.id);
+        if (req.body.password === req.body.conpassword) { // If password and confirmation password match
+            await userServices.changePassword(user.id, req.body.password);
+            await userServices.changeCheckToFalse(user.id);
             res.render('loginPage', { user: user, errorMessage: 'Password changed successfully!' });
         }
-        else {
-            res.render('resetPassword', { user: user, errorMessage: 'Passwords do not match!' })
-        }
+        else {res.render('resetPassword', { user: user, errorMessage: 'Passwords do not match!' })}
     }
-    else {
-        res.redirect('/login');
-    }
+    else {res.redirect('/login');}
 });
 
-const confirmEmail = catchAsync(async (req, res) => {
+const sendEmailForReset = catchAsync(async (req, res) => {
     const user = await userServices.findByEmail(req.body.email);
     let message = '';
 
     if (!user) {message = 'Email does not exist or incorrect!';}
     else {
-        await userServices.sendEmailToUser(user); // <-- function to actually send the email -->
+        await userServices.sendEmailForPassReset(user);
         await userServices.changeCheckToTrue(user.id);
-        message = 'Email sent password reset link!';
+        message = 'Email sent with password reset link!';
     }
     res.render('resetByEmail', {errorMessage: message});
+});
+
+const confirmEmail = catchAsync(async (req, res) => {
+    const user = await userServices.findByID(req.params.id);
+    if (!user.emailVerified) {
+        await userServices.changeEmailVerifyToTrue(user.id);
+        res.render('emailVerification');
+    }
+    else {
+        res.redirect('/login');
+    }
 });
 
 module.exports = {
@@ -87,6 +101,7 @@ module.exports = {
     updateUserSelf,
     deleteUser,
     signupUser,
+    confirmEmail,
     changePassword,
-    confirmEmail
+    sendEmailForReset
 }

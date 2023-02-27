@@ -13,7 +13,11 @@
                 </div>
 
                 <% if (user.role === 'admin') {%>
-                    <a href="/users"><button class="btn btn-primary px-3 me-2" type="button">User Inventory</button></a>
+                    <a href="/users"><button class="btn btn-primary px-3 me-2 mb-3" type="button">User Inventory</button></a>
+                <%}%>
+
+                <% if (!user.emailVerified) {%>
+                    <p style="color: #ff3547">Email verification is pending!</p>
                 <%}%>
 
             </div>

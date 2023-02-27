@@ -3,8 +3,7 @@ const bcrypt = require("bcrypt");
 const {User} = require('../model/index');
 const passport = require("passport");
 const ApiError = require('../utils/ApiError');
-const {transporter, mailOptions} = require("../config");
-
+const {transporter, mailForNewUser, mailForReset, mailForConfirmation} = require("../config");
 const queryUsers = async (filter) => {
     return await User.find().sort(filter);
 }
@@ -18,6 +17,17 @@ const findByEmail = async (email) => {
 };
 
 const createUser = async (userBody) => {
+    let newUser = userBody;
+    if (await User.isEmailTaken(userBody.email)) {
+        return undefined;
+    }
+    let generatedPassword = Math.random().toString(36).slice(-8);
+    newUser.password === '...' ? await bcrypt.hash(generatedPassword, 10) : await bcrypt.hash(userBody.password, 10);
+    newUser.checkFalse = true;
+    return await User.create(newUser);
+}
+
+const signUpUser = async (userBody) => {
     if (await User.isEmailTaken(userBody.email)) {
         return undefined;
     }
@@ -60,10 +70,9 @@ const deleteUser = async (userID) => {
     await user.remove();
 }
 
-const changePassword = async (userID, updateBody) => {
-    const user = await findByID(userID);
-    let hashedPassword = await bcrypt.hash(updateBody.password, 10);
-    await user.updateOne(
+const changePassword = async (userID, newPassword) => {
+    let hashedPassword = await bcrypt.hash(newPassword, 10);
+    await User.updateOne(
         { _id: userID },
         { $set: { password: hashedPassword } },
         { new: true }
@@ -71,25 +80,51 @@ const changePassword = async (userID, updateBody) => {
 }
 
 const changeCheckToTrue = async (userID) => {
-    const user = await findByID(userID);
-    await user.updateOne(
+    await User.updateOne(
         { _id: userID },
-        { $set: { check: true } },
+        { $set: { checkFalse: true } },
         { new: true }
     );
 }
 
 const changeCheckToFalse = async (userID) => {
-    const user = await findByID(userID);
-    await user.updateOne(
+    await User.updateOne(
         { _id: userID },
-        { $set: { check: false } },
+        { $set: { checkFalse: false } },
         { new: true }
     );
 }
 
-const sendEmailToUser = (user) => {
-    transporter.sendMail(mailOptions(user), function(error, info) {
+const changeEmailVerifyToTrue = async (userID) => {
+    await User.updateOne(
+        { _id: userID },
+        { $set: { emailVerified: true } },
+        { new: true }
+    );
+}
+
+const sendEmailForPassReset = (user) => {
+    transporter.sendMail(mailForReset(user), function(error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+}
+
+const sendEmailForVerification = (user) => {
+    transporter.sendMail(mailForConfirmation(user), function(error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+}
+
+const sendEmailForNewUser = (user) => {
+    transporter.sendMail(mailForNewUser(user), function(error, info) {
         if (error) {
             console.log(error);
         } else {
@@ -103,10 +138,14 @@ module.exports = {
     findByID,
     findByEmail,
     createUser,
+    signUpUser,
     updateUser,
     deleteUser,
     changePassword,
     changeCheckToTrue,
     changeCheckToFalse,
-    sendEmailToUser
+    sendEmailForNewUser,
+    sendEmailForPassReset,
+    sendEmailForVerification,
+    changeEmailVerifyToTrue
 }
