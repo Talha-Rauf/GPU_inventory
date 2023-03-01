@@ -102,7 +102,7 @@ const confirmEmail = catchAsync(async (req, res) => {
 
 const uploadImage = catchAsync(async (req, res) => {
     if (req.files) {
-        const {image} = req.files.image;
+        let image = req.files.image;
         // If it does not have image mime type prevent from uploading
         if (/^image/.test(image.mimetype)) {
             // Move the uploaded image to our upload folder
@@ -121,30 +121,22 @@ const uploadImage = catchAsync(async (req, res) => {
 
 // return res.render('uploadMyAvatar', {userID: req.params.id, errorMessage: 'No file was selected!!'});
 const uploadMyImage = catchAsync(async (req, res) => {
-    const handleError = (err, res) => {
-        console.log(err);
-        res
-            .status(500)
-            .contentType("text/plain")
-            .end("Oops! Something went wrong!");
-    };
-
-    const storage = multer.diskStorage({
-        destination: (req, file, cb) => {
-            cb(null, path.join(__dirname, 'public'))
-        },
-        filename: (req, file, cb) => {
-            cb(null, Date.now() + '-' + file.originalname);
+    if (req.files) {
+        let image = req.files.image;
+        // If it does not have image mime type prevent from uploading
+        if (/^image/.test(image.mimetype)) {
+            // Move the uploaded image to our upload folder
+            await upload.uploadMyImage(image, req.params.id);
+            res.redirect("/userpage/update-user/" + req.params.id);
         }
-    })
-
-    const upload = multer({
-        storage: storage
-        // you might also want to set some limits: https://github.com/expressjs/multer#limits
-    });
-
-    upload.single('image');
-    console.log('uploaded:', req.file);
+        else {
+            res.render('uploadMyAvatar', {userID: req.params.id, errorMessage: 'File type is incorrect!!'});
+        }
+    }
+    // If no image submitted, exit
+    else {
+        return res.render('uploadMyAvatar', {userID: req.params.id, errorMessage: 'No file was selected!!'});
+    }
 
 });
 

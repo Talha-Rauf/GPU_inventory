@@ -7,24 +7,11 @@ const upload = multer({
 });
 
 const uploadImage = async (image, userID) => {
-    await image.mv(__dirname + "/avatars/" + userID);
+    await image.mv(__dirname + "/avatars/" + userID + path.extname(image.name).toLowerCase());
 }
 
 const uploadMyImage = async (image, userID) => {
-    upload.single("file" /* name attribute of <file> element in your form */);
-    const tempPath = image.path;
-    const targetPath = path.join(__dirname, "./uploads/image.png");
-
-    let extensionName = path.extname(image.originalname).toLowerCase();
-    if (extensionName === ".png" || extensionName === ".jpg") {
-        fs.rename(tempPath, targetPath, err => {
-            if (err) return true;
-        });
-    } else {
-        fs.unlink(tempPath, err => {
-            if (err) return false;
-        });
-    }
+    await image.mv(__dirname + "/avatars/" + userID + path.extname(image.name).toLowerCase());
 }
 
 module.exports = {

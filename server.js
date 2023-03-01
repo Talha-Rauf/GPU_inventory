@@ -61,12 +61,9 @@ app.use(passport.session());
 // set view engine
 app.set("view engine", "ejs");
 
-// using override method to treat post request as put
-// app.use(methodOverride('_method'));
-
 // load assets
 app.use('/css', express.static(path.resolve(__dirname, "assets/css")));
-app.use('/img', express.static(path.resolve(__dirname + "/server/upload/avatars")));
+app.use('/img', express.static(path.resolve(__dirname + "/server/upload/")));
 app.use('/js', express.static(path.resolve(__dirname, "assets/js")));
 app.use(express.json());
 
