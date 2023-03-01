@@ -39,16 +39,16 @@ const signupUser = catchAsync(async (req, res) => {
     }
 });
 
-// Update a user through the user inventory page
-const updateUser = catchAsync(async (req, res) => {
-    await userServices.updateUser(req.params.id, req.body);
-    res.redirect('/users/view-user/' + req.params.id);
-});
-
 // update a user through the userpage
 const updateUserSelf = catchAsync(async (req, res) => {
     await userServices.updateUser(req.params.id, req.body);
     res.redirect('/userpage');
+});
+
+// Update a user through the user inventory page
+const updateUser = catchAsync(async (req, res) => {
+    await userServices.updateUser(req.params.id, req.body);
+    res.redirect('/users/view-user/' + req.params.id);
 });
 
 // Delete a user

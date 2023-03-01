@@ -25,7 +25,7 @@
                                 <a href=" <%= "/userpage/update-user/upload-image/" + user.id %> "><button class="btn btn-dark btn-lg btn-rounded px-5" type="button">Change Avatar</button></a>
                                 <hr>
 
-                                <form action=" <%= "/users/update-user/" + user.id + "?_method=PATCH"%> " method="POST" id="update_user">
+                                <form action=" <%= "/userpage/update-user/" + user.id + "?_method=PATCH"%> " method="POST" id="update_user">
 
                                     <%- include('include/_editForm'); %>
 
