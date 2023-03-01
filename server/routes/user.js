@@ -32,6 +32,10 @@ router.get('/delete-user/:id', [
     routeConfig.sameUserCannotPerformAction,
     services.viewDeleteUserPage
 ]);
+router.get('/update-user/upload-image/:id',
+    checkAuthenticated,
+    services.viewUploadImagePage
+);
 
 // API for CRUD operations
 router.post('/add-user',
@@ -42,6 +46,9 @@ router.patch('/update-user/:id',
 );
 router.delete('/delete-user/:id',
     userController.deleteUser
+);
+router.post('/update-user/upload-image/:id',
+    userController.uploadImage
 );
 
 module.exports = router;

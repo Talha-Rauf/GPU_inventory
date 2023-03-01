@@ -57,4 +57,13 @@ router.delete('/delete-gpu/:id',
     gpuController.deleteMyGPU
 );
 
+router.get('/update-user/upload-image/:id',
+    checkAuthenticated,
+    services.viewUploadMyImagePage
+);
+
+router.post('/update-user/upload-image/:id',
+    userController.uploadMyImage
+);
+
 module.exports = router;

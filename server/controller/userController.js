@@ -3,6 +3,10 @@ const catchAsync = require("../utils/catchAsync");
 const ApiError = require("../utils/ApiError");
 const httpStatus = require("http-status");
 const passport = require("passport");
+const upload = require("../upload/uploadFile");
+const multer = require("multer");
+const path = require("path");
+const fs = require('fs');
 
 // view user(s)
 const getAllUsers = catchAsync(async (req, res) => {
@@ -96,6 +100,54 @@ const confirmEmail = catchAsync(async (req, res) => {
     }
 });
 
+const uploadImage = catchAsync(async (req, res) => {
+    if (req.files) {
+        const {image} = req.files.image;
+        // If it does not have image mime type prevent from uploading
+        if (/^image/.test(image.mimetype)) {
+            // Move the uploaded image to our upload folder
+            await upload.uploadImage(image, req.params.id);
+            res.redirect("/users/update-user/" + req.params.id);
+        }
+        else {
+            res.render('uploadAvatar', {userID: req.params.id, errorMessage: 'File type is incorrect!!'});
+        }
+    }
+    // If no image submitted, exit
+    else {
+        return res.render('uploadAvatar', {userID: req.params.id, errorMessage: 'No file was selected!!'});
+    }
+});
+
+// return res.render('uploadMyAvatar', {userID: req.params.id, errorMessage: 'No file was selected!!'});
+const uploadMyImage = catchAsync(async (req, res) => {
+    const handleError = (err, res) => {
+        console.log(err);
+        res
+            .status(500)
+            .contentType("text/plain")
+            .end("Oops! Something went wrong!");
+    };
+
+    const storage = multer.diskStorage({
+        destination: (req, file, cb) => {
+            cb(null, path.join(__dirname, 'public'))
+        },
+        filename: (req, file, cb) => {
+            cb(null, Date.now() + '-' + file.originalname);
+        }
+    })
+
+    const upload = multer({
+        storage: storage
+        // you might also want to set some limits: https://github.com/expressjs/multer#limits
+    });
+
+    upload.single('image');
+    console.log('uploaded:', req.file);
+
+});
+
 module.exports = {
     getAllUsers,
     getUser,
@@ -107,5 +159,7 @@ module.exports = {
     checkIfFalse,
     confirmEmail,
     changePassword,
-    sendEmailForReset
+    sendEmailForReset,
+    uploadImage,
+    uploadMyImage
 }

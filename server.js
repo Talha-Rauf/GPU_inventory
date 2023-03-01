@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 require('dotenv').config();
 const path = require("path");
+const fileUpload = require('express-fileupload');
+const cors = require('cors');
 const bodyParser = require("body-parser");
 const routes = require('./server/routes/index');
 const morgan = require("morgan");
@@ -26,6 +28,17 @@ const expressSession = require("express-session")({
     saveUninitialized: false
 });
 
+// enable files upload
+app.use(fileUpload({
+    limits: {
+        fileSize: 10000000, // Around 10MB
+    },
+    abortOnLimit: true,
+    createParentPath: true
+}));
+
+//other middleware
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressSession);
@@ -53,7 +66,7 @@ app.set("view engine", "ejs");
 
 // load assets
 app.use('/css', express.static(path.resolve(__dirname, "assets/css")));
-app.use('/img', express.static(path.resolve(__dirname, "assets/img")));
+app.use('/img', express.static(path.resolve(__dirname + "/server/upload/avatars")));
 app.use('/js', express.static(path.resolve(__dirname, "assets/js")));
 app.use(express.json());
 

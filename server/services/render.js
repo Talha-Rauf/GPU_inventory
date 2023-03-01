@@ -1,5 +1,6 @@
 const {User, Gpu} = require('../model/index');
 const passport = require("passport");
+const {findByID} = require("./userService");
 
 // Rendering Authentication Pages
 const viewHomePage = (req, res) => {
@@ -162,6 +163,14 @@ const viewDeleteGPUPage = async (req, res, webpage) => {
     }
 }
 
+const viewUploadImagePage = (req, res) => {
+    res.render('uploadAvatar', { userID: req.params.id, errorMessage: '' });
+}
+
+const viewUploadMyImagePage = async (req, res) => {
+    res.render('uploadMyAvatar', { userID: req.params.id, errorMessage: '' });
+}
+
 module.exports = {
     viewHomePage,
     viewLoginPage,
@@ -175,5 +184,7 @@ module.exports = {
     editGPUPage,
     viewDeleteUserPage,
     viewDeleteGPUPage,
-    viewUserPage
+    viewUserPage,
+    viewUploadImagePage,
+    viewUploadMyImagePage
 }
