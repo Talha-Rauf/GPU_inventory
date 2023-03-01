@@ -7,11 +7,11 @@ const upload = multer({
 });
 
 const uploadImage = async (image, userID) => {
-    await image.mv(__dirname + "/avatars/" + userID + path.extname(image.name).toLowerCase());
+    await image.mv("../../img" + "/avatars/" + userID + path.extname(image.name).toLowerCase());
 }
 
 const uploadMyImage = async (image, userID) => {
-    await image.mv(__dirname + "/avatars/" + userID + path.extname(image.name).toLowerCase());
+    await image.mv("../../img" + "/avatars/" + userID + path.extname(image.name).toLowerCase());
 }
 
 module.exports = {

@@ -65,6 +65,7 @@ app.set("view engine", "ejs");
 app.use('/css', express.static(path.resolve(__dirname, "assets/css")));
 app.use('/img', express.static(path.resolve(__dirname + "/server/upload/")));
 app.use('/js', express.static(path.resolve(__dirname, "assets/js")));
+app.use(express.static( "img" ));
 app.use(express.json());
 
 app.use('/', routes);
