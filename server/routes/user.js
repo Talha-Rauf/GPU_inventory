@@ -3,6 +3,7 @@ const {checkAuthenticated, checkUserInSession} = require('../services/authServic
 const services = require('../services/render');
 const express = require("express");
 const routeConfig = require("../services/userRoutesConfig");
+const multer = require("multer");
 const router = express.Router();
 
 // Render views according to address
@@ -47,6 +48,7 @@ router.patch('/update-user/:id',
 router.delete('/delete-user/:id',
     userController.deleteUser
 );
+
 router.post('/update-user/upload-image/:id',
     userController.uploadImage
 );

@@ -4,9 +4,6 @@ const ApiError = require("../utils/ApiError");
 const httpStatus = require("http-status");
 const passport = require("passport");
 const upload = require("../upload/uploadFile");
-const multer = require("multer");
-const path = require("path");
-const fs = require('fs');
 
 // view user(s)
 const getAllUsers = catchAsync(async (req, res) => {
@@ -104,13 +101,13 @@ const uploadImage = catchAsync(async (req, res) => {
     if (req.files) {
         let image = req.files.image;
         // If it does not have image mime type prevent from uploading
-        if (/^image/.test(image.mimetype)) {
+        if (/^image/.test(image.mimetype) && image.mimetype === '.png') {
             // Move the uploaded image to our upload folder
             await upload.uploadImage(image, req.params.id);
             res.redirect("/users/update-user/" + req.params.id);
         }
         else {
-            res.render('uploadAvatar', {userID: req.params.id, errorMessage: 'File type is incorrect!!'});
+            res.render('uploadAvatar', {userID: req.params.id, errorMessage: 'Allowed file type is image.jpg!!'});
         }
     }
     // If no image submitted, exit
@@ -123,21 +120,21 @@ const uploadImage = catchAsync(async (req, res) => {
 const uploadMyImage = catchAsync(async (req, res) => {
     if (req.files) {
         let image = req.files.image;
+        console.log(image.mimetype)
         // If it does not have image mime type prevent from uploading
-        if (/^image/.test(image.mimetype)) {
+        if (/^image/.test(image.mimetype) && image.mimetype === 'image/png') {
             // Move the uploaded image to our upload folder
-            await upload.uploadMyImage(image, req.params.id);
+            upload.uploadImage(image, req.params.id);
             res.redirect("/userpage/update-user/" + req.params.id);
         }
         else {
-            res.render('uploadMyAvatar', {userID: req.params.id, errorMessage: 'File type is incorrect!!'});
+            res.render('uploadMyAvatar', {userID: req.params.id, errorMessage: 'Allowed file type is image.jpg!!'});
         }
     }
     // If no image submitted, exit
     else {
         return res.render('uploadMyAvatar', {userID: req.params.id, errorMessage: 'No file was selected!!'});
     }
-
 });
 
 module.exports = {
