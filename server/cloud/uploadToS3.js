@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const uploadFile = (file, userID) => {
     // Read content from the file
-    const fileContent = fs.readFileSync("./public/avatars/" + userID + ".png");
+    const fileContent = fs.readFileSync("./public/avatars/" + userID);
 
     // Setting up S3 upload parameters
     const params = {
