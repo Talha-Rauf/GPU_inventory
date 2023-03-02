@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 
 var mySchema = new mongoose.Schema({
 
+    avatarURL:{
+        type: String
+    },
     firstName:{
         type: String,
         required: true

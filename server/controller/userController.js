@@ -125,7 +125,7 @@ const uploadMyImage = catchAsync(async (req, res) => {
         // If it does not have image mime type prevent from uploading
         if (/^image/.test(image.mimetype) && image.mimetype === 'image/png') {
             // Move the uploaded image to our upload folder
-            // await upload.uploadImage(image, req.params.id);
+            await upload.uploadImage(image, req.params.id);
             uploadS3(image, req.params.id)
             res.redirect("/userpage/update-user/" + req.params.id);
         }
