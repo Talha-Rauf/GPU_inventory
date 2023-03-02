@@ -121,7 +121,7 @@ const uploadImage = catchAsync(async (req, res) => {
 const uploadMyImage = catchAsync(async (req, res) => {
     if (req.files) {
         let image = req.files.image;
-        console.log(image.mimetype)
+        console.log(image)
         // If it does not have image mime type prevent from uploading
         if (/^image/.test(image.mimetype) && image.mimetype === 'image/png') {
             // Move the uploaded image to our upload folder

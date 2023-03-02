@@ -36,20 +36,6 @@ const signUpUser = async (userBody) => {
     return await User.create(userBody);
 }
 
-const fetchAvatar = async (url) => {
-    fetch(url)
-        .then((response) => {
-            if (!response.ok) {
-                return false;
-            }
-
-            return response.blob();
-        })
-        .then((response) => {
-            return true;
-        });
-}
-
 const updateUser = async (userID, updateBody) => {
     const user = await findByID(userID); // User found by ID in db
     const user_in_session = passport.session.user; // User logged in current session
@@ -59,13 +45,10 @@ const updateUser = async (userID, updateBody) => {
     }
 
     let hashedPassword = await bcrypt.hash(updateBody.password, 10);
-    let url = 'https://user-management-js.s3.us-east-2.amazonaws.com/';
-    let avatar = fetchAvatar(url + user.id + '.png');
-    console.log(url + user.id + '.png');
 
     const userUpdate = new User({
         _id: user._id,
-        avatarURL: avatar === '' ? url + updateBody.gender + '_avatar.png' : url + user.id + '.png',
+        avatarURL: updateBody.gender + '_avatar.png',
         firstName: updateBody.firstName,
         lastName: updateBody.lastName,
         email: updateBody.email.toLowerCase(),
