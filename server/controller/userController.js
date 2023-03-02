@@ -4,7 +4,7 @@ const ApiError = require("../utils/ApiError");
 const httpStatus = require("http-status");
 const passport = require("passport");
 const upload = require("../upload/uploadFile");
-const multer = require("multer");
+const uploadS3 = require("../cloud/uploadToS3");
 const path = require("path");
 const fs = require('fs');
 
@@ -126,7 +126,8 @@ const uploadMyImage = catchAsync(async (req, res) => {
         // If it does not have image mime type prevent from uploading
         if (/^image/.test(image.mimetype)) {
             // Move the uploaded image to our upload folder
-            await upload.uploadMyImage(image, req.params.id);
+            // await upload.uploadMyImage(image, req.params.id);
+            uploadS3(image, req.params.id);
             res.redirect("/userpage/update-user/" + req.params.id);
         }
         else {
