@@ -54,7 +54,7 @@ const updateUser = async (userID, updateBody) => {
         gender: updateBody.gender,
         status: updateBody.status,
         role: user_in_session.role === 'admin' ? updateBody.role : user.role,
-        emailVerified: updateBody.emailVerified,
+        emailVerified: user_in_session.emailVerified === 'true' ? 'true' : updateBody.emailVerified,
         checkFalse: updateBody.checkFalse
     });
 

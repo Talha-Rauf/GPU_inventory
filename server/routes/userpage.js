@@ -24,7 +24,7 @@ router.get('/update-user/:id', [
 
 router.patch('/update-user/:id',
     checkAuthenticated,
-    userController.updateUser
+    userController.updateUserSelf
 );
 
 // GPU Related operations
