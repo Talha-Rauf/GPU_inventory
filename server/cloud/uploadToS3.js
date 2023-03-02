@@ -1,14 +1,15 @@
 const s3 = require('./amazonS3')
+const fs = require('fs');
 
-const uploadFile = (fileName, userID) => {
+const uploadFile = (file, userID) => {
     // Read content from the file
-    const fileContent = fs.readFileSync(fileName);
+    const fileContent = fs.readFileSync(file.name);
 
     // Setting up S3 upload parameters
     const params = {
         Bucket: 'user-management-js',
         Key: userID + '.png', // File name you want to save as in S3
-        Body: fileContent
+        Body: file
     };
 
     // Uploading files to the bucket
