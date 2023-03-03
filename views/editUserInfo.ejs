@@ -22,7 +22,7 @@
                         <div class="row d-flex justify-content-center">
                             <div class="col-lg-12">
                                 <img src="<%=user.avatarURL%>" class="rounded-circle shadow-4" style="width: 150px; height: 150px;" alt="Avatar" />
-                                <a href=" <%= "/userpage/update-user/upload-image/" + user.id %> "><button class="btn btn-dark btn-lg btn-rounded px-5" type="button">Change Avatar</button></a>
+                                <a href=" <%= "/users/update-user/upload-image/" + user.id %> "><button class="btn btn-dark btn-lg btn-rounded px-5" type="button">Change Avatar</button></a>
                                 <hr>
 
                                 <form action=" <%= "/users/update-user/" + user.id + "?_method=PATCH"%> " method="POST" id="update_user">

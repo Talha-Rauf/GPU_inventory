@@ -4,6 +4,7 @@ const {User} = require('../model/index');
 const passport = require("passport");
 const ApiError = require('../utils/ApiError');
 const {transporter, mailForNewUser, mailForReset, mailForConfirmation} = require("../config");
+const urlExists = require("url-exists");
 const fs = require("fs");
 
 const queryUsers = async (filter) => {
@@ -45,12 +46,19 @@ const updateUser = async (userID, updateBody) => {
     if (!user) {throw new ApiError(httpStatus.NOT_FOUND, 'User not found');}
 
     let hashedPassword = await bcrypt.hash(updateBody.password, 10);
-    let url = 'https://user-management-js.s3.us-east-2.amazonaws.com/';
-    const fileUrl = "../public/avatars/" + userID + ".png";
+    let url = 'https://' + process.env.AWS_S3_BUCKET_NAME + '.s3.us-east-2.amazonaws.com/';
+    let finalUrl = url + updateBody.gender.toLowerCase() + '_avatar.png';
+
+    urlExists(url + user._id + '.png', function(err, exists) {
+        if (exists) {
+            finalUrl = url + user._id + '.png';
+        }
+    });
+
     // updateBody.gender + '_avatar.png',
     const userUpdate = new User({
         _id: user._id,
-        avatarURL: fs.readFileSync(fileUrl) === undefined ? url + updateBody.gender.toLowerCase() + '_avatar.png' : url + user._id + '.png',
+        avatarURL: finalUrl,
         firstName: updateBody.firstName,
         lastName: updateBody.lastName,
         email: updateBody.email.toLowerCase(),

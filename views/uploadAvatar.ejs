@@ -18,13 +18,13 @@
 
             <div class="card-body py-5 px-md-5">
                 <div class="row d-flex justify-content-center">
-                    <div class="col-lg-8">
+                    <div class="col-lg-8 mb-3">
                         <h2 class="fw-bold mb-5">
-                            UPLOAD AVATAR<i class="fa fa-image-portrait"></i>
+                            UPLOAD AVATAR <i class="fa fa-image-portrait"></i>
                         </h2>
 
                         <form action=" <%= "/users/update-user/upload-image/" + userID%> " method="POST" enctype="multipart/form-data">
-                            <input type="file" name="image" /><hr>
+                            <input type="file" class="form-control-file" id="photo-upload" name="image" /><hr>
 
                             <% if (errorMessage) {%>
                                 <div class="error-message"><%= errorMessage %></div>
