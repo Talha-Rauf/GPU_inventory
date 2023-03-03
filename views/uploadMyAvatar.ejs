@@ -24,7 +24,7 @@
                         </h2>
 
                         <form action=" <%= "/userpage/update-user/upload-image/" + userID%> " method="POST" enctype="multipart/form-data">
-                            <input type="file" class="form-control-file" name="image" /><hr>
+                            <input type="file" class="form-control-file" id="photo-upload" name="image" /><hr>
 
                             <% if (errorMessage) {%>
                                 <div class="error-message"><%= errorMessage %></div>

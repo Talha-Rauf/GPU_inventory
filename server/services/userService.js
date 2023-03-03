@@ -4,6 +4,7 @@ const {User} = require('../model/index');
 const passport = require("passport");
 const ApiError = require('../utils/ApiError');
 const {transporter, mailForNewUser, mailForReset, mailForConfirmation} = require("../config");
+const fs = require("fs");
 
 const queryUsers = async (filter) => {
     return await User.find().sort(filter);
@@ -23,7 +24,9 @@ const createUser = async (userBody) => {
         return undefined;
     }
     let generatedPassword = Math.random().toString(36).slice(-8);
+    let url = 'https://user-management-js.s3.us-east-2.amazonaws.com/';
     newUser.password === '...' ? await bcrypt.hash(generatedPassword, 10) : await bcrypt.hash(userBody.password, 10);
+    newUser.avatarURL = url + newUser.gender + '_avatar.png';
     newUser.checkFalse = true;
     return await User.create(newUser);
 }
@@ -39,16 +42,15 @@ const signUpUser = async (userBody) => {
 const updateUser = async (userID, updateBody) => {
     const user = await findByID(userID); // User found by ID in db
     const user_in_session = passport.session.user; // User logged in current session
-
-    if (!user) {
-        throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
-    }
+    if (!user) {throw new ApiError(httpStatus.NOT_FOUND, 'User not found');}
 
     let hashedPassword = await bcrypt.hash(updateBody.password, 10);
-
+    let url = 'https://user-management-js.s3.us-east-2.amazonaws.com/';
+    const fileUrl = "../public/avatars/" + userID + ".png";
+    // updateBody.gender + '_avatar.png',
     const userUpdate = new User({
         _id: user._id,
-        avatarURL: updateBody.gender + '_avatar.png',
+        avatarURL: fs.readFileSync(fileUrl) === undefined ? url + updateBody.gender.toLowerCase() + '_avatar.png' : url + user._id + '.png',
         firstName: updateBody.firstName,
         lastName: updateBody.lastName,
         email: updateBody.email.toLowerCase(),

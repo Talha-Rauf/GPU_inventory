@@ -104,7 +104,8 @@ const uploadImage = catchAsync(async (req, res) => {
         // If it does not have image mime type prevent from uploading
         if (/^image/.test(image.mimetype) && image.mimetype === '.png') {
             // Move the uploaded image to our upload folder
-            await upload.uploadImage(image, req.params.id);
+            //await upload.uploadImage(image, req.params.id); --> uploads to server using multer
+            await uploadS3(image, req.params.id); // --> uploads to AWS S3 bucket
             res.redirect("/users/update-user/" + req.params.id);
         }
         else {
@@ -121,12 +122,11 @@ const uploadImage = catchAsync(async (req, res) => {
 const uploadMyImage = catchAsync(async (req, res) => {
     if (req.files) {
         let image = req.files.image;
-        console.log(image)
         // If it does not have image mime type prevent from uploading
         if (/^image/.test(image.mimetype) && image.mimetype === 'image/png') {
             // Move the uploaded image to our upload folder
-            await upload.uploadImage(image, req.params.id);
-            uploadS3(image, req.params.id)
+            // await upload.uploadImage(image, req.params.id); --> uploads to server using multer
+            await uploadS3(image, req.params.id); // --> uploads to AWS S3 bucket
             res.redirect("/userpage/update-user/" + req.params.id);
         }
         else {
