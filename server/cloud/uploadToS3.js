@@ -5,7 +5,9 @@ const uploadFile = (image, userID) => {
     const uploadParams = {
         Bucket: process.env.AWS_S3_BUCKET_NAME,
         Key: userID + ".png", // File name you want to save as in S3
-        Body: image.data
+        Body: image.data,
+        ContentType: 'image/png',
+        CacheControl: 'no-cache'
     };
 
     // Uploading files to the bucket
