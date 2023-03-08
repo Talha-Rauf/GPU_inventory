@@ -34,6 +34,7 @@ router.delete('/logout', [
 ]);
 
 router.post('/login',
+    authService.checkEmailVerified,
     authService.authenticateUser
 );
 
@@ -52,7 +53,7 @@ router.post('/reset',
 );
 
 router.get('/email-verification/:id',
-    authService.checkNotAuthenticated,
+    authService.verifyEmailByID,
     userController.confirmEmail
 );
 

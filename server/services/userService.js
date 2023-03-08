@@ -55,23 +55,16 @@ const updateUser = async (userID, updateBody) => {
         }
     });
 
-    // updateBody.gender + '_avatar.png',
-    const userUpdate = new User({
-        _id: user._id,
-        avatarURL: finalUrl,
-        firstName: updateBody.firstName,
-        lastName: updateBody.lastName,
-        email: updateBody.email.toLowerCase(),
-        password: updateBody.password === '' ? user.password : hashedPassword,
-        gender: updateBody.gender,
-        status: updateBody.status,
-        role: user_in_session.role === 'admin' ? updateBody.role : user.role,
-        emailVerified: user_in_session.emailVerified === 'true' ? 'true' : updateBody.emailVerified,
-        checkFalse: updateBody.checkFalse
-    });
-
-    Object.assign(user, userUpdate);
-    await user.save();
+    await User.updateOne(
+        { _id: userID },
+        { $set: {
+                avatarURL: finalUrl,
+                password: updateBody.password === '' ? user.password : hashedPassword,
+                role: user_in_session.role === 'admin' ? updateBody.role : user.role,
+                emailVerified: user_in_session.emailVerified === 'true' ? 'true' : updateBody.emailVerified
+        } },
+        { new: true }
+    );
 }
 
 const deleteUser = async (userID) => {
