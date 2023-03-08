@@ -4,8 +4,6 @@ const {User} = require('../model/index');
 const passport = require("passport");
 const ApiError = require('../utils/ApiError');
 const {transporter, mailForNewUser, mailForReset, mailForConfirmation} = require("../config");
-const urlExists = require("url-exists");
-const fs = require("fs");
 
 const queryUsers = async (filter) => {
     return await User.find().sort(filter);
@@ -25,43 +23,40 @@ const createUser = async (userBody) => {
         return undefined;
     }
     let generatedPassword = Math.random().toString(36).slice(-8);
-    let url = 'https://user-management-js.s3.us-east-2.amazonaws.com/';
     newUser.password === '...' ? await bcrypt.hash(generatedPassword, 10) : await bcrypt.hash(userBody.password, 10);
-    newUser.avatarURL = url + newUser.gender + '_avatar.png';
+    newUser.avatarURL = 'https://user-management-js.s3.us-east-2.amazonaws.com/' + newUser.gender + '_avatar.jpg';
     newUser.checkFalse = true;
     return await User.create(newUser);
 }
 
 const signUpUser = async (userBody) => {
+    let newUser = userBody;
     if (await User.isEmailTaken(userBody.email)) {
         return undefined;
     }
-    userBody.password = await bcrypt.hash(userBody.password, 10);
-    return await User.create(userBody);
+    newUser.password = await bcrypt.hash(userBody.password, 10);
+    newUser.avatarURL = 'https://user-management-js.s3.us-east-2.amazonaws.com/' + newUser.gender + '_avatar.jpg';
+    return await User.create(newUser);
 }
 
 const updateUser = async (userID, updateBody) => {
+    let { default: fetch } = await import("node-fetch");
+
     const user = await findByID(userID); // User found by ID in db
     const user_in_session = passport.session.user; // User logged in current session
     if (!user) {throw new ApiError(httpStatus.NOT_FOUND, 'User not found');}
 
     let hashedPassword = await bcrypt.hash(updateBody.password, 10);
     let url = 'https://' + process.env.AWS_S3_BUCKET_NAME + '.s3.us-east-2.amazonaws.com/';
-    let finalUrl = url + updateBody.gender.toLowerCase() + '_avatar.png';
-
-    urlExists(url + user._id + '.png', function(err, exists) {
-        if (exists) {
-            finalUrl = url + user._id + '.png';
-        }
-    });
+    const avatarUrlExists = await fetch(url + user._id + '.jpg');
 
     await User.updateOne(
         { _id: userID },
         { $set: {
-                avatarURL: finalUrl,
+                avatarURL: avatarUrlExists.ok === true ? url + user._id + '.jpg' : url + updateBody.gender.toLowerCase() + '_avatar.jpg',
                 password: updateBody.password === '' ? user.password : hashedPassword,
                 role: user_in_session.role === 'admin' ? updateBody.role : user.role,
-                emailVerified: user_in_session.emailVerified === 'true' ? 'true' : updateBody.emailVerified
+                emailVerified: user_in_session.emailVerified === true ? true : updateBody.emailVerified
         } },
         { new: true }
     );

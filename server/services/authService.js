@@ -2,7 +2,7 @@ const services = require("./userService");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 const {User} = require("../model");
-const {findByEmail, findByID} = require("./userService");
+const userServices = require("./userService");
 
 exports.isUsernameAndPasswordEmpty = async (req, res, next) => {
     let errors = [];
@@ -80,23 +80,14 @@ exports.checkNotAuthenticated = (req, res, next) => {
     return next();
 }
 
-exports.checkEmailVerified = (req, res, next) => {
-    let user = findByEmail(req.body.email);
+exports.checkEmailVerified = async (req, res, next) => {
+    let user =  await services.findByEmail(req.body.email);
     if (user.emailVerified){
         return next();
     }
     else {
+        await userServices.sendEmailForVerification(user);
         return res.render('loginPage', {errorMessage: 'Email not verified!'});
-    }
-}
-
-exports.verifyEmailByID = (req, res, next) => {
-    let user = findByID(req.params.id);
-    if (!user.emailVerified){
-        return next();
-    }
-    else {
-        return res.redirect('/userpage');
     }
 }
 

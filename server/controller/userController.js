@@ -70,8 +70,8 @@ const changePassword = catchAsync(async (req, res) => {
 
 const checkIfFalse = catchAsync(async (req,res) => {
     const user = await userServices.findByID(req.params.id);
-    if (user.checkFalse) { res.next(); }
-    else { res.redirect('/login'); }
+    if (!user.checkFalse) { res.redirect('/login'); }
+    else { res.next(); }
 });
 
 const sendEmailForReset = catchAsync(async (req, res) => {
@@ -102,7 +102,7 @@ const uploadImage = catchAsync(async (req, res) => {
     if (req.files) {
         let image = req.files.image;
         // If it does not have image mime type prevent from uploading
-        if (/^image/.test(image.mimetype) && image.mimetype === '.png') {
+        if (/^image/.test(image.mimetype) && image.mimetype === 'image/jpeg') {
             // Move the uploaded image to our upload folder
             //await upload.uploadImage(image, req.params.id); --> uploads to server using multer
             await uploadS3(image, req.params.id); // --> uploads to AWS S3 bucket
@@ -123,7 +123,7 @@ const uploadMyImage = catchAsync(async (req, res) => {
     if (req.files) {
         let image = req.files.image;
         // If it does not have image mime type prevent from uploading
-        if (/^image/.test(image.mimetype) && image.mimetype === 'image/png') {
+        if (/^image/.test(image.mimetype) && image.mimetype === 'image/jpeg') {
             // Move the uploaded image to our upload folder
             // await upload.uploadImage(image, req.params.id); --> uploads to server using multer
             await uploadS3(image, req.params.id); // --> uploads to AWS S3 bucket
