@@ -68,10 +68,10 @@ const changePassword = catchAsync(async (req, res) => {
     else {res.render('resetPassword', { user: user, errorMessage: 'Passwords do not match!' })}
 });
 
-const checkIfFalse = catchAsync(async (req,res) => {
+const checkIfFalse = catchAsync(async (req, res, next) => {
     const user = await userServices.findByID(req.params.id);
     if (!user.checkFalse) { res.redirect('/login'); }
-    else { res.next(); }
+    else { next(); }
 });
 
 const sendEmailForReset = catchAsync(async (req, res) => {

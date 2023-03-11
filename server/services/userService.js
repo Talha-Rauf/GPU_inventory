@@ -24,7 +24,7 @@ const createUser = async (userBody) => {
     }
     let generatedPassword = Math.random().toString(36).slice(-8);
     newUser.password === '...' ? await bcrypt.hash(generatedPassword, 10) : await bcrypt.hash(userBody.password, 10);
-    newUser.avatarURL = 'https://user-management-js.s3.us-east-2.amazonaws.com/' + newUser.gender + '_avatar.jpg';
+    newUser.avatarURL = 'https://user-management-js.s3.us-east-2.amazonaws.com/' + newUser.gender.toLowerCase() + '_avatar.jpg';
     newUser.checkFalse = true;
     return await User.create(newUser);
 }
@@ -35,7 +35,7 @@ const signUpUser = async (userBody) => {
         return undefined;
     }
     newUser.password = await bcrypt.hash(userBody.password, 10);
-    newUser.avatarURL = 'https://user-management-js.s3.us-east-2.amazonaws.com/' + newUser.gender + '_avatar.jpg';
+    newUser.avatarURL = 'https://user-management-js.s3.us-east-2.amazonaws.com/' + newUser.gender.toLowerCase() + '_avatar.jpg';
     return await User.create(newUser);
 }
 
@@ -49,6 +49,7 @@ const updateUser = async (userID, updateBody) => {
     let hashedPassword = await bcrypt.hash(updateBody.password, 10);
     let url = 'https://' + process.env.AWS_S3_BUCKET_NAME + '.s3.us-east-2.amazonaws.com/';
     const avatarUrlExists = await fetch(url + user._id + '.jpg');
+    console.log(avatarUrlExists.ok)
 
     await User.updateOne(
         { _id: userID },
