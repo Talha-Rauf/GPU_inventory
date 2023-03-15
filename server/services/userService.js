@@ -66,9 +66,7 @@ const updateUser = async (userID, updateBody) => {
 
 
     // User found by ID in db after update
-    let userAfterUpdate = await findByID(userID);
-    passport.session.user = userAfterUpdate;
-    return userAfterUpdate;
+    return await findByID(userID);
 }
 
 const deleteUser = async (userID) => {
