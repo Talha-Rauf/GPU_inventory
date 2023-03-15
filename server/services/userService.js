@@ -49,18 +49,26 @@ const updateUser = async (userID, updateBody) => {
     let hashedPassword = await bcrypt.hash(updateBody.password, 10);
     let url = 'https://' + process.env.AWS_S3_BUCKET_NAME + '.s3.us-east-2.amazonaws.com/';
     const avatarUrlExists = await fetch(url + user._id + '.jpg');
-    console.log(avatarUrlExists.ok)
 
     await User.updateOne(
         { _id: userID },
         { $set: {
                 avatarURL: avatarUrlExists.ok === true ? url + user._id + '.jpg' : url + updateBody.gender.toLowerCase() + '_avatar.jpg',
+                firstName: updateBody.firstName,
+                lastName: updateBody.lastName,
                 password: updateBody.password === '' ? user.password : hashedPassword,
+                gender: updateBody.gender,
                 role: user_in_session.role === 'admin' ? updateBody.role : user.role,
                 emailVerified: user_in_session.emailVerified === true ? true : updateBody.emailVerified
         } },
         { new: true }
     );
+
+
+    // User found by ID in db after update
+    let userAfterUpdate = await findByID(userID);
+    passport.session.user = userAfterUpdate;
+    return userAfterUpdate;
 }
 
 const deleteUser = async (userID) => {

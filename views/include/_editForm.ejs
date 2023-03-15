@@ -15,7 +15,7 @@
 </div>
 
 <div class="form-outline mb-4">
-    <input id="typeEmail" type="email" class="form-control form-control-md" name="email" value="<%= user.email %>" required>
+    <input id="typeEmail" type="email" class="form-control form-control-md" name="email" value="<%= user.email %>" disabled>
     <label for="typeEmail" class="form-label">Email</label>
 </div>
 
@@ -30,14 +30,14 @@
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" value="Male" name="gender" id="radio1" <%= user.gender === 'Male' ? 'checked' : ''%>>
+        <input class="form-check-input" type="radio" value="Male" name="gender" id="radio1" <%= user.gender === 'Male' ? 'checked' : ''%> required>
         <label class="form-check-label" for="radio1">
             Male
         </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" value="Female" name="gender" id="radio2" <%= user.gender === 'Female' ? 'checked' : ''%>>
+        <input class="form-check-input" type="radio" value="Female" name="gender" id="radio2" <%= user.gender === 'Female' ? 'checked' : ''%> required>
         <label class="form-check-label" for="radio2">
             Female
         </label>
@@ -51,14 +51,14 @@
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" value="Employed" name="status" id="radio3" <%= user.status === 'Employed' ? 'checked' : ''%>>
+        <input class="form-check-input" type="radio" value="Employed" name="status" id="radio3" <%= user.status === 'Employed' ? 'checked' : ''%> required>
         <label class="form-check-label" for="radio3">
             Employed
         </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" value="Unemployed" name="status" id="radio4" <%= user.status === 'Unemployed' ? 'checked' : ''%>>
+        <input class="form-check-input" type="radio" value="Unemployed" name="status" id="radio4" <%= user.status === 'Unemployed' ? 'checked' : ''%> required>
         <label class="form-check-label" for="radio4">
             Unemployed
         </label>
@@ -72,14 +72,14 @@
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" value="admin" name="role" id="radio5" <%= user.role === 'admin' ? 'checked' : ''%>>
+        <input class="form-check-input" type="radio" value="admin" name="role" id="radio5" <%= user.role === 'admin' ? 'checked' : ''%> required>
         <label class="form-check-label" for="radio5">
             Admin
         </label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" value="user" name="role" id="radio6" <%= user.role === 'user' ? 'checked' : ''%>>
+        <input class="form-check-input" type="radio" value="user" name="role" id="radio6" <%= user.role === 'user' ? 'checked' : ''%> required>
         <label class="form-check-label" for="radio6">
             User
         </label>

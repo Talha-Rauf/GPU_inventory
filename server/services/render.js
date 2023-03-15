@@ -1,6 +1,5 @@
 const {User, Gpu} = require('../model/index');
 const passport = require("passport");
-const {findByID} = require("./userService");
 
 // Rendering Authentication Pages
 const viewHomePage = (req, res) => {
@@ -86,7 +85,7 @@ const viewDeleteUserPage = async (req, res) => {
 // Rendering User-page
 const viewUserPage = async (req, res) => {
     let gpu = await Gpu.find().sort('model');
-    let user = passport.session.user;
+    let user = await passport.session.user;
     res.render('userPage', {user, gpu});
 }
 

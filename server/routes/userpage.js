@@ -4,6 +4,7 @@ const gpuServices = require('../services/gpuRoutes')
 const express = require("express");
 const gpuController = require("../controller/gpuController");
 const userController = require("../controller/userController");
+const authService = require("../services/authService");
 const router = express.Router();
 
 // User related operations

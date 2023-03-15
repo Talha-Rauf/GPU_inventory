@@ -9,7 +9,7 @@ const uploadS3 = require("../cloud/uploadToS3");
 // view user(s)
 const getAllUsers = catchAsync(async (req, res) => {
     const all_users = await userServices.queryUsers('firstName');
-    const user_in_session = passport.session.user;
+    const user_in_session = await userServices.findByID(passport.session.user.id);
     if (!all_users) {throw new ApiError(httpStatus.NOT_FOUND, 'User not found');}
     res.render('usersInfoPage', {users: all_users, user: user_in_session});
 });
@@ -42,7 +42,7 @@ const signupUser = catchAsync(async (req, res) => {
 
 // update a user through the userpage
 const updateUserSelf = catchAsync(async (req, res) => {
-    await userServices.updateUser(req.params.id, req.body);
+    passport.session.user = await userServices.updateUser(req.params.id, req.body);
     res.redirect('/userpage');
 });
 
